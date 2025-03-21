@@ -30,7 +30,7 @@ app.use((error, req, res, next) => {
 
 
 
-mongoose.connect('mongodb+srv://shin:153123@cluster0.ydxf4.mongodb.net/travel?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect('mongodb+srv://shin:153123@cluster0.ydxf4.mongodb.net/trip?retryWrites=true&w=majority&appName=Cluster0')
  .then(() => {
     app.listen(port, (req,res) => {
         console.log(`포트번호${port}에서 서버가 실행중....`)
