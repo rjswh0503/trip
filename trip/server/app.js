@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 // 
 
 const HttpError = require('./models/http-error');
-
+const userRoutes = require('./routes/users-routes');
 
 const app = express();
 const port = 5000;
@@ -14,6 +14,7 @@ const port = 5000;
 app.use(bodyParser.json());
 
 
+app.use('/api/users', userRoutes);
 
 
 
@@ -25,6 +26,9 @@ app.use((error, req, res, next) => {
     res.status(error.code || 500);
     res.json({message: error.message || '알 수 없는 애러가 발생했습니다.!!'});
 });
+
+
+
 
 
 

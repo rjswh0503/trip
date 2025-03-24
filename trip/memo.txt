@@ -1,0 +1,3 @@
+Controller는 응답,요청
+
+Services는 비즈니스 로직

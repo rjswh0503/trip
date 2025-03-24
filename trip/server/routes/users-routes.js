@@ -2,6 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const router = express.Router();
+const userController = require('../controller/users-controller')
 
 
 
@@ -16,6 +17,8 @@ router.post('/register',
             .isEmail(),
         check('password').isLength({ min: 6 })
     ],
+    userController.register
+
 );
 
 
