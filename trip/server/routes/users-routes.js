@@ -27,6 +27,11 @@ router.post('/register',
 router.post('/login', userController.login);
 
 
+// 프로필조회 router
+// 특정 :id 조회 
+router.get('/:id/profile', userController.getUserId);
+
+
 //프로필 수정 router
 router.patch('/:id/profile', userController.updateUserById);
 
@@ -34,9 +39,6 @@ router.patch('/:id/profile', userController.updateUserById);
 // Param을 사용하여 특정 :id(param) 삭제 
 router.delete('/:id');
 
-// 프로필조회 router
-// 특정 :id 조회 
-router.get('/:id/profile', userController.getUserId);
 
 //내가 쓴 게시글
 router.get('/:id/posts');

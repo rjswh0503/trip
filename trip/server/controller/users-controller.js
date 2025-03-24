@@ -127,11 +127,6 @@ const getUserId = async (req, res, next) => {
 
 }
 
-
-
-
-
-
 // 유저 프로필 수정 로직
 
 const updateUserById = async (req, res, next) => {
@@ -162,6 +157,12 @@ const updateUserById = async (req, res, next) => {
 
 
 }
+
+
+
+// 찜한 여행지
+
+
 
 
 
