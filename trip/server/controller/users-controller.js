@@ -50,7 +50,7 @@ const register = async (req, res, next) => {
 
     try {
         await createUser.save();
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('회원가입을 실패했습니다. 다시 시도해주세요.', 500);
         return next(error);
     }
@@ -60,7 +60,50 @@ const register = async (req, res, next) => {
 }
 
 
+// 로그인 비즈니스 로직
+
+const login = async (req, res, next) => {
+
+    const { email, password } = req.body;
+
+
+    let existingUser;
+
+    try {
+        existingUser = await User.findOne({ email: email });
+    } catch (e) {
+        const error = new HttpError('로그인 실패했습니다.', 500);
+        return next(error);
+    }
+
+    if(!existingUser){
+        const error = new HttpError('해당하는 이메일은 없는 이메일 입니다. 회원가입을 먼저 진행해주세요.', 401);
+        return next(error);
+    };
+
+
+    let IsValidPassword = false;
+
+    try {
+        IsValidPassword = await bcrypt.compare(password, existingUser.password);
+    } catch(e){
+        const error = new HttpError('비밀번호가 틀렸습니다. 다시 시도해주세요.', 401);
+        return next(error);
+    };
+
+
+    res.json({
+        userId: existingUser.id,
+        name: existingUser.name,
+        email: existingUser.email
+    })
+
+
+}
+
+
 exports.register = register;
+exports.login = login;
 
 
 

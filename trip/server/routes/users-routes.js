@@ -23,7 +23,7 @@ router.post('/register',
 
 
 // 로그인 router
-router.post('/login');
+router.post('/login', userController.login);
 
 
 //프로필 수정 router
