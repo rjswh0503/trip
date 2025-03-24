@@ -2,7 +2,8 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const router = express.Router();
-const userController = require('../controller/users-controller')
+const userController = require('../controller/users-controller');
+const user = require('../models/user');
 
 
 
@@ -27,7 +28,7 @@ router.post('/login', userController.login);
 
 
 //프로필 수정 router
-router.patch('/profile');
+router.patch('/:id/profile', userController.updateUserById);
 
 //회원 탈퇴 router
 // Param을 사용하여 특정 :id(param) 삭제 
@@ -35,11 +36,12 @@ router.delete('/:id');
 
 // 프로필조회 router
 // 특정 :id 조회 
-router.get('/:id');
+router.get('/:id/profile', userController.getUserId);
 
 //내가 쓴 게시글
-
 router.get('/:id/posts');
+
+
 //내가 쓴 덧글
 router.get('/:id/comments');
 

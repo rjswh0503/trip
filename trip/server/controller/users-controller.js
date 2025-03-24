@@ -76,7 +76,7 @@ const login = async (req, res, next) => {
         return next(error);
     }
 
-    if(!existingUser){
+    if (!existingUser) {
         const error = new HttpError('해당하는 이메일은 없는 이메일 입니다. 회원가입을 먼저 진행해주세요.', 401);
         return next(error);
     };
@@ -86,7 +86,7 @@ const login = async (req, res, next) => {
 
     try {
         IsValidPassword = await bcrypt.compare(password, existingUser.password);
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('비밀번호가 틀렸습니다. 다시 시도해주세요.', 401);
         return next(error);
     };
@@ -102,8 +102,73 @@ const login = async (req, res, next) => {
 }
 
 
+// 특정 유저 프로필 조회 로직
+
+const getUserId = async (req, res, next) => {
+
+    const userId = req.params.id;
+    let profile;
+    try {
+        profile = await User.findById(userId);
+    } catch (e) {
+        const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 401);
+        return next(error);
+    }
+
+    res.json({
+        name: profile.name,
+        email: profile.email,
+        image: profile.image,
+        favorites: profile.favorites,
+        review: profile.review,
+        post: profile.post,
+        comment: profile.comment
+    });
+
+}
+
+
+
+
+
+
+// 유저 프로필 수정 로직
+
+const updateUserById = async (req, res, next) => {
+
+    const { name, password } = req.body;
+    const userId = req.params.id
+
+    let updateUser;
+
+    try {
+        updateUser = await User.findById(userId);
+    } catch (e) {
+        const error = new HttpError('업데이트 하는데 실패했습니다. 다시 시도해 주세요.', 500);
+        return next(error);
+        // return next(error)가 없으면 오류 발생시 코드 작동 중지가 안된다.
+    }
+
+    updateUser.name = name
+    updateUser.password = password
+
+
+    try {
+        updateUser.save();
+    } catch (e) {
+        const error = new HttpError('업데이트 실패 다시 시도해 주세요.', 500);
+        return next(error);
+    }
+
+
+}
+
+
+
 exports.register = register;
 exports.login = login;
+exports.getUserId = getUserId;
+exports.updateUserById = updateUserById;
 
 
 
