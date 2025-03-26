@@ -55,9 +55,29 @@ const register = async (req, res, next) => {
         return next(error);
     }
 
-    res.status(201).json({ name: createUser.name, email: createUser.email });
+    let token;
+
+    try {
+        token = jwt.sign(
+            {
+                userId: createUser.id, email: createUser.email
+            }, 'Secret-Code',
+            {
+                expiresIn: '1h'
+            }
+        );
+    } catch (e) {
+        const error = new HttpError('회원가입에 실패했습니다. 다시 시도해주세요.', 500);
+        return next(error);
+    }
+    res.status(201).json({ name: createUser.name, email: createUser.email, token: token });
+
+    console.log(token)
 
 }
+
+
+
 
 
 // 로그인 비즈니스 로직
@@ -77,9 +97,10 @@ const login = async (req, res, next) => {
     }
 
     if (!existingUser) {
-        const error = new HttpError('해당하는 이메일은 없는 이메일 입니다. 회원가입을 먼저 진행해주세요.', 401);
+        const error = new HttpError('존재하지 않는 사용자입니다. 회원가입 부터 해주세요.', 401);
         return next(error);
     };
+
 
 
     let IsValidPassword = false;
@@ -87,17 +108,42 @@ const login = async (req, res, next) => {
     try {
         IsValidPassword = await bcrypt.compare(password, existingUser.password);
     } catch (e) {
-        const error = new HttpError('비밀번호가 틀렸습니다. 다시 시도해주세요.', 401);
+        const error = new HttpError('비밀번호가 올바르지 않습니다. 다시 시도해주세요.', 401);
         return next(error);
     };
 
 
-    res.json({
-        userId: existingUser.id,
-        name: existingUser.name,
-        email: existingUser.email
-    })
+    if (!IsValidPassword) {
+        const error = new HttpError('비밀번호가 일치하지 않습니다. 다시 시도해주세요.', 401);
+        return next(error);
+    }
 
+    let token
+
+    try {
+        token = jwt.sign(
+            {
+                userId: existingUser.id, email: existingUser.email,
+            },
+            'Secret-Code',
+            {
+                expiresIn: '1h'
+            }
+        )
+    } catch (e) {
+        const error = new HttpError('로그인 실패 했습니다. 다시 시도해 주세요.', 401);
+    }
+
+    res.json(
+        {
+            userId: existingUser.id,
+            name: existingUser.name,
+            email: existingUser.email,
+            token: token
+        }
+    );
+
+    console.log(`로그인한 ${existingUser.name}의 토큰은 : [` + token + ']');
 
 }
 
