@@ -132,6 +132,7 @@ const login = async (req, res, next) => {
         )
     } catch (e) {
         const error = new HttpError('로그인 실패 했습니다. 다시 시도해 주세요.', 401);
+        return next(error);
     }
 
     res.json(
