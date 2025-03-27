@@ -6,7 +6,7 @@ import axios from 'axios';
 
 
 
-const register = () => {
+const Register = () => {
 
     const [formData, setFormData] = useState({
         name: '',
@@ -18,7 +18,7 @@ const register = () => {
     const registerSubmitHandler = async (e) => {
         e.preventDefault();
         try {
-            const responseData = await axios.get('http://localhost:5000/api/users/register',
+            const responseData = await axios.post('http://localhost:5000/api/users/register',
                 {
                     name: formData.name,
                     email: formData.email,
@@ -32,11 +32,19 @@ const register = () => {
                 });
 
                 console.log('회원가입 성공!!' + responseData);
+                alert('회원가입 성공!');
 
         } catch (e) {
 
         }
     }
+
+    const handleChange = (e) => {
+        setFormData({
+            ...formData,
+            [e.target.name]: e.target.value
+        });
+    };
 
 
 
@@ -44,15 +52,16 @@ const register = () => {
         <>
         <h2>Register</h2>
         <form onSubmit={registerSubmitHandler}>
-            <input type='text' name='name' placeholder='사용자 이름' value={formData.name} required />
-            <input type='email' name='email' placeholder='사용자 이메일' value={formData.email} required />
-            <input type='password' name='password' placeholder='사용자 비밀번호' value={formData.password} required />
-
+            <input type='text' name='name' placeholder='사용자 이름' onChange={handleChange} value={formData.name} required />
+            <input type='email' name='email' placeholder='사용자 이메일' onChange={handleChange} value={formData.email} required />
+            <input type='password' name='password' placeholder='사용자 비밀번호' onChange={handleChange} value={formData.password} required />
+            <button type='submit'>회원가입</button>
         </form>
+        
 
         </>
     )
 }
 
 
-export default register;
+export default Register;
