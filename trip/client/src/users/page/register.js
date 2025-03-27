@@ -31,7 +31,7 @@ const Register = () => {
                     password: ''
                 });
 
-                console.log('회원가입 성공!!' + responseData);
+                console.log('회원가입 성공!!' + responseData.data);
                 alert('회원가입 성공!');
 
         } catch (e) {
