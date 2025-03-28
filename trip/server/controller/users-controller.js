@@ -123,7 +123,7 @@ const login = async (req, res, next) => {
     try {
         token = jwt.sign(
             {
-                userId: existingUser.id, email: existingUser.email,
+                userId: existingUser.id, email: existingUser.email, name: existingUser.name
             },
             'Secret-Code',
             {

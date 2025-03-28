@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -8,6 +9,7 @@ import axios from 'axios';
 
 const Register = () => {
 
+    const Navigate = useNavigate();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -31,8 +33,9 @@ const Register = () => {
                     password: ''
                 });
 
-                console.log('회원가입 성공!!' + responseData.data);
+                console.log('회원가입 성공!!' + responseData.data.formData);
                 alert('회원가입 성공!');
+                Navigate('/login')
 
         } catch (e) {
 
