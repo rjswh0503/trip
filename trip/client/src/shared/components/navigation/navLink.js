@@ -14,17 +14,18 @@ const MainNavLink = () => {
         localStorage.removeItem('token');
         
         alert("성공적으로 로그아웃 했습니다.");
-        navigate('/');
+        navigate('/login');
     }
 
     return (
-        <div>
+        <div style={{marginBottom:'100px'}}>
             {isLoggedIn ? (
                 <>
                 <button onClick={logoutHandler}>로그아웃</button>
                 </>
             ) : (
             <ul>
+                <p></p>
                 <li>
                     <NavLink to="/login">로그인</NavLink>
                 </li>

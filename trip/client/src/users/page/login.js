@@ -18,28 +18,30 @@ const Login = () => {
     const loginHandler = async (e) => {
         e.preventDefault();
 
-        try {
-            const responseData = await axios.post('http://localhost:5000/api/users/login', {
-
-                email: formData.email,
-                password: formData.password
-
-            });
-            setFormData({
-                email: '',
-                password: ''
-            });
-            localStorage.setItem('token', responseData.data.token);
-
-            alert(`로그인 성공!!`)
-
-            Navigate('/');
-
-        } catch (e) {
-            console.log('로그인 실패했습니다.')
-            alert('로그인 실패' + e);
+            try {
+                const responseData = await axios.post('http://localhost:5000/api/users/login', {
+    
+                    email: formData.email,
+                    password: formData.password,
+                    name: formData.name
+    
+                });
+                setFormData({
+                    email: '',
+                    password: ''
+                });
+                localStorage.setItem('token', responseData.data.token);
+    
+                alert(`로그인 성공!!`)
+    
+                Navigate('/');
+    
+            } catch (e) {
+                console.log('로그인 실패했습니다.')
+                alert('이메일이 틀렸거나, 없는 이메일 입니다. 회원가입 부터 진행해주세요.');
+            }
         }
-    };
+        
 
 
     const onChange = (e) => {
