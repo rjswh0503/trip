@@ -26,7 +26,6 @@ const Login = () => {
                 email: formData.email,
                 password: formData.password,
                 name: formData.name
-
             });
             setFormData({
                 email: '',
