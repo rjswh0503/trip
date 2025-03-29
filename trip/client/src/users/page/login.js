@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../shared/context/auth-context';
 
 
 
@@ -8,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
 
+    const { setToken, setIsLoggedIn } = useAuth();
     const Navigate = useNavigate();
     const [formData, setFormData] = useState({
         email: '',
@@ -18,30 +20,30 @@ const Login = () => {
     const loginHandler = async (e) => {
         e.preventDefault();
 
-            try {
-                const responseData = await axios.post('http://localhost:5000/api/users/login', {
-    
-                    email: formData.email,
-                    password: formData.password,
-                    name: formData.name
-    
-                });
-                setFormData({
-                    email: '',
-                    password: ''
-                });
-                localStorage.setItem('token', responseData.data.token);
-    
-                alert(`로그인 성공!!`)
-    
-                Navigate('/');
-    
-            } catch (e) {
-                console.log('로그인 실패했습니다.')
-                alert('이메일이 틀렸거나, 없는 이메일 입니다. 회원가입 부터 진행해주세요.');
-            }
+        try {
+            const responseData = await axios.post('http://localhost:5000/api/users/login', {
+
+                email: formData.email,
+                password: formData.password,
+                name: formData.name
+
+            });
+            setFormData({
+                email: '',
+                password: ''
+            });
+            const token = responseData.data.token;
+            localStorage.setItem('token', token);
+            setToken(token);
+            setIsLoggedIn(true);
+            alert(`로그인 성공!!`)
+            Navigate('/');
+        } catch (e) {
+            console.log('로그인 실패했습니다.')
+            alert('이메일이 틀렸거나, 없는 이메일 입니다. 회원가입 부터 진행해주세요.');
         }
-        
+    }
+
 
 
     const onChange = (e) => {
@@ -54,6 +56,7 @@ const Login = () => {
 
     return (
         <div>
+            <h2>Login Page</h2>
             <form onSubmit={loginHandler}>
                 <input type='email' name="email" placeholder='이메일을 입력하세요.' onChange={onChange} />
                 <input type='password' name='password' placeholder='비밀번호를 입력하세요.' onChange={onChange} />
