@@ -1,7 +1,11 @@
 const express = require('express');
 const { check } = require('express-validator');
+const checkAuth = require('../middleware/auth-middleware');
 
+const postController = require('../controller/posts-controller');
 const router = express.Router();
+
+
 
 
 
@@ -14,11 +18,14 @@ router.get('/:id');
 // 게시글 추가 
 // 게시글 추가 router에 check()함수를 사용해서 검증 확인
 // 
-router.post('/',
+router.use(checkAuth);
+
+router.post('/add',
     [
         check('title').not().isEmpty(),
-        check('description').isLength( { min: 3 } )
-    ]
+        check('content').isLength( { min: 3 } )
+    ],
+    postController.addPost
 );
 
 

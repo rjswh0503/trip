@@ -17,7 +17,7 @@ const MainNavLink = () => {
                 <>
                     <p><span style={{ color: 'red' }}>{user.name}</span></p>
                     <LogoutButton />
-
+                    <NavLink to="/post">게시글작성</NavLink>
                 </>
             ) : (
                 <ul>
