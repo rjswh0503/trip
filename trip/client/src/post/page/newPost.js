@@ -19,7 +19,7 @@ const NewPost = () => {
         e.preventDefault();
 
         try {
-            const responseData = await axios.post('http://localhost:5000/api/posts/add',
+            const response = await axios.post('http://localhost:5000/api/posts/add',
                 {
                     title: formData.title,
                     content: formData.content,
@@ -36,9 +36,9 @@ const NewPost = () => {
                 content: '',
             });
 
-            console.log('작성성공' + responseData.data.formData)
+            console.log('작성성공' + response.data.formData)
             alert('게시글 작성 성공');
-            Navigate('/');
+            Navigate('/posts/list');
 
         } catch (e) {
             console.log(e);

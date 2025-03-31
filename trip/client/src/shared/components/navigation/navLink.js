@@ -15,7 +15,8 @@ const MainNavLink = () => {
                 <>
                     <p><span style={{ color: 'red' }}>{user.name}</span></p>
                     <LogoutButton />
-                    <NavLink to="/post">게시글작성</NavLink>
+                    <NavLink style={{marginRight:'30px', marginLeft:'30px'}} to="/posts/add">게시글작성</NavLink>
+                    <NavLink to="/posts/list">전체게시글</NavLink>
                 </>
             ) : (
                 <ul>

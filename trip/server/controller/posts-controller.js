@@ -5,6 +5,27 @@ const Post = require('../models/post');
 
 
 
+
+
+// 게시글 전체 조회
+
+const getPostList = async (req, res, next) => {
+    let postList;
+    try {
+        postList = await Post.find().populate('author', 'name');
+    } catch(e){
+        const error = new HttpError('게시글 불러오는데 실패했습니다.', 500);
+        return next(error);
+    }
+
+    res.json({
+        postList
+    })
+
+}
+
+
+
 // 게시글 작성 로직
 
 const addPost = async (req,res,next) => {
@@ -20,7 +41,7 @@ const addPost = async (req,res,next) => {
     try {
         await createPlace.save();
     } catch(e){
-        const error = new HttpError('게시글 작성 실패', )
+        const error = new HttpError('게시글 작성 실패',401)
         return next(error);
     }
 
@@ -32,7 +53,31 @@ const addPost = async (req,res,next) => {
 
 
 
+// 게시글 상세보기
+
+const getPostById = async (req, res, next) => {
+
+    const postId = req.params.id;
+
+    let post;
+    try {
+        post = await Post.findById(postId).populate('author', 'name');
+
+    } catch(e){
+        const error = new HttpError('게시글 상세보기 애러', 401);
+        return next(error);
+    }
+
+    res.json({
+        post
+
+    })
+};
 
 
 
+
+
+exports.getPostList = getPostList;
 exports.addPost = addPost;
+exports.getPostById = getPostById;

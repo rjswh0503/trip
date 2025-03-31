@@ -9,15 +9,20 @@ const router = express.Router();
 
 
 
+
+
 // 게시글 전체 조회
-router.get('/');
+router.get('/list', postController.getPostList);
+
+
 
 // 특정 게시글 조회
-router.get('/:id');
+router.get('/:id', postController.getPostById);
 
 // 게시글 추가 
 // 게시글 추가 router에 check()함수를 사용해서 검증 확인
 // 
+
 router.use(checkAuth);
 
 router.post('/add',
