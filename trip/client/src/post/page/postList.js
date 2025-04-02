@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+
 import { useAuth } from '../../shared/context/auth-context';
-import { Link } from 'react-router-dom';
+import Card from '../../shared/components/UI/Card';
+import './postList.css';
+
 
 
 const PostList = () => {
@@ -24,24 +27,27 @@ const PostList = () => {
             }
         };
         fetchData();
+
+        
     }, [token]);
 
 
+
+
     return (
-        <div>
-            <h1>게시글 목록</h1>
-            {posts && posts.map(post => (
-                <div key={post._id}>
-                    <div>
-                        <Link to={`/posts/${post._id}`}>{post.title}</Link>
-
-                    </div>
-                    <div>
-                        작성자:{post.author.name}
-                    </div>
-                </div>
-            ))}
-
+        <div className='post-list'>
+            <h1 style={{ marginBottom: '10rem' }}>여행 게시판</h1>
+            <div className='post-grid'>
+                {posts && posts.map(post => (
+                    <Card
+                        key={post._id}
+                        id={post._id}
+                        title={post.title}
+                        author={post.author?.name}
+                        date={post.createdAt}
+                    />
+                ))}
+            </div>
         </div>
     )
 

@@ -1,14 +1,18 @@
 import React from "react";
 import MainNavLink from '../navigation/navLink';
+import { Link } from "react-router-dom";
 
+import './navMain.css';
 
 const NavMain = () => {
 
     return (
-        <header>
-            <h1><a style={{textDecoration:'none', color:'black'}} href="/">Trip</a></h1>
-            <MainNavLink/>
-        </header>
+        <nav className="navbar">
+            <div className="navbar-logo">
+                <Link to="/">Trip</Link>
+            </div>
+                <MainNavLink />
+        </nav>
     )
 
 }
