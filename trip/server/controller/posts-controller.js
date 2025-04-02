@@ -1,5 +1,7 @@
+const { default: mongoose } = require('mongoose');
 const HttpError = require('../models/http-error');
 const Post = require('../models/post');
+const User = require('../models/user');
 
 
 
@@ -38,16 +40,36 @@ const addPost = async (req,res,next) => {
         image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFUAfyVe3Easiycyh3isP9wDQTYuSmGPsPQvLIJdEYvQ_DsFq5Ez2Nh_QjiS3oZ3B8ZPfK9cZQyIStmQMV1lDPLw',
     });
 
+    let user;
+
     try {
-        await createPlace.save();
+        user = await User.findById(req.userData.userId);
+
     } catch(e){
-        const error = new HttpError('게시글 작성 실패',401)
+        const error = new HttpError('게시글 생성하는데 실패했습니다.', 500);
+        return next(error);
+    }
+    
+    if(!user){
+        const error = new HttpError('사용자를 찾을 수 없습니다.', 404);
         return next(error);
     }
 
-    res.json({
-        msg: '게시글 작성 성공'
-    })
+
+
+    try {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        await createPlace.save({ session: session });
+        user.post.push(createPlace);
+        await user.save({ session: session});
+        await session.commitTransaction();
+    } catch(e){
+        const error = new HttpError('게시글 생성 실패했습니다.', 500);
+        return next(error);
+    }
+
+    res.status(201).json({ post: createPlace})
 
 }
 
@@ -75,9 +97,36 @@ const getPostById = async (req, res, next) => {
 };
 
 
+// 특정 유저 게시글 조회
+
+const getPostByUserId =  async (req,res,next) => {
+    const { userId } = req.params.id;
+
+    let userPost;
+
+    try {
+        userPost = await User.findById(userId).populate('post', 'title');
+
+    } catch(e){
+        const error = new HttpError('유저를 찾을 수 없습니다.',401);
+        return next(error);
+    }
+
+    if(userPost.post.length === 0){
+        return next(
+            new HttpError('해당 유저의 게시물을 찾을 수 없습니다.', 401)
+        )
+    };
+    res.json({ post: userPost.post.map(post => post.toObject({getters: true }))})
+};
+
+
+
+
 
 
 
 exports.getPostList = getPostList;
+exports.getPostByUserId = getPostByUserId;
 exports.addPost = addPost;
 exports.getPostById = getPostById;

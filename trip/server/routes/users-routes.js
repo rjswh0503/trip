@@ -41,7 +41,7 @@ router.delete('/:id');
 
 
 //내가 쓴 게시글
-router.get('/:id/posts');
+router.get('/:id/posts', userController.getUserId);
 
 
 //내가 쓴 덧글

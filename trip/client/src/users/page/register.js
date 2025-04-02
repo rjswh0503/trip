@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 
 
+
 const Register = () => {
 
     const Navigate = useNavigate();
@@ -36,6 +37,8 @@ const Register = () => {
                 console.log('회원가입 성공!!' + responseData.data.formData);
                 alert('회원가입 성공!');
                 Navigate('/login')
+
+                
 
         } catch (e) {
 

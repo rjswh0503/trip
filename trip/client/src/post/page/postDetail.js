@@ -19,12 +19,9 @@ const PostDetail = () => {
                     {
                         headers: {
                             Authorization: `Bearer ${token}`, 
-                        }
-                    }
-                )
+                        },
+                    })
                 setDetail(response.data.post);
-                
-                
             } catch (e) {
                 console.log(e);
             }

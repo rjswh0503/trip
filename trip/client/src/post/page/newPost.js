@@ -55,13 +55,13 @@ const NewPost = () => {
     };
 
     return (
-        <>
+        <div style={{marginTop:'10rem'}}>
             <form onSubmit={NewPostHandler}>
                 <input type='text' placeholder='제목을 작성하세요.' name='title' onChange={onChange} value={formData.title} required />
                 <textarea placeholder='내용을 작성하세요.' name='content' onChange={onChange} value={formData.content} required />
                 <button type='submit'>작성하기</button>
             </form>
-        </>
+        </div>
     )
 }
 

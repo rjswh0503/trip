@@ -34,6 +34,9 @@ router.post('/add',
 );
 
 
+
+
+
 // 게시글 수정 router
 router.patch('/:id',
     [

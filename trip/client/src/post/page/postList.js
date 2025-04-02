@@ -20,7 +20,7 @@ const PostList = () => {
                     headers: {
                         Authorization: `Bearer ${token}`, // 꼭 필요!
                     },
-                });
+                })
                 setPosts(response.data.postList);
             } catch (e) {
                 console.log(e);
@@ -28,26 +28,35 @@ const PostList = () => {
         };
         fetchData();
 
-        
+
     }, [token]);
 
 
 
 
     return (
-        <div className='post-list'>
-            <h1 style={{ marginBottom: '10rem' }}>여행 게시판</h1>
-            <div className='post-grid'>
-                {posts && posts.map(post => (
-                    <Card
-                        key={post._id}
-                        id={post._id}
-                        title={post.title}
-                        author={post.author?.name}
-                        date={post.createdAt}
-                    />
-                ))}
-            </div>
+        <div>
+            {posts && posts.length > 0 ? (
+                <div className='post-list'>
+                    <h1 style={{ marginBottom: '10rem' }}>여행 게시판</h1>
+                    <div className='post-grid'>
+                        {posts && posts.map(post => (
+                            <Card
+                                key={post._id}
+                                id={post._id}
+                                title={post.title}
+                                author={post.author?.name}
+                                date={post.createdAt}
+                            />
+                        ))}
+                    </div>
+                </div>
+            )
+                :
+
+                (
+                    <p style={{ textAlign: 'center', marginTop: '10rem' }}>게시글이 없습니다...</p>
+                )}
         </div>
     )
 

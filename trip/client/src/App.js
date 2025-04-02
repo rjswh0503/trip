@@ -11,6 +11,7 @@ import PostDetail from './post/page/postDetail';
 import Main from './shared/page/main';
 
 import './App.css';
+import MyPage from './users/page/myPage';
 
 const App = () => {
 
@@ -23,9 +24,11 @@ const App = () => {
                   <Route path='/' element={<Main />} />
                   <Route path='/register' element={<Register />} />
                   <Route path='/login' element={<Login />} />
+                  <Route path='/:id/mypage' element={<MyPage/>}/>
                   <Route path='/posts/add' element={<NewPost />} />
                   <Route path='/posts/list' element={<PostList />} />
                   <Route path='/posts/:id' element={<PostDetail />} />
+                  
                 </Routes>
               </main>
         </AuthProvider>
