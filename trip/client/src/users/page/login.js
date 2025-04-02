@@ -1,8 +1,10 @@
-import axios from 'axios';
 import React, { useState } from 'react';
+import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 
+import './login.css';
 
 
 
@@ -54,12 +56,15 @@ const Login = () => {
 
 
     return (
-        <div>
-            <h2>Login Page</h2>
-            <form onSubmit={loginHandler}>
+        <div className='login-container'>
+            
+            
+            <form className='login-box' onSubmit={loginHandler}>
+            <h2>로그인</h2>
                 <input type='email' name="email" placeholder='이메일을 입력하세요.' onChange={onChange} />
                 <input type='password' name='password' placeholder='비밀번호를 입력하세요.' onChange={onChange} />
                 <button type='submit'>로그인</button>
+                <p className='login-footer'>계정이 없으신가요? <a href='/register'>회원가입</a> </p>
             </form>
 
         </div>

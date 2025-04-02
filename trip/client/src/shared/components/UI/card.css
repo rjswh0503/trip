@@ -8,7 +8,7 @@
 }
 
 .card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-10px);
 }
 
 .image {
@@ -24,8 +24,9 @@
 
 .content h3 {
     margin-bottom: 0.5rem;
-    color: #0077cc;
+    color: #050505;
     font-size: 1.1rem;
+    
 }
 
 .meta {
