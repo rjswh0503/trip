@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 
 
 
-const Card = ({ id,title, author, date, content, image }) => {
+const Card = ({ id, title, author, date, content, image }) => {
     const relativeDate = formatDistanceToNow(new Date(date), {
         addSuffix: true,
         locale: ko,
@@ -15,13 +15,16 @@ const Card = ({ id,title, author, date, content, image }) => {
 
 
     return (
+
         <div className='card'>
-            <img src="/image1.jpg" alt={title} className='image' />
-            <div className='content'>
-                <Link to={`/posts/${id}`}><h3 style={{textDecoration: 'none'}}>{title}</h3></Link>
-                <p className='meta'>by {author} · {relativeDate}</p>
-                <p className='desc'>{content}</p>
-            </div>
+            <Link to={`/posts/${id}`}>
+                <img src="/image1.jpg" alt={title} className='image' />
+                <div className='content'>
+                    <h3 style={{ textDecoration: 'none' }}>{title}</h3>
+                    <p className='meta'>by {author} · {relativeDate}</p>
+                    <p className='desc'>{content}</p>
+                </div>
+            </Link>
         </div>
     )
 }

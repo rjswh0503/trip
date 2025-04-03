@@ -29,7 +29,7 @@ router.post('/login', userController.login);
 
 // 프로필조회 router
 // 특정 :id 조회 
-router.get('/:id/profile', userController.getUserId);
+router.get('/:id/profile', userController.getUserbyId);
 
 
 //프로필 수정 router
@@ -41,7 +41,7 @@ router.delete('/:id');
 
 
 //내가 쓴 게시글
-router.get('/:id/posts', userController.getUserId);
+router.get('/:id/posts', userController.getUserbyId);
 
 
 //내가 쓴 덧글

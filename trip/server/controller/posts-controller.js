@@ -33,7 +33,7 @@ const getPostList = async (req, res, next) => {
 const addPost = async (req,res,next) => {
     const {title, content} = req.body;
 
-    const createPlace = new Post({
+    const createPost = new Post({
         author: req.userData.userId,
         title,
         content,
@@ -60,8 +60,8 @@ const addPost = async (req,res,next) => {
     try {
         const session = await mongoose.startSession();
         session.startTransaction();
-        await createPlace.save({ session: session });
-        user.post.push(createPlace);
+        await createPost.save({ session: session });
+        user.post.push(createPost);
         await user.save({ session: session});
         await session.commitTransaction();
     } catch(e){
@@ -69,7 +69,7 @@ const addPost = async (req,res,next) => {
         return next(error);
     }
 
-    res.status(201).json({ post: createPlace})
+    res.status(201).json({ post: createPost})
 
 }
 

@@ -12,27 +12,29 @@ import Main from './shared/page/main';
 
 import './App.css';
 import MyPage from './users/page/myPage';
+import MyPost from './users/components/myPost';
 
 const App = () => {
 
   return (
-      <Router>
-        <AuthProvider>
-            <NavMain />
-              <main>
-                <Routes>
-                  <Route path='/' element={<Main />} />
-                  <Route path='/register' element={<Register />} />
-                  <Route path='/login' element={<Login />} />
-                  <Route path='/:id/mypage' element={<MyPage/>}/>
-                  <Route path='/posts/add' element={<NewPost />} />
-                  <Route path='/posts/list' element={<PostList />} />
-                  <Route path='/posts/:id' element={<PostDetail />} />
-                  
-                </Routes>
-              </main>
-        </AuthProvider>
-      </Router>
+    <Router>
+      <AuthProvider>
+        <NavMain />
+        <main>
+          <Routes>
+            <Route path='/' element={<Main />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/:id/mypage' element={<MyPage />} />
+            <Route path='/posts/add' element={<NewPost />} />
+            <Route path='/posts/list' element={<PostList />} />
+            <Route path='/posts/:id' element={<PostDetail />} />
+            <Route path='/posts/:id' element={<MyPost />} />
+
+          </Routes>
+        </main>
+      </AuthProvider>
+    </Router>
   );
 }
 

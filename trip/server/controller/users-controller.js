@@ -149,14 +149,14 @@ const login = async (req, res, next) => {
 }
 
 
-// 특정 유저 프로필 조회 로직
+// 특정 유저 프로필 조회 & 내가 작성한 게시글 조회 & 내가 작성한 덧글 조회
 
-const getUserId = async (req, res, next) => {
+const getUserbyId = async (req, res, next) => {
 
     const userId = req.params.id;
     let profile;
     try {
-        profile = await User.findById(userId);
+        profile = await User.findById(userId).populate('post', 'title');
     } catch (e) {
         const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 401);
         return next(error);
@@ -215,7 +215,7 @@ const updateUserById = async (req, res, next) => {
 
 exports.register = register;
 exports.login = login;
-exports.getUserId = getUserId;
+exports.getUserbyId = getUserbyId;
 exports.updateUserById = updateUserById;
 
 

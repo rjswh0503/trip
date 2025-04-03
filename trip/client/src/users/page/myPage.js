@@ -3,6 +3,7 @@ import React from "react";
 
 
 import UserInfo from "../components/UserInfo";
+import MyPost from "../components/myPost";
 import './myPage.css';
 
 
@@ -34,7 +35,7 @@ const MyPage = () => {
 
             <div className="section">
                 <h3>내가 작성한 게시글</h3>
-                
+                    <MyPost/>
             </div>
 
             <div className="section">

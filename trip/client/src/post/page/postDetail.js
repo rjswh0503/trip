@@ -5,6 +5,9 @@ import { useAuth } from '../../shared/context/auth-context';
 
 
 
+
+
+
 const PostDetail = () => {
     const { token } = useAuth();
     const { id } = useParams();
@@ -32,6 +35,7 @@ const PostDetail = () => {
     //id의 값이 변경될 때마다 리 랜더링함.
 
     
+    
 
 
     return (
@@ -41,6 +45,7 @@ const PostDetail = () => {
                 <h2>제목: {detail.title}</h2>
                 <h4>내용: {detail.content}</h4>
                 <p>작성자: {detail.author?.name}</p>
+                <p>{detail.createdAt}</p>
                 
                 </>
             ): (
