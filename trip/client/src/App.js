@@ -9,6 +9,7 @@ import NewPost from './post/page/newPost';
 import PostList from './post/page/postList';
 import PostDetail from './post/page/postDetail';
 import Main from './shared/page/main';
+import NewComment from './comment/page/newComment';
 
 import './App.css';
 import MyPage from './users/page/myPage';
@@ -30,6 +31,7 @@ const App = () => {
             <Route path='/posts/list' element={<PostList />} />
             <Route path='/posts/:id' element={<PostDetail />} />
             <Route path='/posts/:id' element={<MyPost />} />
+            <Route path='/comment/:id' element={<NewComment />} />
 
           </Routes>
         </main>

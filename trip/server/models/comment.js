@@ -4,9 +4,9 @@ const Schema = mongoose.Schema;
 
 const commentSchema = new Schema(
     {
-        author: [{ type: mongoose.Types.ObjectId, retuired: true, ref: 'User' }],
+        author: { type: mongoose.Types.ObjectId, retuired: true, ref: 'User' },
         content: { type: String, required: true },
-        post: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Post' }],
+        post: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Post', default: [] }],
     },
     { timestamps: true }
 

@@ -2,7 +2,7 @@ const HttpError = require('../models/http-error');
 const Comment = require('../models/comment');
 const User = require('../models/user');
 const Post = require('../models/post');
-const { mongo, default: mongoose } = require('mongoose');
+const { default: mongoose } = require('mongoose');
 
 
 
@@ -10,11 +10,14 @@ const { mongo, default: mongoose } = require('mongoose');
 // 덧글 작성 로직
 
 const addComment = async (req, res, next) => {
+    const { postId } = req.params;
     const { content } = req.body;
+    const userId = req.userData.userId;
 
     const createComment = new Comment({
-        author: req.userData.userId,
-        content
+        content,
+        author: userId,
+        post: postId
     });
 
     let user;
@@ -31,13 +34,30 @@ const addComment = async (req, res, next) => {
         return next(error);
     }
 
+    let post;
+    try {
+        post = await Post.findById(postId);
+    } catch (e) {
+        const error = new HttpError('게시글을 찾을 수 없습니다.', 500);
+        return next(error);
+    }
+
+    if(!post){
+        const error = new HttpError('게시글을 찾을 수 없습니다.', 500);
+        return next(error);
+    }
+
+
     try {
         const session = await mongoose.startSession();
         session.startTransaction();
         await createComment.save({ session: session });
-        user.comment.push(createComment);
+        post.comments.push(createComment)
+        user.comments.push(createComment);
+        await post.save({ session: session });
         await user.save({ session: session });
         await session.commitTransaction();
+        session.endSession();
     } catch (e) {
         const error = new HttpError('덧글 생성 실패했습니다.', 500);
         return next(error);
@@ -51,12 +71,12 @@ const addComment = async (req, res, next) => {
 
 //덧글 조회 로직
 
-const getCommentList = async (req,res,next) => {
+const getCommentList = async (req, res, next) => {
     let commentList;
     try {
         commentList = await Comment.find().populate('author', 'content');
 
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('덧글 불러오는데 실패했습니다.', 500);
         return next(error);
     }
@@ -66,3 +86,4 @@ const getCommentList = async (req,res,next) => {
 
 
 exports.addComment = addComment;
+exports.getCommentList = getCommentList;

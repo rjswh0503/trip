@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 
+import NewComment from '../../comment/page/newComment';
+
 
 
 
@@ -21,7 +23,7 @@ const PostDetail = () => {
                 const response = await axios.get(`http://localhost:5000/api/posts/${id}`,
                     {
                         headers: {
-                            Authorization: `Bearer ${token}`, 
+                            Authorization: `Bearer ${token}`,
                         },
                     })
                 setDetail(response.data.post);
@@ -31,26 +33,32 @@ const PostDetail = () => {
         };
 
         fetchData();
-    }, [id,token]);
+    }, [id, token]);
     //id의 값이 변경될 때마다 리 랜더링함.
 
-    
-    
+
+
 
 
     return (
         <div>
-            {detail ? (
-                <>
-                <h2>제목: {detail.title}</h2>
-                <h4>내용: {detail.content}</h4>
-                <p>작성자: {detail.author?.name}</p>
-                <p>{detail.createdAt}</p>
-                
-                </>
-            ): (
-             <p>로딩중..</p>
-            )}
+            <div>
+                {detail ? (
+                    <>
+                        <h2>제목: {detail.title}</h2>
+                        <h4>내용: {detail.content}</h4>
+                        <p>작성자: {detail.author?.name}</p>
+                        <p>{detail.createdAt}</p>
+
+                    </>
+                ) : (
+                    <p>로딩중..</p>
+                )}
+            </div>
+
+            <div>
+                <NewComment/>
+            </div>
         </div>
     )
 

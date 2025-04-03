@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const HttpError = require('./models/http-error');
 const userRoutes = require('./routes/users-routes');
 const postRoutes = require('./routes/post-routes');
+const commentRoutes = require('./routes/comment-routes');
 
 const app = express();
 const port = 5000;
@@ -26,6 +27,7 @@ app.use((req, res, next) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
+app.use('/api/comment/', commentRoutes)
 
 
 //애러 관련 로직

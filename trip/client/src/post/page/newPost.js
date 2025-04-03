@@ -36,7 +36,7 @@ const NewPost = () => {
                 content: '',
             });
 
-            console.log('작성성공' + response.data.formData)
+            console.log('작성성공' + response)
             alert('게시글 작성 성공');
             Navigate('/posts/list');
 

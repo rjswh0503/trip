@@ -17,8 +17,8 @@ const placesSchema = new Schema(
         },
         likes: { type: Number, default: 0},
         ratings: { type: Number, default: 0 },
-        review: [{ type: mongoose.Types.ObjectId, ref: 'Review'}],
-        comment: [{ type: mongoose.Types.ObjectId, ref: "Comment"}],
+        review: [{ type: mongoose.Types.ObjectId, ref: 'Review', default: []}],
+        comment: [{ type: mongoose.Types.ObjectId, ref: "Comment", default: []}],
     },
     { timestamps: true }
 )

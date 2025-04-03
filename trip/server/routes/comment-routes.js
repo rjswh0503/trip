@@ -1,15 +1,22 @@
 const express = require('express');
 const { check } = require('express-validator');
 
+const checkAuth = require('../middleware/auth-middleware');
 const router = express.Router();
 const commentController = require('../controller/comment-controller');
-const user = require('../models/user');
-const post = require('../models/post');
 
 
+
+// 덧글 리스트 router
+
+router.get('/');
+
+
+
+router.use(checkAuth);
 
 // 덧글 작성 router
-router.post('/',
+router.post('/:postId',
     [
         check('content')
             .not()
@@ -20,9 +27,6 @@ router.post('/',
 );
 
 
-// 덧글 리스트 router
-
-router.get('/');
 
 
 // 덧글 수정 router

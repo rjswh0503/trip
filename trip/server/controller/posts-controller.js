@@ -15,7 +15,7 @@ const getPostList = async (req, res, next) => {
     let postList;
     try {
         postList = await Post.find().populate('author', 'name');
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('게시글 불러오는데 실패했습니다.', 500);
         return next(error);
     }
@@ -30,8 +30,8 @@ const getPostList = async (req, res, next) => {
 
 // 게시글 작성 로직
 
-const addPost = async (req,res,next) => {
-    const {title, content} = req.body;
+const addPost = async (req, res, next) => {
+    const { title, content } = req.body;
 
     const createPost = new Post({
         author: req.userData.userId,
@@ -45,12 +45,12 @@ const addPost = async (req,res,next) => {
     try {
         user = await User.findById(req.userData.userId);
 
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('게시글 생성하는데 실패했습니다.', 500);
         return next(error);
     }
-    
-    if(!user){
+
+    if (!user) {
         const error = new HttpError('사용자를 찾을 수 없습니다.', 404);
         return next(error);
     }
@@ -62,14 +62,14 @@ const addPost = async (req,res,next) => {
         session.startTransaction();
         await createPost.save({ session: session });
         user.post.push(createPost);
-        await user.save({ session: session});
+        await user.save({ session: session });
         await session.commitTransaction();
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('게시글 생성 실패했습니다.', 500);
         return next(error);
     }
 
-    res.status(201).json({ post: createPost})
+    res.status(201).json({ post: createPost })
 
 }
 
@@ -83,9 +83,16 @@ const getPostById = async (req, res, next) => {
 
     let post;
     try {
-        post = await Post.findById(postId).populate('author', 'name');
+        post = await Post.findById(postId).populate('author', 'name').populate({
+            path: 'comments',
+            select: 'content author',
+            populate: {
+                path: 'author',
+                select: 'name'
+            }
+        });
 
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('게시글 상세보기 애러', 401);
         return next(error);
     }
@@ -99,7 +106,7 @@ const getPostById = async (req, res, next) => {
 
 // 특정 유저 게시글 조회
 
-const getPostByUserId =  async (req,res,next) => {
+const getPostByUserId = async (req, res, next) => {
     const { userId } = req.params.id;
 
     let userPost;
@@ -107,18 +114,21 @@ const getPostByUserId =  async (req,res,next) => {
     try {
         userPost = await User.findById(userId).populate('post', 'title');
 
-    } catch(e){
-        const error = new HttpError('유저를 찾을 수 없습니다.',401);
+    } catch (e) {
+        const error = new HttpError('유저를 찾을 수 없습니다.', 401);
         return next(error);
     }
 
-    if(userPost.post.length === 0){
+    if (userPost.post.length === 0) {
         return next(
             new HttpError('해당 유저의 게시물을 찾을 수 없습니다.', 401)
         )
     };
-    res.json({ post: userPost.post.map(post => post.toObject({getters: true }))})
+    res.json({ post: userPost.post.map(post => post.toObject({ getters: true })) })
 };
+
+
+
 
 
 
