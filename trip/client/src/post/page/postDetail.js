@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 
 import NewComment from '../../comment/page/newComment';
+import CommentList from '../../comment/page/commentList';
 
 
 
@@ -57,7 +58,10 @@ const PostDetail = () => {
             </div>
 
             <div>
-                <NewComment/>
+                <NewComment />
+            </div>
+            <div>
+                <CommentList />
             </div>
         </div>
     )

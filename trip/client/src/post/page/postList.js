@@ -32,31 +32,29 @@ const PostList = () => {
     }, [token]);
 
 
+    if (!posts || posts.length === 0) {
+        return <p style={{ textAlign: 'center', marginTop: '10rem' }}>게시글이 없습니다...</p>
+    }
+
+
 
 
     return (
         <div>
-            {posts && posts.length > 0 ? (
-                <div className='post-list'>
-                    <h1 style={{ marginBottom: '10rem' }}>여행 게시판</h1>
-                    <div className='post-grid'>
-                        {posts && posts.map(post => (
-                            <Card
-                                key={post._id}
-                                id={post._id}
-                                title={post.title}
-                                author={post.author?.name}
-                                date={post.createdAt}
-                            />
-                        ))}
-                    </div>
+            <div className='post-list'>
+                <h1 style={{ marginBottom: '10rem' }}>여행 게시판</h1>
+                <div className='post-grid'>
+                    {posts && posts.map(post => (
+                        <Card
+                            key={post._id}
+                            id={post._id}
+                            title={post.title}
+                            author={post.author?.name}
+                            date={post.createdAt}
+                        />
+                    ))}
                 </div>
-            )
-                :
-
-                (
-                    <p style={{ textAlign: 'center', marginTop: '10rem' }}>게시글이 없습니다...</p>
-                )}
+            </div>
         </div>
     )
 

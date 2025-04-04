@@ -7,11 +7,12 @@ const commentController = require('../controller/comment-controller');
 
 
 
-// 덧글 리스트 router
-
-router.get('/');
 
 
+
+// 특정 게시글 덧글  router
+
+router.get('/:id', commentController.getCommentList);
 
 router.use(checkAuth);
 

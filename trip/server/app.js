@@ -27,7 +27,7 @@ app.use((req, res, next) => {
 
 app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
-app.use('/api/comment/', commentRoutes)
+app.use('/api/comment', commentRoutes)
 
 
 //애러 관련 로직

@@ -169,7 +169,7 @@ const getUserbyId = async (req, res, next) => {
         favorites: profile.favorites,
         review: profile.review,
         post: profile.post,
-        comment: profile.comment
+        comment: profile.comments
     });
 
 }

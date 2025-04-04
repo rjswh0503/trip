@@ -3,6 +3,8 @@ const Comment = require('../models/comment');
 const User = require('../models/user');
 const Post = require('../models/post');
 const { default: mongoose } = require('mongoose');
+const post = require('../models/post');
+
 
 
 
@@ -17,7 +19,7 @@ const addComment = async (req, res, next) => {
     const createComment = new Comment({
         content,
         author: userId,
-        post: postId
+        post: postId,
     });
 
     let user;
@@ -42,7 +44,7 @@ const addComment = async (req, res, next) => {
         return next(error);
     }
 
-    if(!post){
+    if (!post) {
         const error = new HttpError('게시글을 찾을 수 없습니다.', 500);
         return next(error);
     }
@@ -72,15 +74,27 @@ const addComment = async (req, res, next) => {
 //덧글 조회 로직
 
 const getCommentList = async (req, res, next) => {
-    let commentList;
-    try {
-        commentList = await Comment.find().populate('author', 'content');
+    const   postId  = req.params.id;
 
+    let comments;
+    try {
+        
+        comments = await Comment.find({ post: postId }).populate('author', 'name');
+        
     } catch (e) {
+        
         const error = new HttpError('덧글 불러오는데 실패했습니다.', 500);
         return next(error);
+        
     }
+
+
+
+    res.json({
+        comments
+    })
 }
+
 
 
 
