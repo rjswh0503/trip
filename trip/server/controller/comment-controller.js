@@ -79,7 +79,7 @@ const getCommentList = async (req, res, next) => {
     let comments;
     try {
         
-        comments = await Comment.find({ post: postId }).populate('author', 'name');
+        comments = await Comment.find({ post: postId }).populate('author', 'name').sort({ createdAt: -1});
         
     } catch (e) {
         
