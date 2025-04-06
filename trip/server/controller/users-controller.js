@@ -156,7 +156,14 @@ const getUserbyId = async (req, res, next) => {
     const userId = req.params.id;
     let profile;
     try {
-        profile = await User.findById(userId).populate('post', 'title');
+        profile = await User.findById(userId).populate({
+            path: 'comments',
+            select: 'content post',
+            populate: {
+                path: 'post',
+                select: 'title'
+            }
+        }).populate('post', 'title');
     } catch (e) {
         const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 401);
         return next(error);

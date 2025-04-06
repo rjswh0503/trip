@@ -15,7 +15,22 @@ const PostDetail = () => {
     const { token } = useAuth();
     const { id } = useParams();
     const [detail, setDetail] = useState(null);
+    const [comments, setComments] = useState([]);
 
+
+
+    const fetchComments = async () => {
+        try {
+            const response = await axios.get(`http://localhost:5000/api/comment/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+            setComments(response.data.comments);
+        } catch (e) {
+            console.log(e)
+        }
+    };
 
     useEffect(() => {
 
@@ -33,12 +48,28 @@ const PostDetail = () => {
             }
         };
 
+        fetchComments();
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id, token]);
-    //id의 값이 변경될 때마다 리 랜더링함.
+    //id와 token 변경될 때 마다 리 랜더링함.
 
 
-
+    const handleAddComment = async (Data) => {
+        try {
+            await axios.post(`http://localhost:5000/api/comment/${id}`,
+                Data,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            fetchComments();
+        } catch (e) {
+            console.log(e);
+        }
+    }
 
 
     return (
@@ -58,14 +89,14 @@ const PostDetail = () => {
             </div>
 
             <div>
-                <NewComment />
+                <NewComment onAddComment={handleAddComment} />
             </div>
             <div>
-                <CommentList />
+                <CommentList comments={comments} />
             </div>
         </div>
     )
 
-}
+};
 
 export default PostDetail;

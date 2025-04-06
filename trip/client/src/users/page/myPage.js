@@ -4,6 +4,7 @@ import React from "react";
 
 import UserInfo from "../components/UserInfo";
 import MyPost from "../components/myPost";
+import MyComment from "../components/myComment";
 import './myPage.css';
 
 
@@ -19,28 +20,28 @@ const MyPage = () => {
 
             <div className="profile-section">
                 <div className="profile-info">
-                    <UserInfo/>
+                    <UserInfo />
                 </div>
             </div>
 
             <div className="section">
                 <h3>나의 찜 목록</h3>
-                
+
             </div>
 
             <div className="section">
                 <h3>나의 좋아요</h3>
-                
+
             </div>
 
             <div className="section">
                 <h3>내가 작성한 게시글</h3>
-                    <MyPost/>
+                <MyPost />
             </div>
 
             <div className="section">
                 <h3>내가 작성한 댓글</h3>
-                
+                <MyComment />
             </div>
         </div>
 

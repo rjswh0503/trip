@@ -45,7 +45,7 @@ router.get('/:id/posts', userController.getUserbyId);
 
 
 //내가 쓴 덧글
-router.get('/:id/comments');
+router.get('/:id/comments', userController.getUserbyId);
 
 //내가 찜한 여행지 router
 router.get('/:id/favorites/places');
