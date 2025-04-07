@@ -128,15 +128,87 @@ const getPostByUserId = async (req, res, next) => {
 };
 
 
+// 특정 유저 게시글 수정
+
+const updatePost = async (req, res, next) => {
+    const { title, content } = req.body;
+    const PostId = req.params.id;
+
+    let update;
+    try {
+        update = await Post.findById(PostId);
+
+    } catch (e) {
+        const error = new HttpError('업데이트 실패했습니다.', 500);
+        return next(error);
+    }
+
+    if (update.author.toString() !== req.userData.userId) {
+        const error = new HttpError('업데이트 할 권한이 없습니다.', 401);
+        return next(error);
+    }
+    update.title = title;
+    update.content = content;
+
+    try {
+        await update.save();
+    } catch (e) {
+        const error = new HttpError('업데이트 실패했습니다.', 500);
+        return next(error);
+    };
+
+    res.status(200).json({ update: update })
+
+};
 
 
+// 특정 유저 게시글 삭제
 
+const deletePost = async (req, res, next) => {
+    const postId = req.params.id;
 
+    let post;
 
+    try {
+        post = await Post.findById(postId).populate('author');
 
+    } catch (e) {
+        const error = new HttpError('게시글을 삭제할 수 없습니다.', 500);
+        return next(error);
+    }
 
+    if (!post) {
+        const error = new HttpError('해당하는 유저의 게시글이 없습니다.', 404);
+        return next(error);
+    }
+
+    if (post.author._id.toString() !== req.userData.userId) {
+
+        const error = new HttpError('삭제할 권한이 없습니다.', 401);
+        return next(error);
+
+    }
+
+    
+    //게시글 삭제시 데이터베이스 세션 업데이트
+    try {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        await post.deleteOne({ session });
+        
+        await session.commitTransaction();
+    } catch (e) {
+        const error = new HttpError('오류가 발생했습니다. 게시글을 삭제할 수 없습니다.', 500);
+        return next(error);
+    }
+
+    res.status(200).json({ message: '성공적으로 삭제되었습니다.' });
+
+};
 
 exports.getPostList = getPostList;
 exports.getPostByUserId = getPostByUserId;
 exports.addPost = addPost;
 exports.getPostById = getPostById;
+exports.updatePost = updatePost;
+exports.deletePost = deletePost;

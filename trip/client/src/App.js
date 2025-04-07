@@ -14,6 +14,7 @@ import NewComment from './comment/page/newComment';
 import './App.css';
 import MyPage from './users/page/myPage';
 import MyPost from './users/components/myPost';
+import UpdatePost from './post/page/updatePost';
 
 const App = () => {
 
@@ -32,6 +33,7 @@ const App = () => {
             <Route path='/posts/:id' element={<PostDetail />} />
             <Route path='/posts/:id' element={<MyPost />} />
             <Route path='/comment/:id' element={<NewComment />} />
+            <Route path='/posts/:id/edit' element={<UpdatePost />} />
 
           </Routes>
         </main>

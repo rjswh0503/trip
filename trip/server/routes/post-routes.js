@@ -38,16 +38,17 @@ router.post('/add',
 
 
 // 게시글 수정 router
-router.patch('/:id',
+router.patch('/:id/edit',
     [
         check('title').not().isEmpty(),
-        check('description').isLength( { min: 3} )
-    ]
+        check('content').isLength( { min: 3} )
+    ],
+    postController.updatePost
 );
 
 
 // 게시글 삭제 router
-router.delete('/:id');
+router.delete('/:id', postController.deletePost);
 
 
 // 게시글 댓글 리스트 조회

@@ -33,23 +33,25 @@ const MyComment = () => {
 
     return (
         <div>
-            {myComment?.length > 0 ? (
+            {myComment && myComment.filter(comment => comment && comment._id).length > 0 ? (
                 <div>
-                    {myComment.map(comment => (
-                        <div key={comment._id}>
-                            <Link to={`/posts/${comment.post._id}`}>
-                                <p>{comment.content}</p>
-                            </Link>
-                        </div>
-                    ))}
+                    {myComment
+                        .filter(comment => comment && comment._id)
+                        .map(comment => (
+                            <div key={comment._id}>
+                                <Link to={`/posts/${comment.post?._id}`}>
+                                    <p>{comment.content}</p>
+                                </Link>
+                            </div>
+                        ))}
                 </div>
             ) : (
                 <div>
                     <p>작성한 댓글이 없습니다....</p>
                 </div>
             )}
-
         </div>
+
     )
 
 }
