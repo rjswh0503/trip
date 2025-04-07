@@ -13,11 +13,9 @@ const MainNavLink = () => {
       {isLoggedIn && user ? (
         <>
           <LogoutButton />
-          
-          <NavLink className="nav-link" to={`/${user.userId}/mypage`}>마이페이지</NavLink>
           <NavLink className="nav-link" to="/posts/add">글쓰기</NavLink>
           <NavLink className="nav-link" to="/posts/list">게시글</NavLink>
-          <span className="nav-username">{user.name}님</span>
+          <NavLink className="nav-link" to={`/${user.userId}/mypage`}>{user.name}</NavLink>
           
         </>
       ) : (

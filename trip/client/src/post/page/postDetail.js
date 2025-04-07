@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 
 import NewComment from '../../comment/page/newComment';
@@ -125,7 +125,11 @@ const PostDetail = () => {
                     <>
                         <h2>제목: {detail.title}</h2>
                         <h4>내용: {detail.content}</h4>
-                        <p>작성자: {detail.author?.name}</p>
+                        <p>작성자:
+                            <Link to={`/${detail.author._id}/mypage`}>
+                                {detail.author?.name}
+                            </Link>
+                        </p>
                         <p>{new Date(detail.createdAt).toLocaleString()}</p>
 
                         {detail && user.userId === detail.author._id && (
