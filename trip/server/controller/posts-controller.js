@@ -195,7 +195,6 @@ const deletePost = async (req, res, next) => {
         const session = await mongoose.startSession();
         session.startTransaction();
         await post.deleteOne({ session });
-        
         await session.commitTransaction();
     } catch (e) {
         const error = new HttpError('오류가 발생했습니다. 게시글을 삭제할 수 없습니다.', 500);

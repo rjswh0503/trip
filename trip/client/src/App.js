@@ -14,6 +14,7 @@ import NewComment from './comment/page/newComment';
 import './App.css';
 import MyPage from './users/page/myPage';
 import MyPost from './users/components/myPost';
+import MyComment from './users/components/myComment';
 import UpdatePost from './post/page/updatePost';
 
 const App = () => {
@@ -27,7 +28,10 @@ const App = () => {
             <Route path='/' element={<Main />} />
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
-            <Route path='/:id/mypage' element={<MyPage />} />
+            <Route path='/:id/mypage' element={<MyPage />}>
+              <Route path='post' element={<MyPost />} />
+              <Route path='comments' element={<MyComment/>}/>
+            </Route>
             <Route path='/posts/add' element={<NewPost />} />
             <Route path='/posts/list' element={<PostList />} />
             <Route path='/posts/:id' element={<PostDetail />} />

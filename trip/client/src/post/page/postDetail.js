@@ -82,17 +82,14 @@ const PostDetail = () => {
 
 
     const handleDelete = async () => {
-        console.log('[✅] 삭제 버튼 클릭됨');
 
         if (window.confirm('정말 삭제하시겠습니까?')) {
-            console.log('[🔁] 삭제 요청 시작...');
 
             try {
                 const response = await axios.delete(`http://localhost:5000/api/posts/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     },
-                    timeout: 5000,
                 });
 
                 console.log('[✅] 삭제 성공 응답:', response);
@@ -103,7 +100,7 @@ const PostDetail = () => {
                 console.log('[🚀] 상태 초기화 및 페이지 이동 완료');
 
             } catch (e) {
-                console.error('[❌] 삭제 요청 실패', e.response?.data || e.message);
+                
                 alert('삭제에 실패했습니다.');
             }
 
