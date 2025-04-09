@@ -159,7 +159,8 @@ const deleteComment = async (req, res, next) => {
         const session = await mongoose.startSession();
         session.startTransaction();
         await comment.deleteOne({ session });
-
+        comment.author.comments.pull(comment);
+        await comment.author.save({ session });
         await session.commitTransaction();
     } catch(e) {
         const error = new HttpError('오류가 발생했습니다. 덧글을 삭제할 수 없습니다.', 501);

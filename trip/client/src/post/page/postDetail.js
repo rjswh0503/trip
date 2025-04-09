@@ -80,7 +80,7 @@ const PostDetail = () => {
 
     }
 
-
+    //게시글 삭제 요청 
     const handleDelete = async () => {
 
         if (window.confirm('정말 삭제하시겠습니까?')) {
@@ -100,7 +100,7 @@ const PostDetail = () => {
                 console.log('[🚀] 상태 초기화 및 페이지 이동 완료');
 
             } catch (e) {
-                
+
                 alert('삭제에 실패했습니다.');
             }
 
@@ -110,7 +110,28 @@ const PostDetail = () => {
     };
 
 
+    // 덧글 삭제 요청 
+    const deleteHandler = async (commentId) => {
+        if (window.confirm('정말 삭제하시겠습니까?')) {
+            try {
+                const response = await axios.delete(
+                    `http://localhost:5000/api/comment/${commentId}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
+                    }
+                );
+                setComments(prev => prev.filter(comment => comment._id !== commentId));
+                console.log('삭제완료', response);
+                alert('삭제완료');
 
+            } catch (e) {
+                console.log('삭제실패', e);
+                alert('삭제 실패');
+            }
+        }
+    };
 
 
 
@@ -147,7 +168,7 @@ const PostDetail = () => {
                 <NewComment onAddComment={handleAddComment} />
             </div>
             <div>
-                <CommentList comments={comments} />
+                <CommentList comments={comments} onDelete={deleteHandler} />
             </div>
         </div>
     )
