@@ -6,6 +6,7 @@ import { useAuth } from '../../shared/context/auth-context';
 import NewComment from '../../comment/page/newComment';
 import CommentList from '../../comment/page/commentList';
 
+import './postDetail.css';
 
 
 
@@ -137,47 +138,55 @@ const PostDetail = () => {
 
 
     return (
-        <div>
-            <div>
-                {detail ? (
-                    <>
-                        <h2>제목: {detail.title}</h2>
-                        <h4>내용: {detail.content}</h4>
-                        <p>작성자:
-                            <Link to={`/${detail.author._id}/mypage`}>
-                                {detail.author?.name}
-                            </Link>
-                        </p>
+        <div className="post-detail-container-pc">
+            {detail ? (
+                <>
+                    <div className="post-detail-header">
+                        <h1 className="post-title"> {detail.title}</h1>
+                        <div className="post-meta">
+                            <span>
+                                
+                                <Link to={`/${detail.author._id}/mypage`} className="post-author-link">
+                                    {detail.author?.name}
+                                </Link>
+                            </span>
+                            <span>{new Date(detail.createdAt).toLocaleString()}</span>
+                        </div>
+                    </div>
+
+                    <div className="post-body-pc">
+                        <p className="post-content">{detail.content}</p>
+
                         {Array.isArray(detail.images) && detail.images.length > 0 && (
-                            <div style={{ display: 'flex', gap: '10px' }}>
+                            <div className="post-image-list-pc">
                                 {detail.images.map((imgUrl, idx) => (
-                                    <img key={idx} src={imgUrl} alt={`게시글 이미지 ${idx + 1}`} width="150" />
+                                    <img key={idx} src={imgUrl} alt={`게시글 이미지 ${idx + 1}`} className="post-image-pc" />
                                 ))}
                             </div>
                         )}
-                        <p>{new Date(detail.createdAt).toLocaleString()}</p>
+                    </div>
 
-                        {detail && user.userId === detail.author._id && (
-                            <div>
-                                <button onClick={handleEdit}>수정</button>
-                                <button onClick={() => handleDelete()}>삭제</button>
-                            </div>
-                        )}
+                    {user.userId === detail.author._id && (
+                        <div className="post-actions">
+                            <button onClick={handleEdit} className="edit-button">수정</button>
+                            <button onClick={handleDelete} className="delete-button">삭제</button>
+                        </div>
+                    )}
 
+                    <div className="comment-form-wrapper">
+                        <NewComment onAddComment={handleAddComment} />
+                    </div>
 
-                    </>
-                ) : (
-                    <p>로딩중..</p>
-                )}
-            </div>
-
-            <div>
-                <NewComment onAddComment={handleAddComment} />
-            </div>
-            <div>
-                <CommentList comments={comments} onDelete={deleteHandler} />
-            </div>
+                    <div className="comment-list-wrapper">
+                        <CommentList comments={comments} onDelete={deleteHandler} />
+                    </div>
+                </>
+            ) : (
+                <p className="loading-text">로딩중...</p>
+            )}
         </div>
+
+
     )
 
 };
