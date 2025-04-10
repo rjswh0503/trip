@@ -145,7 +145,7 @@ const PostDetail = () => {
                         <h1 className="post-title"> {detail.title}</h1>
                         <div className="post-meta">
                             <span>
-                                
+
                                 <Link to={`/${detail.author._id}/mypage`} className="post-author-link">
                                     {detail.author?.name}
                                 </Link>
@@ -173,12 +173,14 @@ const PostDetail = () => {
                         </div>
                     )}
 
-                    <div className="comment-form-wrapper">
-                        <NewComment onAddComment={handleAddComment} />
-                    </div>
+
 
                     <div className="comment-list-wrapper">
                         <CommentList comments={comments} onDelete={deleteHandler} />
+                    </div>
+
+                    <div className="comment-form-wrapper">
+                        <NewComment onAddComment={handleAddComment} />
                     </div>
                 </>
             ) : (

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+import './comment.css';
 
 
 const NewComment = ({ onAddComment }) => {
@@ -34,12 +35,23 @@ const NewComment = ({ onAddComment }) => {
 
 
     return (
-        <div style={{ marginTop: '10rem' }}>
-            <form onSubmit={NewCommentHandler}>
-                <input type='text' placeholder='덧글을 입력하세요.' name='content' onChange={onChange} value={formData.content} required />
-                <button type='submit'>덧글 작성</button>
+        <div className="comment-form-wrapper">
+            <form className="comment-form" onSubmit={NewCommentHandler}>
+                <input
+                    type="text"
+                    name="content"
+                    placeholder="덧글을 입력하세요."
+                    onChange={onChange}
+                    value={formData.content}
+                    required
+                    className="comment-input"
+                />
+                <button type="submit" className="comment-submit-button">
+                    덧글 작성
+                </button>
             </form>
         </div>
+
     )
 
 }
