@@ -11,6 +11,7 @@ const User = require('../models/user');
 const register = async (req, res, next) => {
 
     const { name, email, password } = req.body;
+    const imageUrl = req.file?.location;
 
     let existingUser;
 
@@ -41,7 +42,7 @@ const register = async (req, res, next) => {
         name,
         email,
         password: hashPassword,
-        image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Golde33443.jpg/280px-Golde33443.jpg',
+        image: imageUrl || null ,
         favorites: [],
         review: [],
         post: [],
