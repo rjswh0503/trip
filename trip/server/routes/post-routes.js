@@ -2,6 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 const checkAuth = require('../middleware/auth-middleware');
 
+const upload = require('../middleware/uploadPostImg');
 const postController = require('../controller/posts-controller');
 const router = express.Router();
 
@@ -30,6 +31,7 @@ router.post('/add',
         check('title').not().isEmpty(),
         check('content').isLength( { min: 3 } )
     ],
+    upload.array('images',5),
     postController.addPost
 );
 

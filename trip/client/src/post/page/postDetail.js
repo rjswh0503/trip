@@ -148,6 +148,13 @@ const PostDetail = () => {
                                 {detail.author?.name}
                             </Link>
                         </p>
+                        {Array.isArray(detail.images) && detail.images.length > 0 && (
+                            <div style={{ display: 'flex', gap: '10px' }}>
+                                {detail.images.map((imgUrl, idx) => (
+                                    <img key={idx} src={imgUrl} alt={`게시글 이미지 ${idx + 1}`} width="150" />
+                                ))}
+                            </div>
+                        )}
                         <p>{new Date(detail.createdAt).toLocaleString()}</p>
 
                         {detail && user.userId === detail.author._id && (

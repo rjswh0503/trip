@@ -41,6 +41,8 @@ const Register = () => {
                 email: '',
                 password: ''
             });
+
+            
             setImageFile(null);
             setPrviewUrl('');
             console.log('회원가입 성공!!' + responseData.data.formData);
@@ -71,7 +73,7 @@ const Register = () => {
         <>
             <h2>Register</h2>
             <form onSubmit={registerSubmitHandler}>
-                <input type='text' name='name' placeholder='사용자 이름' onChange={handleChange} value={formData.name} required />
+                <input type='text' name='name' placeholder='사용자 닉네임' onChange={handleChange} value={formData.name} required />
                 <input type='email' name='email' placeholder='사용자 이메일' onChange={handleChange} value={formData.email} required />
                 <input type='password' name='password' placeholder='사용자 비밀번호' onChange={handleChange} value={formData.password} required />
                 <input type='file' accept='image/*' onChange={handleImageChange}></input>

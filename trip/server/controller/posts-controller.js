@@ -2,6 +2,7 @@ const { default: mongoose } = require('mongoose');
 const HttpError = require('../models/http-error');
 const Post = require('../models/post');
 const User = require('../models/user');
+const { DeleteBucketCommand } = require('@aws-sdk/client-s3');
 
 
 
@@ -32,12 +33,13 @@ const getPostList = async (req, res, next) => {
 
 const addPost = async (req, res, next) => {
     const { title, content } = req.body;
+    const imageUrls = req.files?.map(file => file.location) || [];
 
     const createPost = new Post({
         author: req.userData.userId,
         title,
         content,
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFUAfyVe3Easiycyh3isP9wDQTYuSmGPsPQvLIJdEYvQ_DsFq5Ez2Nh_QjiS3oZ3B8ZPfK9cZQyIStmQMV1lDPLw',
+        images:imageUrls || null,
     });
 
     let user;
@@ -188,6 +190,22 @@ const deletePost = async (req, res, next) => {
         return next(error);
 
     }
+
+    try {
+        if(post.images && post.images.length > 0){
+            for(const url of post.images){
+                const key = url.split('.amazonaws.com/posts/')[1];
+                await s3.send(new DeleteBucketCommand({
+                    Bucket: 'my-trip-project',
+                    key: key,
+                }))
+            }
+        }
+    } catch(e){
+        const error = new HttpError('이미지 삭제 실패', 500);
+        return next(error);
+    }
+
 
     
     //게시글 삭제시 데이터베이스 세션 업데이트

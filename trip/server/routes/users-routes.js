@@ -2,8 +2,9 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const router = express.Router();
+const uploadUser = require('../middleware/uploadUserImg');
 const userController = require('../controller/users-controller');
-const user = require('../models/user');
+
 
 
 
@@ -18,6 +19,7 @@ router.post('/register',
             .isEmail(),
         check('password').isLength({ min: 6 })
     ],
+    uploadUser.single('image'),
     userController.register
 
 );

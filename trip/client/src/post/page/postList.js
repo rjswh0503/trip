@@ -48,6 +48,7 @@ const PostList = () => {
                         <Card
                             key={post._id}
                             id={post._id}
+                            images={post.images[0] || ''}
                             title={post.title}
                             author={post.author?.name}
                             date={post.createdAt}

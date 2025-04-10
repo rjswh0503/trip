@@ -16,14 +16,15 @@ const register = async (req, res, next) => {
     let existingUser;
 
     try {
-        existingUser = await User.findOne({ email: email });
+        existingUser = await User.findOne({ email: email});
     } catch (e) {
+
         const error = new HttpError('회원가입 실패', 500);
         return next(error);
     }
 
     if (existingUser) {
-        const error = new HttpError('사용자가 이미 존재합니다. 다른 이메일을 사용해주세요.', 401);
+        const error = new HttpError('사용자가 이미 존재합니다.', 401);
         return next(error);
     }
 
@@ -42,7 +43,7 @@ const register = async (req, res, next) => {
         name,
         email,
         password: hashPassword,
-        image: imageUrl || null ,
+        image: imageUrl || null,
         favorites: [],
         review: [],
         post: [],

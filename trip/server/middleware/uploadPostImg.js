@@ -6,19 +6,19 @@ const s3 = new S3Client({
     region: 'ap-northeast-2',
     credentials: {
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
     }
 })
 
-const upload = multer({
+const uploadPostImg = multer({
     storage: multerS3({
         s3: s3,
         bucket: 'my-trip-project',
         key: function (요청, file, cb) {
-            cb(null, Date.now().toString()) //업로드시 파일명 변경가능
+            const ext = file.originalname.split('.').pop();
+            cb(null, `posts/${Date.now()}.${ext}`);
         }
     })
 })
 
-
-module.exports = upload;
+module.exports = uploadPostImg;
