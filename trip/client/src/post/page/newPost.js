@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../../shared/context/auth-context';
 import './newPost.css';
 
+
 const NewPost = () => {
 
     const { token } = useAuth();
@@ -52,7 +53,8 @@ const NewPost = () => {
         }
 
     }
-
+    
+    // 이미지 추가 핸들러
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
         setImageFile(prev => [...prev, ...files]);
@@ -60,6 +62,7 @@ const NewPost = () => {
         setPreviewUrl(prev => [...prev, ...previews]);
     }
 
+    
     const onChange = (e) => {
         setFormData({
             ...formData,
@@ -103,7 +106,8 @@ const NewPost = () => {
                 {previewUrl.length > 0 && (
                     <div className="image-preview-list">
                         {previewUrl.map((url, idx) => (
-                            <img key={idx} src={url} alt={`미리보기-${idx}`} className="image-preview" />
+                            <img key={idx} src={url} alt={`미리보기-${idx}`} className="image-preview"/>
+                            
                         ))}
                     </div>
                 )}
