@@ -2,7 +2,6 @@ const { default: mongoose } = require('mongoose');
 const HttpError = require('../models/http-error');
 const Post = require('../models/post');
 const User = require('../models/user');
-const { DeleteBucketCommand } = require('@aws-sdk/client-s3');
 
 
 
@@ -39,7 +38,7 @@ const addPost = async (req, res, next) => {
         author: req.userData.userId,
         title,
         content,
-        images:imageUrls || null,
+        images: imageUrls || null,
     });
 
     let user;
@@ -191,23 +190,8 @@ const deletePost = async (req, res, next) => {
 
     }
 
-    try {
-        if(post.images && post.images.length > 0){
-            for(const url of post.images){
-                const key = url.split('.amazonaws.com/posts/')[1];
-                await s3.send(new DeleteBucketCommand({
-                    Bucket: 'my-trip-project',
-                    key: key,
-                }))
-            }
-        }
-    } catch(e){
-        const error = new HttpError('이미지 삭제 실패', 500);
-        return next(error);
-    }
 
 
-    
     //게시글 삭제시 데이터베이스 세션 업데이트
     try {
         const session = await mongoose.startSession();

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../shared/context/auth-context';
-
+import './newPost.css';
 
 const NewPost = () => {
 
@@ -32,7 +32,7 @@ const NewPost = () => {
                 {
                     headers: {
                         Authorization: `Bearer ${token}`, // 꼭 필요!
-                        
+
                     }
                 }
             );
@@ -69,22 +69,51 @@ const NewPost = () => {
     };
 
     return (
-        <div style={{ marginTop: '10rem' }}>
-            <form onSubmit={NewPostHandler}>
-                <input type='text' placeholder='제목을 작성하세요.' name='title' onChange={onChange} value={formData.title} required />
-                <textarea placeholder='내용을 작성하세요.' name='content' onChange={onChange} value={formData.content} required />
-                <input type='file' name='files' accept='image/*' onChange={handleImageChange}></input>
+        <div className="create-post-wrapper">
+            <h2>게시글 작성</h2>
+            <form className="create-post-form" onSubmit={NewPostHandler}>
+                <input
+                    type="text"
+                    name="title"
+                    placeholder="제목을 작성하세요."
+                    onChange={onChange}
+                    value={formData.title}
+                    required
+                    className="post-input title-input"
+                />
+
+                <textarea
+                    name="content"
+                    placeholder="내용을 작성하세요."
+                    onChange={onChange}
+                    value={formData.content}
+                    required
+                    className="post-textarea"
+                />
+
+                <input
+                    type="file"
+                    name="files"
+                    accept="image/*"
+                    onChange={handleImageChange}
+                    className="image-upload-input"
+                    multiple
+                />
+
                 {previewUrl.length > 0 && (
-                    <div style={{ margin: '1rem 0', display: 'flex', gap: '10px' }}>
+                    <div className="image-preview-list">
                         {previewUrl.map((url, idx) => (
-                            <img key={idx} src={url} alt={`미리보기-${idx}`} width="150" />
+                            <img key={idx} src={url} alt={`미리보기-${idx}`} className="image-preview" />
                         ))}
                     </div>
                 )}
 
-                <button type='submit'>작성하기</button>
+                <button type="submit" className="submit-button">
+                    작성하기
+                </button>
             </form>
         </div>
+
     )
 }
 
