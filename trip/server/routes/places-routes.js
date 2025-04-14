@@ -1,6 +1,8 @@
 const express = require('express');
 const { check } = require('express-validator');
-
+const placesController = require('../controller/places-controller');
+const checkAuth = require('../middleware/auth-middleware');
+const upload = require('../middleware/uploadPlacesImg');
 const router = express.Router();
 
 
@@ -9,6 +11,8 @@ router.get('/');
 
 //특정 여행지 조회
 router.get('/:id');
+
+router.use(checkAuth);
 
 //새로운 여행지 등록
 router.post('/',
@@ -20,8 +24,8 @@ router.post('/',
 
         check('address').not().isEmpty()
     ],
-    
-
+    upload.array('images',5),
+    placesController.addPlaces
 );
 
 //여행지 수정

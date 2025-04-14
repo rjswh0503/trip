@@ -16,6 +16,7 @@ import MyPage from './users/page/myPage';
 import MyPost from './users/components/myPost';
 import MyComment from './users/components/myComment';
 import UpdatePost from './post/page/updatePost';
+import NewPlaces from './places/page/newPlaces';
 
 const App = () => {
 
@@ -30,7 +31,7 @@ const App = () => {
             <Route path='/login' element={<Login />} />
             <Route path='/:id/mypage' element={<MyPage />}>
               <Route path='post' element={<MyPost />} />
-              <Route path='comments' element={<MyComment/>}/>
+              <Route path='comments' element={<MyComment />} />
             </Route>
             <Route path='/posts/add' element={<NewPost />} />
             <Route path='/posts/list' element={<PostList />} />
@@ -38,6 +39,7 @@ const App = () => {
             <Route path='/posts/:id' element={<MyPost />} />
             <Route path='/comment/:id' element={<NewComment />} />
             <Route path='/posts/:id/edit' element={<UpdatePost />} />
+            <Route path='/places/add' element={<NewPlaces />} />
 
           </Routes>
         </main>

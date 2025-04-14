@@ -1,7 +1,9 @@
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
 const review = require('../models/review');
-const places = require('../models/places');
+const Place = require('../models/places');
+const getCoordsForAddress = require('../util/location');
+const { default: mongoose } = require('mongoose');
 
 
 
@@ -10,34 +12,79 @@ const places = require('../models/places');
 
 //여행지 추가 
 
-const addPlaces = async(req, res, next) => {
-    const { title, description, category, city, address } = req.body;
-    const imageUrls = req.file?.map(file => file.location) || [];
+const addPlaces = async (req, res, next) => {
 
-    const createPlaces = new places({
+    const { title, description, category, city, address } = req.body;
+    const imageUrls = req.files?.map(file => file.location) || [];
+
+    let coordinates;
+    try {
+        coordinates = await getCoordsForAddress(address);
+    } catch (error) {
+        return next(error);
+    }
+
+    const createPlaces = new Place({
         title,
         description,
         images: imageUrls || null,
         category,
         city,
-        address
-    });
+        address,
+        location: coordinates,
+        creator: req.userData.userId
+    })
 
-    let places;
+    console.log(createPlaces)
+
+
+
+
+    let user;
 
     try {
-
-    } catch(e){
+        user = await User.findById(req.userData.userId);
+    } catch (e) {
+        console.error('에러 상세:', e);
         const error = new HttpError('여행지 생성하는데 실패했습니다.', 500);
         return next(error);
     }
+
+    if (!user) {
+        const error = new HttpError('사용자를 찾을 수 없습니다.', 404);
+        return next(error);
+    };
+
+    if (!user || user.role !== 'admin') {
+        return res.status(403).json({ message: '관리자만 여행지를 등록할 수 있습니다.' });
+    }
+
+
+    try {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        await createPlaces.save({ session }); // ✅ 여기서 저장
+        user.places.push(createPlaces);
+        await user.save({ session });
+        await session.commitTransaction(); // ❗여기 도달 못 하면 저장도 무효
+        session.endSession();
+
+    } catch (e) {
+        
+        const error = new HttpError('장소 생성 실패', 500);
+        return next(error);
+    }
+
+    console.log('✅ 응답 직전');
+    res.status(201).json({ message: '등록 성공!', places: createPlaces });
+
 }
 
 
 
 
 
-//여행지 리스트 
+//여행지 리스트
 
 
 
@@ -74,7 +121,7 @@ const addPlaces = async(req, res, next) => {
 
 
 
-// 여행지 좋아요 
+// 여행지 좋아요
 
 
 
@@ -83,3 +130,6 @@ const addPlaces = async(req, res, next) => {
 
 
 
+
+
+exports.addPlaces = addPlaces;

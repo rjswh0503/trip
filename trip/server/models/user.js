@@ -14,6 +14,7 @@ const userSchema = new Schema(
         favorites: [{ type: mongoose.Types.ObjectId, ref: 'Place' }],
         review: [{ type: mongoose.Types.ObjectId, ref: 'Review' }],
         post: [{ type: mongoose.Types.ObjectId, ref: 'Post' }],
+        places: [{ type: mongoose.Types.ObjectId, ref: 'Place'}],
         comments: [{ type: mongoose.Types.ObjectId, ref: 'Comment' }],
         role: { type: String, required: true, default: 'user' }
     },

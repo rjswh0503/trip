@@ -17,7 +17,7 @@ const MainNavLink = () => {
           <NavLink className="nav-link" to="/posts/list">게시글</NavLink>
           <NavLink className="nav-link" to="/">여행지</NavLink>
           {user?.role === 'admin' &&(
-              <NavLink className="nav-link" to="/">여행지등록</NavLink>
+              <NavLink className="nav-link" to='/places/add'>여행지등록</NavLink>
           )}
           <NavLink className="nav-link" to={`/${user.userId}/mypage`}>
           <img style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover', border: '2px solid #e0e0e0'}} src={user.image} alt='프로필 이미지'/>
