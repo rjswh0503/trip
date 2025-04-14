@@ -21,6 +21,7 @@ const PostDetail = () => {
     const [detail, setDetail] = useState(null);
     const [comments, setComments] = useState([]);
 
+    
 
 
     const fetchComments = async () => {
@@ -57,7 +58,7 @@ const PostDetail = () => {
         fetchData();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [id, token]);
-    //id와 token 변경될 때 마다 리 랜더링함.
+    //id와 token 변경될 때 마다 랜더링함.
 
 
     const handleAddComment = async (Data) => {
@@ -93,20 +94,17 @@ const PostDetail = () => {
                     },
                 });
 
-                console.log('[✅] 삭제 성공 응답:', response);
+                console.log(' 삭제 성공 응답:', response);
 
                 alert('삭제되었습니다.');
                 setDetail(null);
                 navigate('/posts/list');
-                console.log('[🚀] 상태 초기화 및 페이지 이동 완료');
+                
 
             } catch (e) {
 
                 alert('삭제에 실패했습니다.');
             }
-
-        } else {
-            console.log('[🚫] 사용자가 삭제 취소함');
         }
     };
 

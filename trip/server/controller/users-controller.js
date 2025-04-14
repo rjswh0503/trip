@@ -47,7 +47,8 @@ const register = async (req, res, next) => {
         favorites: [],
         review: [],
         post: [],
-        comment: []
+        comment: [],
+        
     });
 
     try {
@@ -62,7 +63,7 @@ const register = async (req, res, next) => {
     try {
         token = jwt.sign(
             {
-                userId: createUser.id, email: createUser.email
+                userId: createUser.id, email: createUser.email, image: createUser.image
             }, 'Secret-Code',
             {
                 expiresIn: '1h'
@@ -72,7 +73,7 @@ const register = async (req, res, next) => {
         const error = new HttpError('회원가입에 실패했습니다. 다시 시도해주세요.', 500);
         return next(error);
     }
-    res.status(201).json({ name: createUser.name, email: createUser.email, token: token });
+    res.status(201).json({ name: createUser.name, email: createUser.email,image: createUser.image, token: token });
 
     console.log(token)
 
@@ -125,7 +126,7 @@ const login = async (req, res, next) => {
     try {
         token = jwt.sign(
             {
-                userId: existingUser.id, email: existingUser.email, name: existingUser.name
+                userId: existingUser.id, email: existingUser.email, name: existingUser.name, image: existingUser.image, role: existingUser.role
             },
             'Secret-Code',
             {
@@ -142,6 +143,8 @@ const login = async (req, res, next) => {
             userId: existingUser.id,
             name: existingUser.name,
             email: existingUser.email,
+            image: existingUser.image,
+            role: existingUser.role,
             token: token
         }
     );
@@ -171,6 +174,8 @@ const getUserbyId = async (req, res, next) => {
         return next(error);
     }
 
+    
+
     res.json({
         name: profile.name,
         email: profile.email,
@@ -178,7 +183,10 @@ const getUserbyId = async (req, res, next) => {
         favorites: profile.favorites,
         review: profile.review,
         post: profile.post,
-        comment: profile.comments
+        comment: profile.comments,
+        role: profile.role,
+        createdAt: profile.createdAt
+        
     });
 
 }

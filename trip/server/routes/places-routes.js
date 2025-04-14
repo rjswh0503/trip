@@ -39,4 +39,13 @@ router.delete('/:id');
 
 
 
+//여행지 인기 top5 
+
+
+
+//카테고리별 여행지
+
+
+
+
 module.exports = router;

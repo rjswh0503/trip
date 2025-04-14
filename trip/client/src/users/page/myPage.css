@@ -1,75 +1,55 @@
 .mypage-container {
-    max-width: 900px;
-    margin: 5rem auto;
+    max-width: 960px;
+    margin: 0 auto;
     padding: 2rem;
-    background: white;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-    font-family: 'Segoe UI', sans-serif;
-}
-
-.mypage-header {
-    text-align: center;
-    margin-bottom: 3rem;
-}
-
-.mypage-header h1 {
+  }
+  
+  .mypage-title {
     font-size: 2rem;
     font-weight: bold;
     color: #333;
-}
-
-.profile-section {
+    margin-bottom: 1.5rem;
+  }
+  
+  .mypage-tabs {
     display: flex;
-    align-items: center;
-    gap: 2rem;
-    margin-bottom: 3rem;
-}
-
-.profile-image {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #ccc;
-}
-
-.profile-info {
-    flex: 1;
-}
-
-.profile-info h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-}
-
-.profile-info p {
-    color: #555;
-    font-size: 0.95rem;
-}
-
-.section {
-    margin-bottom: 2.5rem;
-}
-
-.section h3 {
-    font-size: 1.3rem;
-    margin-bottom: 1rem;
-    color: rgb(45, 72, 230);
-    border-bottom: 1px solid #ddd;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e0e0e0;
     padding-bottom: 0.5rem;
-}
-
-.section ul {
-    list-style: none;
-    padding: 0;
-}
-
-.section ul li {
-    background: #f8f9fa;
-    padding: 0.75rem 1rem;
-    margin-bottom: 0.5rem;
-    border-radius: 8px;
-    font-size: 0.95rem;
-    color: #333;
-}
+  }
+  
+  .tab {
+    text-decoration: none;
+    color: #888;
+    font-size: 1rem;
+    padding-bottom: 0.3rem;
+    position: relative;
+    transition: color 0.3s;
+  }
+  
+  .tab:hover {
+    color: #4f46e5;
+  }
+  
+  .tab.active {
+    color: #4f46e5;
+    font-weight: 600;
+  }
+  
+  .tab.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background-color: #4f46e5;
+    border-radius: 2px;
+  }
+  
+  .mypage-content {
+    margin-top: 2rem;
+  }
+  
