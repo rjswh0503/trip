@@ -21,6 +21,7 @@ const PlaceCard = ({ place }) => {
         <h3>{place.title}</h3>
         <div className="place-stats">
           <span>좋아요 {place.likes}</span>
+          <span>조회수 {place.view}</span>
           <span>⭐ {place.recommendations || 0}</span>
         </div>
       </div>

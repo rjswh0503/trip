@@ -89,7 +89,7 @@ const getAllPlaces = async (req, res, next) => {
 
     try {
         places = await Place.find().populate('creator', 'name');
-    } catch (e) {
+    } catch (e) {   
         const error = new HttpError('여행지 리스트 불러오는데 실패했습니다.', 500);
         return next(error);
     }
@@ -108,7 +108,10 @@ const getPlacesById = async (req, res, next) => {
     let places;
 
     try {
-        places = await Place.findById(PlacesId).populate('creator', 'name').populate({
+        places = await Place.findByIdAndUpdate(PlacesId,
+            { $inc: { view: 1} },
+            {new: true }
+        ).populate('creator', 'name').populate({
             path: 'comments',
             select: 'content author',
             populate: {
@@ -117,7 +120,7 @@ const getPlacesById = async (req, res, next) => {
             }
         });
     } catch(e){
-        const error = new HttpError('여행지 상세보기 실패', 401);
+        const error = new HttpError('여행지 상세보기 실패', 404);
         return next(error);
     }
 
@@ -126,11 +129,6 @@ const getPlacesById = async (req, res, next) => {
     })
 
 };
-
-
-
-
-
 
 
 //여행지 수정

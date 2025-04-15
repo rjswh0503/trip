@@ -12,6 +12,7 @@ const PlacesDetail = () => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:5000/api/places/${id}`);
             setPlace(response.data.places);
+            
         };
         fetchData();
     }, [id]);
@@ -28,6 +29,7 @@ const PlacesDetail = () => {
                 <div className="detail-info">
                     <span>⭐ {place.review || ''}리뷰 보러가기</span>
                     <span>📍 {place.address}</span>
+                    <span>조회수{place.view}</span>
                 </div>
 
                 <div className="detail-map">

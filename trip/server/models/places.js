@@ -9,6 +9,7 @@ const placesSchema = new Schema(
         description: { type: String, required: true },
         images: [{ type: String }],
         category: { type: String, required: true },
+        country: { type: String, required: true},
         city: { type: String, required: true },
         region: { type: String, required: true },
         address: { type: String, required: true },
@@ -18,7 +19,7 @@ const placesSchema = new Schema(
         },
         likes: [{ type: mongoose.Types.ObjectId, ref: 'User'}],
         recommend: [{ type: mongoose.Types.ObjectId, ref: 'User'}],     
-        view: [{ type: mongoose.Types.ObjectId, ref: 'User'}],
+        view: { type: Number, default: 0 },
         reviews: [{ type: mongoose.Types.ObjectId, ref: 'Review' }],
         comments: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
         creator: { type: mongoose.Types.ObjectId, ref: 'User' }
