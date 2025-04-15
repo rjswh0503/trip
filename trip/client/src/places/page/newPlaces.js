@@ -3,13 +3,14 @@ import React, { useState } from "react";
 
 import axios from "axios";
 import { useAuth } from "../../shared/context/auth-context";
-
+import { useNavigate } from "react-router-dom";
 
 
 
 const NewPlaces = () => {
 
     const { token } = useAuth();
+    const Navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -71,6 +72,7 @@ const NewPlaces = () => {
             setImageFiles([]);
             setPreviewUrl([]);
             alert('장소 등록 완료');
+            Navigate('/places/list')
             console.log(response.data);
         } catch (e) {
             alert(e.response?.data?.message || '장소 등록 실패');

@@ -7,7 +7,7 @@ import './navLink.css';
 const MainNavLink = () => {
   const { user, isLoggedIn } = useAuth();
 
-  console.log(user);
+  
 
   return (
     <div className="nav-links-container">

@@ -7,6 +7,7 @@
     margin: 0 auto;
     background-color: #fafafa;
     text-align: center;
+    color: black;
   }
   
   .place-image {
@@ -17,11 +18,7 @@
     margin-bottom: 10px;
   }
   
-  .place-author {
-    font-size: 0.9rem;
-    color: #555;
-    margin: 6px 0;
-  }
+ 
   
   .place-stats {
     font-size: 0.85rem;

@@ -3,14 +3,7 @@
     align-items: center;
     gap: 1rem;
   }
-  
-  /* 로그인 시 사용자 이름 */
-  .nav-username {
-    color: black;
-    font-weight: bold;
-  }
-  
-  /* 공통 스타일 */
+
   .nav-link,
   .nav-btn-outline,
   .nav-btn-primary {
@@ -22,17 +15,12 @@
     transition: all 0.3s ease;
   }
   
-  /* 일반 nav 링크 */
+  
   .nav-link {
     color: black;
     border: 1px solid transparent;
   }
   
-  .nav-link:hover {
-    border-bottom: 1px solid #fff;
-  }
-  
-  /* 비로그인: 로그인 버튼 (투명) */
   .nav-btn-outline {
     border: 1px solid #ccc;
     background: transparent;
@@ -43,7 +31,7 @@
     background: rgba(255, 255, 255, 0.15);
   }
   
-  /* 비로그인: 회원가입 버튼 (파란 배경) */
+
   .nav-btn-primary {
     background: #3b82f6;
     color: white;

@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+
+
 import './placesList.css';
 import TravelCard from '../../shared/components/UI/travelCard';
 
@@ -14,7 +16,7 @@ const PlacesList = () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/places');
                 setPlaces(response.data.places);
-                console.log(response.data.places);
+                
             } catch (e) {
                 console.log('에러:', e);
             }
