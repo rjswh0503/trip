@@ -14,7 +14,7 @@ const { default: mongoose } = require('mongoose');
 
 const addPlaces = async (req, res, next) => {
 
-    const { title, description, category, city, address, region,country } = req.body;
+    const { title, description, category, city, address, region, country } = req.body;
     const imageUrls = req.files?.map(file => file.location) || [];
 
     let coordinates;
@@ -190,28 +190,42 @@ const toggleLike = async (req, res, next) => {
     const userId = req.userData.userId;
     const placesId = req.params.id;
 
+    let places;
+
     try {
-        const place = await Place.findById(placesId);
-        const liked = place.likes.includes(userId);
-
-        if (!liked) {
-            await Place.findByIdAndUpdate(placesId, {
-                $pull: { likes: userId },
-                $inc: { likes: -1 }
-            });
-        } else {
-            await Place.findByIdAndUpdate(placesId, {
-                $push: { likes: userId },
-                $inc: { likes: 1 }
-            });
+        places = await Place.findById(placesId);
+        if (!places) {
+            const error = new HttpError('여행지를 찾을 수 없습니다.', 404);
+            return next(error);
         }
-
     } catch (e) {
-        const error = new HttpError('좋아요 실패', 500);
+        const error = new HttpError('좋아요추가 실패', 500);
         return next(error);
     }
 
-    res.status(200).json({ message: '업데이트 완료' });
+
+    const Liked = places.likes.includes(userId);
+
+    try {
+        if (Liked) {
+            places.likes.pull(userId);
+        } else {
+            places.likes.push(userId);
+        }
+
+        await places.save();
+
+    } catch (e) {
+        const error = new HttpError('좋아요 저장 실패', 500);
+        return next(error);
+    }
+
+    res.status(200).json({
+        message: Liked ? '좋아요 취소' : '좋아요 추가',
+        likesCount: places.likes.length,
+        likedByUser: !Liked
+    })
+
 }
 
 
