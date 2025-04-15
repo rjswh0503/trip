@@ -7,19 +7,21 @@ const placesSchema = new Schema(
     {
         title: { type: String, required: true },
         description: { type: String, required: true },
-        images: [{type: String }],
-        category: { type:String, required: true},
-        city: { type: String, required: true},
+        images: [{ type: String }],
+        category: { type: String, required: true },
+        city: { type: String, required: true },
+        region: { type: String, required: true },
         address: { type: String, required: true },
         location: {
             lat: { type: Number, required: true },
             lng: { type: Number, required: true },
         },
-        likes: { type: Number, default: 0},
-        ratings: { type: Number, default: 0 },
-        reviews: [{ type: mongoose.Types.ObjectId, ref: 'Review'}],
-        comments: [{ type: mongoose.Types.ObjectId, ref: "Comment"}],
-        creator: { type: mongoose.Types.ObjectId, ref: 'User'}
+        likes: [{ type: mongoose.Types.ObjectId, ref: 'User'}],
+        recommend: [{ type: mongoose.Types.ObjectId, ref: 'User'}],     
+        view: [{ type: mongoose.Types.ObjectId, ref: 'User'}],
+        reviews: [{ type: mongoose.Types.ObjectId, ref: 'Review' }],
+        comments: [{ type: mongoose.Types.ObjectId, ref: "Comment" }],
+        creator: { type: mongoose.Types.ObjectId, ref: 'User' }
     },
     { timestamps: true }
 )

@@ -7,12 +7,15 @@ const router = express.Router();
 
 
 // 모든 여행지 조회
-router.get('/');
+router.get('/', placesController.getAllPlaces);
+
 
 //특정 여행지 조회
-router.get('/:id');
+router.get('/:id', placesController.getPlacesById);
 
 router.use(checkAuth);
+
+
 
 //새로운 여행지 등록
 router.post('/',
@@ -28,6 +31,7 @@ router.post('/',
     placesController.addPlaces
 );
 
+
 //여행지 수정
 router.patch('/:id',
     [
@@ -38,8 +42,10 @@ router.patch('/:id',
     ],
 );
 
+
 //여행지 삭제
 router.delete('/:id');
+
 
 
 
@@ -47,7 +53,21 @@ router.delete('/:id');
 
 
 
+
+
 //카테고리별 여행지
+
+
+
+
+
+//여행지 좋아요
+
+
+
+
+
+// 여행지 북마크
 
 
 

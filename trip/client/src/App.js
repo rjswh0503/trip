@@ -17,6 +17,7 @@ import MyPost from './users/components/myPost';
 import MyComment from './users/components/myComment';
 import UpdatePost from './post/page/updatePost';
 import NewPlaces from './places/page/newPlaces';
+import PlacesList from './places/page/placesList';
 
 const App = () => {
 
@@ -40,6 +41,7 @@ const App = () => {
             <Route path='/comment/:id' element={<NewComment />} />
             <Route path='/posts/:id/edit' element={<UpdatePost />} />
             <Route path='/places/add' element={<NewPlaces />} />
+            <Route path='/places/list' element={<PlacesList />} />
 
           </Routes>
         </main>

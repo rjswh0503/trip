@@ -15,7 +15,7 @@ const MainNavLink = () => {
         <>
           <LogoutButton />
           <NavLink className="nav-link" to="/posts/list">게시글</NavLink>
-          <NavLink className="nav-link" to="/">여행지</NavLink>
+          <NavLink className="nav-link" to="/places/list">여행지</NavLink>
           {user?.role === 'admin' &&(
               <NavLink className="nav-link" to='/places/add'>여행지등록</NavLink>
           )}

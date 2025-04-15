@@ -1,0 +1,33 @@
+.place-card {
+    width: 100%;
+    max-width: 300px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0 auto;
+    background-color: #fafafa;
+    text-align: center;
+  }
+  
+  .place-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 10px;
+  }
+  
+  .place-author {
+    font-size: 0.9rem;
+    color: #555;
+    margin: 6px 0;
+  }
+  
+  .place-stats {
+    font-size: 0.85rem;
+    color: #333;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 10px;
+  }
+  

@@ -14,7 +14,7 @@ const { default: mongoose } = require('mongoose');
 
 const addPlaces = async (req, res, next) => {
 
-    const { title, description, category, city, address } = req.body;
+    const { title, description, category, city, address, region } = req.body;
     const imageUrls = req.files?.map(file => file.location) || [];
 
     let coordinates;
@@ -30,6 +30,7 @@ const addPlaces = async (req, res, next) => {
         images: imageUrls || null,
         category,
         city,
+        region,
         address,
         location: coordinates,
         creator: req.userData.userId
@@ -70,27 +71,63 @@ const addPlaces = async (req, res, next) => {
         session.endSession();
 
     } catch (e) {
-        
+
         const error = new HttpError('장소 생성 실패', 500);
         return next(error);
     }
 
-    console.log('✅ 응답 직전');
+    
     res.status(201).json({ message: '등록 성공!', places: createPlaces });
 
 }
 
-
-
-
-
 //여행지 리스트
 
+const getAllPlaces = async (req, res, next) => {
 
+    let places;
 
+    try {
+        places = await Place.find().populate('creator', 'name');
+    } catch (e) {
+        const error = new HttpError('여행지 리스트 불러오는데 실패했습니다.', 500);
+        return next(error);
+    }
+
+    res.json({
+        places
+    });
+
+}
 
 
 //여행지 상세조회
+const getPlacesById = async (req, res, next) => {
+    const PlacesId = req.params.id;
+
+    let places;
+
+    try {
+        places = await Place.findById(PlacesId).populate('creator', 'name').populate({
+            path: 'comments',
+            select: 'content author',
+            populate: {
+                path: 'author',
+                select: 'name'
+            }
+        });
+    } catch(e){
+        const error = new HttpError('여행지 상세보기 실패', 401);
+        return next(error);
+    }
+
+    res.json({
+        places
+    })
+
+};
+
+
 
 
 
@@ -114,6 +151,7 @@ const addPlaces = async (req, res, next) => {
 
 
 
+
 // 카테고리별 여행지 조회 (도시, 시골 등등)
 
 
@@ -126,10 +164,11 @@ const addPlaces = async (req, res, next) => {
 
 
 
+
 // 여행지 찜
 
 
 
-
-
 exports.addPlaces = addPlaces;
+exports.getAllPlaces = getAllPlaces;
+exports.getPlacesById = getPlacesById;
