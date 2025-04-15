@@ -44,7 +44,8 @@ router.patch('/:id',
 
 
 //여행지 삭제
-router.delete('/:id');
+router.delete('/:id', placesController.deletePlace);
+
 
 
 
@@ -62,7 +63,7 @@ router.delete('/:id');
 
 
 //여행지 좋아요
-
+router.post('/:id/like', placesController.toggleLike);
 
 
 

@@ -14,7 +14,7 @@ const { default: mongoose } = require('mongoose');
 
 const addPlaces = async (req, res, next) => {
 
-    const { title, description, category, city, address, region } = req.body;
+    const { title, description, category, city, address, region,country } = req.body;
     const imageUrls = req.files?.map(file => file.location) || [];
 
     let coordinates;
@@ -29,6 +29,7 @@ const addPlaces = async (req, res, next) => {
         description,
         images: imageUrls || null,
         category,
+        country,
         city,
         region,
         address,
@@ -76,7 +77,7 @@ const addPlaces = async (req, res, next) => {
         return next(error);
     }
 
-    
+
     res.status(201).json({ message: '등록 성공!', places: createPlaces });
 
 }
@@ -89,7 +90,7 @@ const getAllPlaces = async (req, res, next) => {
 
     try {
         places = await Place.find().populate('creator', 'name');
-    } catch (e) {   
+    } catch (e) {
         const error = new HttpError('여행지 리스트 불러오는데 실패했습니다.', 500);
         return next(error);
     }
@@ -109,8 +110,8 @@ const getPlacesById = async (req, res, next) => {
 
     try {
         places = await Place.findByIdAndUpdate(PlacesId,
-            { $inc: { view: 1} },
-            {new: true }
+            { $inc: { view: 1 } },
+            { new: true }
         ).populate('creator', 'name').populate({
             path: 'comments',
             select: 'content author',
@@ -119,7 +120,7 @@ const getPlacesById = async (req, res, next) => {
                 select: 'name'
             }
         });
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('여행지 상세보기 실패', 404);
         return next(error);
     }
@@ -139,6 +140,32 @@ const getPlacesById = async (req, res, next) => {
 
 //여행지 삭제
 
+const deletePlace = async (req, res, next) => {
+    const PlacesId = req.params.id;
+
+    let places;
+
+    try {
+        places = await Place.findById(PlacesId).populate('creator');
+    } catch (e) {
+        const error = new HttpError('삭제할 수 없습니다.', 500);
+        return next(error);
+    }
+
+    try {
+        const session = await mongoose.startSession();
+        session.startTransaction();
+        await places.deleteOne({ session });
+        places.creator.places.pull(places);
+        await places.creator.save({ session });
+        await session.commitTransaction();
+    } catch (e) {
+        const error = new HttpError('삭제할 수 없습니다.', 500);
+        return next(error);
+    }
+    res.status(200).json({ message: '성공적으로 삭제되었습니다.' });
+
+}
 
 
 
@@ -159,6 +186,35 @@ const getPlacesById = async (req, res, next) => {
 
 // 여행지 좋아요
 
+const toggleLike = async (req, res, next) => {
+    const userId = req.userData.userId;
+    const placesId = req.params.id;
+
+    try {
+        const place = await Place.findById(placesId);
+        const liked = place.likes.includes(userId);
+
+        if (!liked) {
+            await Place.findByIdAndUpdate(placesId, {
+                $pull: { likes: userId },
+                $inc: { likes: -1 }
+            });
+        } else {
+            await Place.findByIdAndUpdate(placesId, {
+                $push: { likes: userId },
+                $inc: { likes: 1 }
+            });
+        }
+
+    } catch (e) {
+        const error = new HttpError('좋아요 실패', 500);
+        return next(error);
+    }
+
+    res.status(200).json({ message: '업데이트 완료' });
+}
+
+
 
 
 
@@ -170,3 +226,5 @@ const getPlacesById = async (req, res, next) => {
 exports.addPlaces = addPlaces;
 exports.getAllPlaces = getAllPlaces;
 exports.getPlacesById = getPlacesById;
+exports.deletePlace = deletePlace;
+exports.toggleLike = toggleLike;

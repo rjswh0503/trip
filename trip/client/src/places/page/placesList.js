@@ -28,10 +28,12 @@ const PlacesList = () => {
         return <p style={{ textAlign: 'center', marginTop: '10rem' }}>여행지가 없습니다...</p>;
     }
 
+    
+
     return (
         <div className="places-container">
             {places.map(place => (
-                <TravelCard key={place._id} place={place}/>
+                <TravelCard key={place._id} place={place} />
             ))}
         </div>
     );

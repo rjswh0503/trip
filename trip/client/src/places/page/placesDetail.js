@@ -1,23 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Map from '../components/map';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import './placesDetail.css';
+import { useAuth } from '../../shared/context/auth-context';
 
 const PlacesDetail = () => {
-    const [place, setPlace] = useState(null);
+    const { token, user } = useAuth();
     const { id } = useParams();
+    const  Navigate  = useNavigate();
+    const [place, setPlace] = useState(null);
+
 
     useEffect(() => {
         const fetchData = async () => {
             const response = await axios.get(`http://localhost:5000/api/places/${id}`);
             setPlace(response.data.places);
-            
+
         };
         fetchData();
     }, [id]);
 
     if (!place) return <p className="loading">불러오는 중...</p>;
+
+    const handleDelete = async () => {
+        try {
+            const response = await axios.delete(`http://localhost:5000/api/places/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                },
+            });
+
+            console.log('삭제성공', response);
+            alert('삭제되었습니다.');
+            Navigate('/places/list');
+        } catch (e) {
+            alert('삭제 실패');
+            console.log('삭제실패:', e);
+        }
+    }
+
 
     return (
         <div className="detail-container">
@@ -35,6 +57,11 @@ const PlacesDetail = () => {
                 <div className="detail-map">
                     <Map lat={place.location.lat} lng={place.location.lng} />
                 </div>
+                {user.role === 'admin' && (
+                    <div>
+                        <button onClick={handleDelete}>삭제</button>
+                    </div>
+                )}
             </div>
         </div>
     );
