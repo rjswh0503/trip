@@ -2,6 +2,7 @@ const express = require('express');
 const { check } = require('express-validator');
 
 const router = express.Router();
+const checkAuth = require('../middleware/auth-middleware');
 const uploadUser = require('../middleware/uploadUserImg');
 const userController = require('../controller/users-controller');
 
@@ -33,6 +34,7 @@ router.post('/login', userController.login);
 // 특정 :id 조회 
 router.get('/:id/profile', userController.getUserbyId);
 
+router.use(checkAuth);
 
 //프로필 수정 router
 router.patch('/:id/profile', userController.updateUserById);
@@ -50,7 +52,7 @@ router.get('/:id/posts', userController.getUserbyId);
 router.get('/:id/comments', userController.getUserbyId);
 
 //내가 찜한 여행지 router
-router.get('/:id/favorites/places');
+router.get('/:id/bookMark', userController.getBookMarks);
 
 //내가 좋아요 누른 게시글
 

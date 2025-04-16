@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
+const user = require('../models/user');
 
 
 
@@ -44,7 +45,6 @@ const register = async (req, res, next) => {
         email,
         password: hashPassword,
         image: imageUrl || null,
-        favorites: [],
         review: [],
         post: [],
         comment: [],
@@ -154,7 +154,7 @@ const login = async (req, res, next) => {
 }
 
 
-// 특정 유저 프로필 조회 & 내가 작성한 게시글 조회 & 내가 작성한 덧글 조회
+// 특정 유저 프로필 조회 & 작성한 게시글 조회 & 작성한 덧글 조회 & 북마크 조회
 
 const getUserbyId = async (req, res, next) => {
 
@@ -168,7 +168,7 @@ const getUserbyId = async (req, res, next) => {
                 path: 'post',
                 select: 'title'
             }
-        }).populate('post', 'title');
+        }).populate('post', 'title').populate('bookMark');
     } catch (e) {
         const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 401);
         return next(error);
@@ -180,7 +180,6 @@ const getUserbyId = async (req, res, next) => {
         name: profile.name,
         email: profile.email,
         image: profile.image,
-        favorites: profile.favorites,
         review: profile.review,
         post: profile.post,
         comment: profile.comments,
@@ -196,7 +195,7 @@ const getUserbyId = async (req, res, next) => {
 const updateUserById = async (req, res, next) => {
 
     const { name, password } = req.body;
-    const userId = req.params.id
+    const userId = req.userData.userId;
 
     let updateUser;
 
@@ -226,6 +225,25 @@ const updateUserById = async (req, res, next) => {
 
 // 찜한 여행지
 
+const getBookMarks = async (req, res, next) => {
+    const  userId  = req.userData.userId;
+
+    try {
+        const user = await User.findById(userId).populate('bookMark');
+        if(!user) {
+            const error = new HttpError('유저를 찾을 수 없습니다.', 404);
+            return next(error);
+        }
+
+
+    } catch(e){
+        const error = new HttpError('북마크 조회 실패', 500);
+        return next(error);
+    }
+
+    res.json({ bookMark: user.bookmarks });
+}
+
 
 
 
@@ -234,6 +252,7 @@ exports.register = register;
 exports.login = login;
 exports.getUserbyId = getUserbyId;
 exports.updateUserById = updateUserById;
+exports.getBookMarks = getBookMarks;
 
 
 

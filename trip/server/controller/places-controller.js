@@ -239,8 +239,8 @@ const toggleLike = async (req, res, next) => {
 // 여행지 찜
 
 const toggleBookMark = async (req,res,next) => {
-    const {placesId } = req.params.id;
-    const { userId }  = req.userData.userId;
+    const placesId  = req.params.id;
+    const  userId   = req.userData.userId;
 
     let places;
 

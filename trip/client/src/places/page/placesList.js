@@ -26,6 +26,7 @@ const PlacesList = () => {
         return <p style={{ textAlign: 'center', marginTop: '10rem' }}>여행지가 없습니다...</p>;
     }
 
+
     const toggleLikeHandler = async (placeId) => {
         try {
             const response = await axios.post(`http://localhost:5000/api/places/${placeId}/like`, {
@@ -59,7 +60,6 @@ const PlacesList = () => {
                     }
                 }
             );
-            console.log(response.data.BookMarkByUser);
             if (response.data.BookMarkByUser) {
                 alert('북마크 성공');
             } else {
