@@ -70,6 +70,7 @@ router.post('/:id/like', placesController.toggleLike);
 
 // 여행지 북마크
 
+router.post('/:id/bookMark', placesController.toggleBookMark);
 
 
 

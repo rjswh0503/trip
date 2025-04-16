@@ -3,10 +3,8 @@ import React from 'react';
 import './travelCard.css';
 import { Link } from 'react-router-dom';
 
-import LikeButton from '../../../places/components/likeButton';
 
-
-const PlaceCard = ({ place, currentUserId }) => {
+const PlaceCard = ({ place, like, bookMark }) => {
 
   return (
     <div>
@@ -22,13 +20,11 @@ const PlaceCard = ({ place, currentUserId }) => {
         </Link>
         <h3>{place.title}</h3>
         <div className="place-stats">
-          <LikeButton
-          placesId={place._id}
-          initialLikes={place.likes}
-          currentUserId={currentUserId}
-          />
+          <span onClick={like} style={{ cursor: 'pointer', fontSize: '1.5rem' }}>
+            ❤️
+          </span>
           <span>조회수 {place.view}</span>
-          <span>⭐ {place.recommendations || 0}</span>
+          <span onClick={bookMark} style={{ cursor: 'pointer', fontSize: '1.5rem' }}>⭐</span>
         </div>
       </div>
     </div>

@@ -84,8 +84,9 @@ const addPlaces = async (req, res, next) => {
 
 //여행지 리스트
 
-const getAllPlaces = async (req, res, next) => {
+// controllers/places-controllers.js
 
+const getAllPlaces = async (req, res, next) => {
     let places;
 
     try {
@@ -95,11 +96,13 @@ const getAllPlaces = async (req, res, next) => {
         return next(error);
     }
 
-    res.json({
-        places
-    });
 
-}
+    res.json({
+        places: places
+    });
+};
+
+
 
 
 //여행지 상세조회
@@ -187,7 +190,7 @@ const deletePlace = async (req, res, next) => {
 // 여행지 좋아요
 
 const toggleLike = async (req, res, next) => {
-    const userId = req.userData.userId;
+    const userId = req.userData.userId; // 현재 로그인한 유저
     const placesId = req.params.id;
 
     let places;
@@ -199,7 +202,7 @@ const toggleLike = async (req, res, next) => {
             return next(error);
         }
     } catch (e) {
-        const error = new HttpError('좋아요추가 실패', 500);
+        const error = new HttpError('서버 오류', 500);
         return next(error);
     }
 
@@ -235,6 +238,49 @@ const toggleLike = async (req, res, next) => {
 
 // 여행지 찜
 
+const toggleBookMark = async (req,res,next) => {
+    const {placesId } = req.params.id;
+    const { userId }  = req.userData.userId;
+
+    let places;
+
+    try {
+        places = await Place.findById(placesId);
+        if(!places){
+            const erorr = new HttpError('여행지를 찾을 수 없습니다.', 404);
+            return next(erorr);
+        }
+    } catch(e){
+        const error = new HttpError('서버 오류', 500);
+        return enxt(error);
+    }
+
+    const BookMark = places.bookMark.includes(userId);
+
+    
+
+    try {
+        if(BookMark){
+            places.bookMark.pull(userId);
+        }else {
+            places.bookMark.push(userId);
+        }
+
+        await places.save();
+    } catch(e){
+        const error = new HttpError('북마크 저장 실패', 404);
+        return next(error);
+    }
+
+    res.status(200).json({
+        message: '북마크 저장 성공',
+        BookMarkByUser: !BookMark,
+    })
+
+
+}
+
+
 
 
 exports.addPlaces = addPlaces;
@@ -242,3 +288,4 @@ exports.getAllPlaces = getAllPlaces;
 exports.getPlacesById = getPlacesById;
 exports.deletePlace = deletePlace;
 exports.toggleLike = toggleLike;
+exports.toggleBookMark = toggleBookMark;
