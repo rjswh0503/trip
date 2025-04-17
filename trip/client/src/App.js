@@ -20,6 +20,7 @@ import NewPlaces from './places/page/newPlaces';
 import PlacesList from './places/page/placesList';
 import PlacesDetail from './places/page/placesDetail';
 import MyBookMark from './users/components/myBookMark';
+import MyLikes from './users/components/myLikes';
 
 const App = () => {
 
@@ -36,6 +37,7 @@ const App = () => {
               <Route path='post' element={<MyPost />} />
               <Route path='comments' element={<MyComment />} />
               <Route path='bookmarks' element={<MyBookMark />} />
+              <Route path='likes' element={<MyLikes />} />
             </Route>
             <Route path='/posts/add' element={<NewPost />} />
             <Route path='/posts/list' element={<PostList />} />

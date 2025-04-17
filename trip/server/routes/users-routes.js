@@ -56,7 +56,7 @@ router.get('/:id/bookMark', userController.getBookMarks);
 
 //내가 좋아요 누른 게시글
 
-router.get('/:id/likes/posts');
+router.get('/:id/likes', userController.getLikes);
 
 
 

@@ -60,13 +60,13 @@ const PlacesList = () => {
                     }
                 }
             );
-            console.log(response.data.BookMarkByUser);
+
             if (response.data.BookMarkByUser) {
                 alert('북마크에 추가되었습니다.');
             } else {
                 alert('북마크가 제거되었습니다.');
             }
-            
+
         } catch (e) {
             console.log('북마크 실패:', e.response?.data?.message || '알 수 없는 오류가 발생했습니다.');
             alert(e.response?.data?.message || '북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.');

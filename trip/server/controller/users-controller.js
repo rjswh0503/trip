@@ -230,54 +230,43 @@ const updateUserById = async (req, res, next) => {
 
 const getBookMarks = async (req,res,next) => {
     const userId = req.userData.userId;
-    const placeId = req.params.placeId;
+    let user;
 
-    let users, place;
+    
 
     try {
-        users = await User.findById(userId);
-        place = await Place.findById(placeId);
+        user = await User.findById(userId).populate('bookMark', 'title content images');
         
-
-        if(!users || !place) {
-            const error = new HttpError('유저나 장소를 찾을 수 없습니다.',404);
+        if (!user) {
+            const error = new HttpError('찜한 여행지 조회 실패', 404);
             return next(error);
         }
-
-        const session = await mongoose.startSession();
-        session.startTransaction();
-
-        try {
-            const isBookmarked = place.bookMark.includes(userId);
-
-            if(isBookmarked) {
-                place.bookMark.pull(userId);
-                user.bookMark.pull(placeId);
-                await place.save({session});
-                await user.save({session});
-                await session.commitTransaction();
-                session.endSession();
-                return res.status(200).json({message: '북마크가 제거되었습니다.'});
-            } else {
-                place.bookMark.push(userId);
-                user.bookMark.push(placeId);
-                await place.save({session});
-                await user.save({session});
-                await session.commitTransaction();
-                session.endSession();
-                return res.status(200).json({message: '북마크에 추가되었습니다.'});
-            }
-
-        } catch (e) {
-            const error = new HttpError('북마크 실패',404);
-            return next(error);
-        } 
-        
-    } catch (e) {
-        const error = new HttpError('북마크 실패',404);
+    } catch(e) {
+        const error = new HttpError('찜한 여행지 조회 실패', 500);
         return next(error);
-
     }
+    res.json({
+        bookMark: user.bookMark
+    });
+}
+
+
+// 좋아요 누른 여행지 조회
+
+const getLikes = async (req,res,next) => {
+    const userId = req.userData.userId;
+    let user;
+
+    try {
+        user = await User.findById(userId).populate('likes', 'title images content');
+    } catch(e) {
+        const error = new HttpError('좋아요 누른 여행지 조회 실패', 500);
+        return next(error);
+    }
+
+    res.json({
+        likes: user.likes
+    });
 }
 
 
@@ -288,6 +277,7 @@ exports.login = login;
 exports.getUserbyId = getUserbyId;
 exports.updateUserById = updateUserById;
 exports.getBookMarks = getBookMarks;
+exports.getLikes = getLikes;
 
 
 
