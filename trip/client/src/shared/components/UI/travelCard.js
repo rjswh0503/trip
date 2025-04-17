@@ -20,8 +20,8 @@ const PlaceCard = ({ place, like, bookMark }) => {
         </Link>
         <h3>{place.title}</h3>
         <div className="place-stats">
-          <span onClick={like} style={{ cursor: 'pointer', fontSize: '1.5rem' }}>
-            ❤️
+          <span className="cursor-pointer" onClick={like} >
+             ❤️
           </span>
           <span>조회수 {place.view}</span>
           <span onClick={bookMark} style={{ cursor: 'pointer', fontSize: '1.5rem' }}>⭐</span>

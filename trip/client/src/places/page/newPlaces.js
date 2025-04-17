@@ -83,9 +83,10 @@ const NewPlaces = () => {
     }
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <h2>여행지 등록</h2>
+        <div className="container max-w-screen-2xl mx-auto p-4 ">
+            <h2 className="text-2xl font-black mt-[150px]">여행지 등록</h2>
+            <form className="grid gap-6 mb-6 md:grid-cols-2 mt-10 border border-gray-300 rounded-lg p-4" onSubmit={handleSubmit}>
+
                 <input name="title" placeholder="제목" onChange={onChange} required />
                 <textarea name="description" placeholder="설명" onChange={onChange} required />
                 <input name="category" placeholder="카테고리" onChange={onChange} required />
@@ -95,18 +96,18 @@ const NewPlaces = () => {
                 <input name="address" placeholder="주소" onChange={onChange} required />
                 <input type="file" name="images" multiple onChange={handleImageChange} required />
                 {previewUrl.length > 0 && (
-                    <div className="image-preview-list">
+                    <div className="">
                         {previewUrl.map((url, idx) => (
                             <img key={idx} src={url} alt={`미리보기-${idx}`} className="image-preview" />
 
                         ))}
                     </div>
                 )}
-                <button type="submit">등록하기</button>
+                <button className="mt-10 w-full bg-yellow-500 text-white px-4 py-2 rounded-lg " type="submit">등록하기</button>
             </form>
 
 
-        </>
+        </div>
     )
 
 }

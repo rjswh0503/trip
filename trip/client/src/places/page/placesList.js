@@ -68,14 +68,14 @@ const PlacesList = () => {
             }
 
         } catch (e) {
-            console.log('북마크 실패:', e.response?.data?.message || '알 수 없는 오류가 발생했습니다.');
+            
             alert(e.response?.data?.message || '북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
         }
     }
 
 
     return (
-        <div className="places-container">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto py-[150px]  max-w-screen-2xl">
             {places.map(place => (
                 <TravelCard key={place._id} place={place} like={() => toggleLikeHandler(place._id)} bookMark={() => toggleBookMarkHandler(place._id)} />
             ))}

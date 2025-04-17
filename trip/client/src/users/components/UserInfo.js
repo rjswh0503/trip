@@ -39,7 +39,7 @@ const UserInfo = () => {
             {user ? (
                 <div className="profile-section">
                     <div className="profile-info">
-                        <img className="profile-image" src={user.image} alt="프로필" />
+                        <img className="w-20 h-20 p-2 rounded-full ring-2 ring-gray-300" src={user.image} alt="프로필" />
                         <div className="profile-text">
                             <h3>{user.name}</h3>
                             <p>{user.email}</p>
