@@ -26,7 +26,7 @@ const NavMain = () => {
                                     <li className="font-black text-yellow-500 hover:text-yellow-600"><NavLink to='/'>관리자페이지</NavLink></li>
                                     </div>
                                 )}
-                                <li className="font-black text-yellow-500 hover:text-yellow-600"><NavLink to={`/${user.userId}/mypage`}><img src={user.image} className="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300" alt='프로필 이미지' /></NavLink></li>
+                                <li className="font-black text-yellow-500 hover:text-yellow-600"><NavLink to={`/${user.userId}/mypage`}><img src={user.image} className="w-12 h-12 p-1 rounded-full ring-2 ring-gray-300 hover:shadow-lg hover:ring-yellow-500" alt='프로필 이미지' /></NavLink></li>
                             </ul>
                         </nav>
                     </header>
