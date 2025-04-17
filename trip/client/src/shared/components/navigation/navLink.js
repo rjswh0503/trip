@@ -10,11 +10,11 @@ const MainNavLink = () => {
   
 
   return (
-    <div className="nav-links-container">
+    <div className="flex space-x-4">
       {isLoggedIn && user ? (
-        <>
+        <div>
           <LogoutButton />
-          <NavLink className="nav-link" to="/posts/list">게시글</NavLink>
+          <NavLink className="text-yellow-500 hover:text-yellow-600 hover:underline" to="/posts/list">게시글</NavLink>
           <NavLink className="nav-link" to="/places/list">여행지</NavLink>
           {user?.role === 'admin' &&(
               <NavLink className="nav-link" to='/places/add'>여행지등록</NavLink>
@@ -24,12 +24,12 @@ const MainNavLink = () => {
           </NavLink>
           
           
-        </>
+        </div>
       ) : (
-        <>
+        <div>
           <NavLink className="nav-btn-outline" to="/login">로그인</NavLink>
           <NavLink className="nav-btn-primary" to="/register">회원가입</NavLink>
-        </>
+        </div>
       )}
       
     </div>
