@@ -20,6 +20,7 @@ const MyBookMark = () => {
                     },
                 });
                 setBookMark(response.data.bookMark);
+                console.log(response.data.bookMark);
             } catch (e) {
                 console.log(e);
             }

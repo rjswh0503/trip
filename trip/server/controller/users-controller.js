@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
+const Place = require('../models/places');
 const user = require('../models/user');
 
 
@@ -45,6 +46,8 @@ const register = async (req, res, next) => {
         email,
         password: hashPassword,
         image: imageUrl || null,
+        likes: [],
+        bookMark: [],
         review: [],
         post: [],
         comment: [],
@@ -154,7 +157,7 @@ const login = async (req, res, next) => {
 }
 
 
-// 특정 유저 프로필 조회 & 작성한 게시글 조회 & 작성한 덧글 조회 & 북마크 조회
+// 특정 유저 프로필 조회 & 작성한 게시글 조회 & 작성한 덧글 조회 
 
 const getUserbyId = async (req, res, next) => {
 
@@ -168,7 +171,7 @@ const getUserbyId = async (req, res, next) => {
                 path: 'post',
                 select: 'title'
             }
-        }).populate('post', 'title').populate('bookMark');
+        }).populate('post', 'title').populate('bookMark', 'title');
     } catch (e) {
         const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 401);
         return next(error);
@@ -223,27 +226,59 @@ const updateUserById = async (req, res, next) => {
 
 
 
-// 찜한 여행지
+// 찜한 여행지 조회
 
-const getBookMarks = async (req, res, next) => {
-    const  userId  = req.userData.userId;
+const getBookMarks = async (req,res,next) => {
+    const userId = req.userData.userId;
+    const placeId = req.params.placeId;
+
+    let users, place;
 
     try {
-        const user = await User.findById(userId).populate('bookMark');
-        if(!user) {
-            const error = new HttpError('유저를 찾을 수 없습니다.', 404);
+        users = await User.findById(userId);
+        place = await Place.findById(placeId);
+        
+
+        if(!users || !place) {
+            const error = new HttpError('유저나 장소를 찾을 수 없습니다.',404);
             return next(error);
         }
 
+        const session = await mongoose.startSession();
+        session.startTransaction();
 
-    } catch(e){
-        const error = new HttpError('북마크 조회 실패', 500);
+        try {
+            const isBookmarked = place.bookMark.includes(userId);
+
+            if(isBookmarked) {
+                place.bookMark.pull(userId);
+                user.bookMark.pull(placeId);
+                await place.save({session});
+                await user.save({session});
+                await session.commitTransaction();
+                session.endSession();
+                return res.status(200).json({message: '북마크가 제거되었습니다.'});
+            } else {
+                place.bookMark.push(userId);
+                user.bookMark.push(placeId);
+                await place.save({session});
+                await user.save({session});
+                await session.commitTransaction();
+                session.endSession();
+                return res.status(200).json({message: '북마크에 추가되었습니다.'});
+            }
+
+        } catch (e) {
+            const error = new HttpError('북마크 실패',404);
+            return next(error);
+        } 
+        
+    } catch (e) {
+        const error = new HttpError('북마크 실패',404);
         return next(error);
+
     }
-
-    res.json({ bookMark: user.bookmarks });
 }
-
 
 
 

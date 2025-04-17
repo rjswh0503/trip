@@ -10,6 +10,7 @@ const { default: mongoose } = require('mongoose');
 
 
 
+
 //여행지 추가 
 
 const addPlaces = async (req, res, next) => {
@@ -65,10 +66,10 @@ const addPlaces = async (req, res, next) => {
     try {
         const session = await mongoose.startSession();
         session.startTransaction();
-        await createPlaces.save({ session }); // ✅ 여기서 저장
+        await createPlaces.save({ session });
         user.places.push(createPlaces);
         await user.save({ session });
-        await session.commitTransaction(); // ❗여기 도달 못 하면 저장도 무효
+        await session.commitTransaction();
         session.endSession();
 
     } catch (e) {
@@ -193,42 +194,56 @@ const toggleLike = async (req, res, next) => {
     const userId = req.userData.userId; // 현재 로그인한 유저
     const placesId = req.params.id;
 
-    let places;
+    let place, user;
 
     try {
-        places = await Place.findById(placesId);
-        if (!places) {
-            const error = new HttpError('여행지를 찾을 수 없습니다.', 404);
+        user = await User.findById(userId);
+        place = await Place.findById(placesId);
+
+        if (!place || !user) {
+            const error = new HttpError('여행지나 유저를 찾을 수 없습니다.', 404);
             return next(error);
         }
     } catch (e) {
         const error = new HttpError('서버 오류', 500);
         return next(error);
     }
-
-
-    const Liked = places.likes.includes(userId);
+    const session = await mongoose.startSession();
+    session.startTransaction();
 
     try {
-        if (Liked) {
-            places.likes.pull(userId);
+        const isBookmarked = place.likes.includes(userId);
+
+        if (isBookmarked) {
+            place.likes.pull(userId);
+            user.likes.pull(placesId);
+            await place.save({ session });
+            await user.save({ session });
+            await session.commitTransaction();
+            session.endSession();
+            return res.status(200).json({
+                message: '좋아요가 제거되었습니다.',
+                LikeByUser: false 
+            });
         } else {
-            places.likes.push(userId);
+            place.likes.push(userId);
+            user.likes.push(placesId);
+            await place.save({ session });
+            await user.save({ session });
+            await session.commitTransaction();
+            session.endSession();
+            return res.status(200).json({
+                message: '좋아요 추가되었습니다.',
+                LikeByUser: true 
+            });
         }
 
-        await places.save();
-
     } catch (e) {
-        const error = new HttpError('좋아요 저장 실패', 500);
+        await session.abortTransaction();
+        session.endSession();
+        const error = new HttpError('좋아요 실패', 500);
         return next(error);
     }
-
-    res.status(200).json({
-        message: Liked ? '좋아요 취소' : '좋아요 추가',
-        likesCount: places.likes.length,
-        likedByUser: !Liked
-    })
-
 }
 
 
@@ -238,46 +253,63 @@ const toggleLike = async (req, res, next) => {
 
 // 여행지 찜
 
-const toggleBookMark = async (req,res,next) => {
-    const placesId  = req.params.id;
-    const  userId   = req.userData.userId;
+const toggleBookMark = async (req, res, next) => {
+    const userId = req.userData.userId;
+    const placesId = req.params.id;
 
-    let places;
+    let users, place;
 
-    try {
-        places = await Place.findById(placesId);
-        if(!places){
-            const erorr = new HttpError('여행지를 찾을 수 없습니다.', 404);
-            return next(erorr);
-        }
-    } catch(e){
-        const error = new HttpError('서버 오류', 500);
-        return enxt(error);
-    }
-
-    const BookMark = places.bookMark.includes(userId);
-
-    
 
     try {
-        if(BookMark){
-            places.bookMark.pull(userId);
-        }else {
-            places.bookMark.push(userId);
+        users = await User.findById(userId);
+        place = await Place.findById(placesId);
+
+        if (!users || !place) {
+            const error = new HttpError('유저나 장소를 찾을 수 없습니다.', 404);
+            return next(error);
         }
 
-        await places.save();
-    } catch(e){
-        const error = new HttpError('북마크 저장 실패', 404);
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+        try {
+            const isBookmarked = place.bookMark.includes(userId);
+
+            if (isBookmarked) {
+                place.bookMark.pull(userId);
+                users.bookMark.pull(placesId);
+                await place.save({ session });
+                await users.save({ session });
+                await session.commitTransaction();
+                session.endSession();
+                return res.status(200).json({
+                    message: '북마크가 제거되었습니다.',
+                    BookMarkByUser: false 
+                });
+            } else {
+                place.bookMark.push(userId);
+                users.bookMark.push(placesId);
+                await place.save({ session });
+                await users.save({ session });
+                await session.commitTransaction();
+                session.endSession();
+                return res.status(200).json({
+                    message: '북마크에 추가되었습니다.',
+                    BookMarkByUser: true 
+                });
+            }
+
+        } catch (e) {
+            await session.abortTransaction(); 
+            session.endSession();
+            const error = new HttpError('북마크 실패', 500); 
+            return next(error);
+        }
+
+    } catch (e) {
+        const error = new HttpError('북마크 실패', 500); 
         return next(error);
     }
-
-    res.status(200).json({
-        message: '북마크 저장 성공',
-        BookMarkByUser: !BookMark,
-    })
-
-
 }
 
 
