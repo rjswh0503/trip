@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-
+import { ToastContainer } from 'react-toastify';
 
 import { AuthProvider } from './shared/context/auth-context';
 import Register from './users/page/register';
@@ -29,6 +29,7 @@ const App = () => {
       <AuthProvider>
         <NavMain />
         <main>
+          <ToastContainer />
           <Routes>
             <Route path='/' element={<Main />} />
             <Route path='/register' element={<Register />} />

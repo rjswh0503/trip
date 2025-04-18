@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 
@@ -26,24 +26,26 @@ const Login = () => {
             const responseData = await axios.post('http://localhost:5000/api/users/login', {
 
                 email: formData.email,
-                password: formData.password,
-                name: formData.name
+                password: formData.password
             });
             setFormData({
                 email: '',
                 password: ''
             });
             const token = responseData.data.token;
+            console.log(token);
             localStorage.setItem('token', token);
             setToken(token);
             setIsLoggedIn(true);
-            alert(`로그인 성공!!`)
+            toast.success('로그인 성공');
             Navigate('/');
         } catch (e) {
             console.log('로그인 실패했습니다.')
             alert('이메일이 틀렸거나, 없는 이메일 입니다. 회원가입 부터 진행해주세요.');
         }
     }
+
+    
 
 
 
@@ -57,10 +59,10 @@ const Login = () => {
 
     return (
         <div className='login-container'>
-            
-            
+
+
             <form className='login-box' onSubmit={loginHandler}>
-            <h2>로그인</h2>
+                <h2>로그인</h2>
                 <input type='email' name="email" placeholder='이메일을 입력하세요.' onChange={onChange} />
                 <input type='password' name='password' placeholder='비밀번호를 입력하세요.' onChange={onChange} />
                 <button type='submit'>로그인</button>
