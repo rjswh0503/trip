@@ -40,8 +40,9 @@ const Login = () => {
             toast.success('로그인 성공');
             Navigate('/');
         } catch (e) {
-            console.log('로그인 실패했습니다.')
-            alert('이메일이 틀렸거나, 없는 이메일 입니다. 회원가입 부터 진행해주세요.');
+            
+            toast.error('이메일이 틀렸거나, 없는 이메일 입니다. 회원가입 부터 진행해주세요.');
+            
         }
     }
 
