@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { toast } from 'react-toastify';
+
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
+import Swal from 'sweetalert2';
 
 import './login.css';
 
@@ -37,11 +38,26 @@ const Login = () => {
             localStorage.setItem('token', token);
             setToken(token);
             setIsLoggedIn(true);
-            toast.success('로그인 성공');
+            await Swal.fire({
+                title: '로그인 성공',
+                icon: 'success',
+                confirmButtonText: '확인',
+                allowOutsideClick: false,
+                text: '로그인 성공!!!',
+                timer: 2000,
+                timerProgressBar: true,
+            });
             Navigate('/');
         } catch (e) {
             
-            toast.error('이메일이 틀렸거나, 없는 이메일 입니다. 회원가입 부터 진행해주세요.');
+            Swal.fire({
+                title: '로그인 실패',
+                icon: 'error',
+                confirmButtonText: '확인',
+                text: '이메일이 틀렸거나, 없는 이메일 입니다.',
+                timer: 2000,
+                timerProgressBar: true,
+            });
             
         }
     }

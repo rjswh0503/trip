@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-
+import Swal from 'sweetalert2';
 
 
 
@@ -45,11 +46,26 @@ const Register = () => {
             
             setImageFile(null);
             setPrviewUrl('');
-            console.log('회원가입 성공!!' + responseData.data.formData);
-            alert('회원가입 성공!');
+            console.log(responseData.data.formData);
+            Swal.fire({
+                title: '회원가입 성공',
+                icon: 'success',
+                confirmButtonText: '확인',
+                text: '회원가입 성공 !! 로그인 해주세요.',
+                timer: 2000,
+                timerProgressBar: true,
+            });
             Navigate('/login')
         } catch (e) {
-
+            console.log(e);
+            Swal.fire({
+                title: '회원가입 실패',
+                icon: 'error',
+                confirmButtonText: '확인',
+                text: '회원가입 실패!! 다시 시도해주세요.',
+                timer: 2000,
+                timerProgressBar: true,
+            });
         }
     }
     const handleImageChange = (e) => {

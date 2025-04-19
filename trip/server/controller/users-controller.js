@@ -18,7 +18,7 @@ const register = async (req, res, next) => {
     let existingUser;
 
     try {
-        existingUser = await User.findOne({ email: email});
+        existingUser = await User.findOne({ email: email });
     } catch (e) {
 
         const error = new HttpError('회원가입 실패', 500);
@@ -29,6 +29,8 @@ const register = async (req, res, next) => {
         const error = new HttpError('사용자가 이미 존재합니다.', 401);
         return next(error);
     }
+
+
 
 
     let hashPassword;

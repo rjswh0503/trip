@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import './placesList.css';
-import TravelCard from '../../shared/components/UI/travelCard';
 import { useAuth } from '../../shared/context/auth-context';
+import Swal from 'sweetalert2';
+import TravelCard from '../../shared/components/UI/travelCard';
+import './placesList.css';
 
 
 const PlacesList = () => {
@@ -39,13 +40,35 @@ const PlacesList = () => {
                 }
             );
             if (response.data.LikeByUser) {
-                alert('좋아요를 눌렀습니다.');
+                Swal.fire({
+                    title: '좋아요 누르기',
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                    allowOutsideClick: false,
+                    text: '좋아요를 눌렀습니다.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
             } else {
-                alert('좋아요 취소했습니다.');
+                Swal.fire({
+                    title: '좋아요 취소',
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                    allowOutsideClick: false,
+                    text: '좋아요를 취소했습니다.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
             }
         } catch (e) {
             console.log('좋아요 실패', e);
-            alert('오류 발생');
+            Swal.fire({
+                title: '좋아요 실패',
+                icon: 'error',
+                confirmButtonText: '확인',
+                allowOutsideClick: false,
+                text: '좋아요 처리 중 오류가 발생했습니다. 다시 시도해주세요.',
+            });
         }
     };
 
@@ -62,14 +85,38 @@ const PlacesList = () => {
             );
 
             if (response.data.BookMarkByUser) {
-                alert('북마크에 추가되었습니다.');
+                Swal.fire({
+                    title: '북마크 누르기',
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                    allowOutsideClick: false,
+                    text: '북마크를 눌렀습니다.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
             } else {
-                alert('북마크가 제거되었습니다.');
+                Swal.fire({
+                    title: '북마크 제거',
+                    icon: 'success',
+                    confirmButtonText: '확인',
+                    allowOutsideClick: false,
+                    text: '북마크를 제거했습니다.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
             }
 
         } catch (e) {
             
-            alert(e.response?.data?.message || '북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.');
+            Swal.fire({
+                title:'북마크 처리 오류',
+                icon:'error',
+                confirmButtonText: '확인',
+                allowOutsideClick: false,
+                text: '북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.',
+                timer: 2000,
+                timerProgressBar: true,
+            });
         }
     }
 

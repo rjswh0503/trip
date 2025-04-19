@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { jwtDecode } from 'jwt-decode';
 import { useNavigate } from "react-router-dom"; 
+import { toast } from 'react-toastify';
 
 const AuthContext = createContext();
 
@@ -23,7 +24,7 @@ export const AuthProvider = ({ children }) => {
                     setToken(null);
                     setUser(null);
                     setIsLoggedIn(false);
-                    alert('세션이 만료되었습니다. 다시 로그인해주세요.');
+                    toast.success('세션이 만료되었습니다. 다시 로그인해주세요.');
                     navigate('/login');
                 } else {
                     // 토큰 살아있음
