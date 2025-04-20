@@ -21,7 +21,7 @@ import PlacesList from './places/page/placesList';
 import PlacesDetail from './places/page/placesDetail';
 import MyBookMark from './users/components/myBookMark';
 import MyLikes from './users/components/myLikes';
-
+import UserUpdate from './users/components/userUpdate';
 const App = () => {
 
   return (
@@ -49,6 +49,7 @@ const App = () => {
             <Route path='/places/add' element={<NewPlaces />} />
             <Route path='/places/list' element={<PlacesList />} />
             <Route path='/places/:id' element={<PlacesDetail />} />
+            <Route path="/users/:id/edit" element={<UserUpdate />} />
           </Routes>
         </main>
       </AuthProvider>

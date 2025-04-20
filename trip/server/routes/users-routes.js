@@ -29,19 +29,22 @@ router.post('/register',
 // 로그인 router
 router.post('/login', userController.login);
 
-
 // 프로필조회 router
 // 특정 :id 조회 
 router.get('/:id/profile', userController.getUserbyId);
 
+
 router.use(checkAuth);
 
+
+
+
 //프로필 수정 router
-router.patch('/:id/profile', userController.updateUserById);
+router.patch('/:id/edit', userController.updateUserById);
 
 //회원 탈퇴 router
 // Param을 사용하여 특정 :id(param) 삭제 
-router.delete('/:id');
+router.delete('/:id/delete', userController.deleteUserById);
 
 
 //내가 쓴 게시글

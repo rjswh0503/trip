@@ -3,8 +3,11 @@ const jwt = require('jsonwebtoken');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
-const Place = require('../models/places');
-const user = require('../models/user');
+
+const { default: mongoose } = require('mongoose');
+const Post = require('../models/post');
+const Comment = require('../models/comment');
+const Review = require('../models/review');
 
 
 
@@ -53,7 +56,7 @@ const register = async (req, res, next) => {
         review: [],
         post: [],
         comment: [],
-        
+
     });
 
     try {
@@ -78,7 +81,7 @@ const register = async (req, res, next) => {
         const error = new HttpError('회원가입에 실패했습니다. 다시 시도해주세요.', 500);
         return next(error);
     }
-    res.status(201).json({ name: createUser.name, email: createUser.email,image: createUser.image, token: token });
+    res.status(201).json({ name: createUser.name, email: createUser.email, image: createUser.image, token: token });
 
     console.log(token)
 
@@ -160,7 +163,7 @@ const login = async (req, res, next) => {
 
 
 // 특정 유저 프로필 조회 & 작성한 게시글 조회 & 작성한 덧글 조회 
-
+// 수정 필요
 const getUserbyId = async (req, res, next) => {
 
     const userId = req.params.id;
@@ -179,7 +182,7 @@ const getUserbyId = async (req, res, next) => {
         return next(error);
     }
 
-    
+
 
     res.json({
         name: profile.name,
@@ -190,60 +193,169 @@ const getUserbyId = async (req, res, next) => {
         comment: profile.comments,
         role: profile.role,
         createdAt: profile.createdAt
-        
+
     });
 
 }
 
 // 유저 프로필 수정 로직
+// 수정 필요 ( 비밀번호 확인 후 수정 가능하도록 수정 필요 )
 
 const updateUserById = async (req, res, next) => {
 
     const { name, password } = req.body;
     const userId = req.userData.userId;
 
-    let updateUser;
+    let user;
+    try {
+        user = await User.findById(userId);
+
+        if (!user) {
+            const error = new HttpError('해당 유저가 없습니다.', 404);
+            return next(error);
+        }
+
+        // 비밀번호 업데이트 로직
+        if (password) {
+            try {
+                const hashPassword = await bcrypt.hash(password, 12);
+                user.password = hashPassword;
+            } catch (e) {
+                const error = new HttpError('비밀번호 해싱에 실패했습니다.', 500);
+                return next(error);
+            }
+        }
+
+        // 이름 업데이트 로직
+        if (name) {
+            user.name = name;
+            
+        }
+
+        await user.save();
+
+        res.status(200).json({
+            message: '회원정보가 성공적으로 수정되었습니다.',
+            user: {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                image: user.image
+            }
+        });
+
+    } catch (e) {
+        const error = new HttpError('회원정보 수정 실패', 500);
+        return next(error);
+    }
+}
+
+
+// 비밀번호 확인 로직 (회원 탈퇴 및 회원정보 수정 시 사용)
+const checkPassword = async (req, res, next) => {
+    const userId = req.userData.userId;
+    const { password } = req.body;
+
+    let user;
 
     try {
-        updateUser = await User.findById(userId);
+        user = await User.findById(userId);
+
+        if (!user) {
+            const error = new HttpError('해당하는 유저가 없습니다.', 404);
+            return next(error);
+        }
+
+        const isValidPassword = await bcrypt.compare(password, user.password);
+
+        if (isValidPassword) {
+            res.json({
+                message: '비밀번호가 일치합니다.',
+                isValid: true
+            })
+        } else {
+            res.json({
+                message: '비밀번호가 일치하지 않습니다.',
+                isValid: false
+            })
+        }
+
     } catch (e) {
-        const error = new HttpError('업데이트 하는데 실패했습니다. 다시 시도해 주세요.', 500);
+        const error = new HttpError('비밀번호 확인 실패', 500);
         return next(error);
-        // return next(error)가 없으면 오류 발생시 코드 작동 중지가 안된다.
     }
 
-    updateUser.name = name
-    updateUser.password = password
+}
 
+
+// 회원 탈퇴 로직
+
+const deleteUserById = async (req, res, next) => {
+    const userId = req.userData.userId;
+
+    let user;
 
     try {
-        updateUser.save();
+        user = await User.findById(userId);
+        if (!user) {
+            const error = new HttpError('해당하는 유저가 없습니다.', 404);
+            return next(error);
+        }
+
+        const session = await mongoose.startSession();
+        session.startTransaction();
+
+        try {
+            // 사용자 삭제
+            await User.deleteOne({ _id: userId }, { session });
+            
+            // 사용자의 게시글 삭제
+            await Post.deleteMany({ author: userId }, { session });
+            
+            // 사용자의 댓글 삭제
+            await Comment.deleteMany({ author: userId }, { session });
+            
+            // 사용자의 리뷰 삭제
+            await Review.deleteMany({ author: userId }, { session });
+
+            await session.commitTransaction();
+            session.endSession();
+
+            res.status(200).json({
+                message: '회원탈퇴 성공',
+                user: user.name
+            });
+
+        } catch (err) {
+            await session.abortTransaction();
+            session.endSession();
+            throw err;
+        }
+
     } catch (e) {
-        const error = new HttpError('업데이트 실패 다시 시도해 주세요.', 500);
+        const error = new HttpError('회원 탈퇴 실패', 500);
         return next(error);
     }
-
-
 }
 
 
 
 // 찜한 여행지 조회
 
-const getBookMarks = async (req,res,next) => {
+const getBookMarks = async (req, res, next) => {
     const userId = req.userData.userId;
     let user;
 
-    
+
 
     try {
         user = await User.findById(userId).populate('bookMark', 'title content images');
-        
+
         if (!user) {
             const error = new HttpError('찜한 여행지 조회 실패', 404);
             return next(error);
         }
-    } catch(e) {
+    } catch (e) {
         const error = new HttpError('찜한 여행지 조회 실패', 500);
         return next(error);
     }
@@ -255,13 +367,13 @@ const getBookMarks = async (req,res,next) => {
 
 // 좋아요 누른 여행지 조회
 
-const getLikes = async (req,res,next) => {
+const getLikes = async (req, res, next) => {
     const userId = req.userData.userId;
     let user;
 
     try {
         user = await User.findById(userId).populate('likes', 'title images content');
-    } catch(e) {
+    } catch (e) {
         const error = new HttpError('좋아요 누른 여행지 조회 실패', 500);
         return next(error);
     }
@@ -274,10 +386,14 @@ const getLikes = async (req,res,next) => {
 
 
 
+
+
 exports.register = register;
 exports.login = login;
 exports.getUserbyId = getUserbyId;
 exports.updateUserById = updateUserById;
+exports.checkPassword = checkPassword;
+exports.deleteUserById = deleteUserById;
 exports.getBookMarks = getBookMarks;
 exports.getLikes = getLikes;
 

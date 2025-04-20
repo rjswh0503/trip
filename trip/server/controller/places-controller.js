@@ -307,7 +307,7 @@ const toggleBookMark = async (req, res, next) => {
         }
 
     } catch (e) {
-        const error = new HttpError('북마크 실패', 500); 
+        const error = new HttpError('서버오류', 500); 
         return next(error);
     }
 }

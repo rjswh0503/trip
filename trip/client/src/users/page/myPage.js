@@ -6,14 +6,12 @@ import './myPage.css';
 const MyPage = () => {
     const location = useLocation();
 
-    
+
 
     return (
-        <div className="mypage-container">
-            
-            <UserInfo />
-
-            <nav className="mypage-tabs">
+        <div className="container mx-auto">
+                <UserInfo />
+            <nav className="mypage-tabs justify-center py-10">
                 <Link
                     to="post"
                     className={location.pathname.includes('/post') ? 'tab active' : 'tab'}

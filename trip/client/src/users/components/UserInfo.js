@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../shared/context/auth-context';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
-import './userInfo.css';
+
 
 const UserInfo = () => {
     const { token } = useAuth();
@@ -35,15 +35,18 @@ const UserInfo = () => {
         : '';
 
     return (
-        <div>
+        <div className="container mx-auto mt-10">
             {user ? (
-                <div className="profile-section">
-                    <div className="profile-info">
+                <div>
+                    <div className="flex items-center gap-4 justify-center">
                         <img className="w-20 h-20 p-2 rounded-full ring-2 ring-gray-300" src={user.image} alt="프로필" />
                         <div className="profile-text">
-                            <h3>{user.name}</h3>
+                            <div className='flex items-center gap-2'>
+                                <h1 className='text-2xl font-black'>{user.name}</h1>
+                                <p className='text-sm text-gray-500 hover:text-gray-700 hover:underline cursor-pointer'><Link to={`/users/${id}/edit`}>회원정보 수정</Link></p>
+                            </div>
                             <p>{user.email}</p>
-                            <span>가입일 : {formattedDate}</span>
+                            <span className='text-sm text-gray-500'>가입일 : {formattedDate}</span>
                         </div>
                     </div>
                 </div>
