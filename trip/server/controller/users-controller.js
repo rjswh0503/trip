@@ -178,17 +178,23 @@ const getUserbyId = async (req, res, next) => {
             }
         }).populate('post', 'title').populate('bookMark', 'title');
     } catch (e) {
-        const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 401);
+        const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 500);
         return next(error);
     }
 
-
+    if (!profile) {
+        return res.status(404).json({ message: '해당 유저를 찾을 수 없습니다.' });
+    }
 
     res.status(200).json({
         message: '프로필 불러오기 성공',
-        user: profile
-    })
-
+        name: profile.name,
+        email: profile.email,
+        post: profile.post || [],
+        comment: profile.comments || [],
+        image: profile.image || '',
+        createdAt: profile.createdAt || '',
+    });
 }
 
 // 유저 프로필 수정 로직
@@ -222,7 +228,7 @@ const updateUserById = async (req, res, next) => {
         // 이름 업데이트 로직
         if (name) {
             user.name = name;
-            
+
         }
 
         await user.save();
@@ -251,50 +257,42 @@ const updateUserById = async (req, res, next) => {
 const deleteUserById = async (req, res, next) => {
     const userId = req.userData.userId;
 
-    let user;
-
     try {
-        user = await User.findById(userId);
+        const user = await User.findById(userId);
         if (!user) {
-            const error = new HttpError('해당하는 유저가 없습니다.', 404);
-            return next(error);
+            return next(new HttpError('해당하는 유저가 없습니다.', 404));
         }
 
         const session = await mongoose.startSession();
         session.startTransaction();
 
         try {
-            // 사용자 삭제
             await User.deleteOne({ _id: userId }, { session });
-            
-            // 사용자의 게시글 삭제
+
             await Post.deleteMany({ author: userId }, { session });
-            
-            // 사용자의 댓글 삭제
+
             await Comment.deleteMany({ author: userId }, { session });
-            
-            // 사용자의 리뷰 삭제
+
             await Review.deleteMany({ author: userId }, { session });
 
             await session.commitTransaction();
             session.endSession();
 
-            res.status(200).json({
+            return res.status(200).json({
                 message: '회원탈퇴 성공',
                 user: user.name
             });
-
         } catch (err) {
             await session.abortTransaction();
             session.endSession();
-            throw err;
-        }
 
+            return next(new HttpError('회원 탈퇴 도중 오류가 발생했습니다.', 500));
+        }
     } catch (e) {
-        const error = new HttpError('회원 탈퇴 실패', 500);
-        return next(error);
+        return next(new HttpError('회원 탈퇴 실패', 500));
     }
 }
+
 
 
 
@@ -339,6 +337,8 @@ const getLikes = async (req, res, next) => {
     });
 }
 
+
+// 친구추가 로직
 
 
 

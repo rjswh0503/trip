@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 const UserDelete = () => {
 
-    const { token, setToken,  setIsLoggedIn } = useAuth();
+    const { token, setToken, setIsLoggedIn, setUser } = useAuth();
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -28,6 +28,7 @@ const UserDelete = () => {
                 localStorage.removeItem('token');
                 setToken(null);
                 setIsLoggedIn(false);
+                
                 await Swal.fire({
                     title: '회원 탈퇴 성공',
                     icon: 'success',
@@ -37,12 +38,16 @@ const UserDelete = () => {
                     timer: 2000,
                     timerProgressBar: true,
                 });
-                
 
                 navigate("/")
             } catch (e) {
                 console.log(e);
-                alert('회원탈퇴 실패');
+                await Swal.fire({
+                    title: '회원탈퇴 실패',
+                    text: e.response?.data?.message || '서버 오류가 발생했습니다.',
+                    icon: 'error',
+                    confirmButtonText: '확인'
+                });
             }
 
         }

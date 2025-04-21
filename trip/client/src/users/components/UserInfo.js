@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../shared/context/auth-context';
 import axios from 'axios';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import UserDelete from './userDelete';
 
 
 
 const UserInfo = () => {
-    const { token } = useAuth();
+    const { token, setIsLoggedIn, setToken } = useAuth();
     const { id } = useParams();
+    const navigate = useNavigate();
     const [user, setUser] = useState(null);
 
     useEffect(() => {
@@ -20,8 +21,13 @@ const UserInfo = () => {
                     },
                 });
                 setUser(response.data);
-            } catch (e) {
-                console.log(e);
+            } catch (error) {
+                if(error.response && error.response.status === 404){
+                    console.log('회원탈퇴로 유저 정보 없음');
+                    navigate('/');
+                } else {
+                    console.error(error);
+                }
             }
         };
         fetchData();
