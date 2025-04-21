@@ -1,18 +1,18 @@
 const HttpError = require('../models/http-error');
-const { default: mongoose } = require('mongoose');
 const User = require('../models/user');
 const Review = require('../models/review');
 const Place = require('../models/places');
+const mongoose = require('mongoose');
 
 
 
 //리뷰 작성 로직
 
 const addReview = async (req, res, next) => {
-    const { title, content, placeId, rating } = req.body;
+    const { title, content, rating, placeId } = req.body;
     const userId = req.userData.userId;
-
     
+   
 
     let user, place;
 
@@ -21,18 +21,18 @@ const addReview = async (req, res, next) => {
         user = await User.findById(userId);
         place = await Place.findById(placeId);
 
-        if(!user){
+        if (!user) {
             const error = new HttpError('유저가 없습니다.', 401);
             return next(error);
-        } 
+        }
 
-        if(!place) {
+        if (!place) {
             const error = new HttpError('해당 장소가 없습니다.', 401);
             return next(error);
 
         }
 
-        const session = mongoose.startSession();
+        const session = await mongoose.startSession();
         await session.startTransaction();
 
         const createReview = new Review({
@@ -40,7 +40,6 @@ const addReview = async (req, res, next) => {
             placeId,
             title,
             content,
-            rating
         });
 
         await createReview.save({ session });
@@ -51,9 +50,9 @@ const addReview = async (req, res, next) => {
         place.reviews.push(createReview);
         await place.save({ session });
 
-        
+
         await session.commitTransaction();
-        await session.endSession();
+        session.endSession();
 
         res.status(201).json({
             message: '리뷰 작성 완료',
@@ -61,12 +60,13 @@ const addReview = async (req, res, next) => {
         })
 
 
-    } catch(e){
+    } catch (e) {
         const error = new HttpError('리뷰 작성 실패', 500);
+        console.error('리뷰 작성 실패 서버 에러:', e);
         return next(error);
     }
 
-    
+
 }
 
 
@@ -82,13 +82,13 @@ const PlacesByReview = async (req, res, next) => {
         review = await Place.findById({ placeId }).populate('author', 'name image');
 
 
-        if(!review){
+        if (!review) {
             const error = new HttpError('해당 장소의 리뷰를 찾을 수 없습니다.', 401);
             return next(error);
         }
-        
 
-    } catch(e){
+
+    } catch (e) {
         const error = new HttpError('리뷰 조회 실패!', e);
     }
     res.status(200).json({

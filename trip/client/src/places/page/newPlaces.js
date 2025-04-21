@@ -10,7 +10,7 @@ import { useNavigate } from "react-router-dom";
 const NewPlaces = () => {
 
     const { token } = useAuth();
-    const Navigate = useNavigate();
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
         description: '',
@@ -75,7 +75,7 @@ const NewPlaces = () => {
             setImageFiles([]);
             setPreviewUrl([]);
             alert('장소 등록 완료');
-            Navigate('/places/list')
+            navigate('/places/list')
             console.log(response.data);
         } catch (e) {
             alert(e.response?.data?.message || '장소 등록 실패');
@@ -87,14 +87,14 @@ const NewPlaces = () => {
             <h2 className="text-2xl font-black mt-[150px]">여행지 등록</h2>
             <form className="grid gap-6 mb-6 md:grid-cols-2 mt-10 border border-gray-300 rounded-lg p-4" onSubmit={handleSubmit}>
 
-                <input name="title" placeholder="제목" onChange={onChange} required />
-                <textarea name="description" placeholder="설명" onChange={onChange} required />
-                <input name="category" placeholder="카테고리" onChange={onChange} required />
-                <input name="country" placeholder="국가" onChange={onChange} required />
-                <input name="city" placeholder="도시" onChange={onChange} required />
-                <input name="region" placeholder="지역" onChange={onChange} required />
-                <input name="address" placeholder="주소" onChange={onChange} required />
-                <input type="file" name="images" multiple onChange={handleImageChange} required />
+                <input name="title" placeholder="제목" value={formData.title} onChange={onChange} required />
+                <textarea name="description" placeholder="설명" value={formData.description} onChange={onChange} required />
+                <input name="category" placeholder="카테고리" value={formData.category} onChange={onChange} required />
+                <input name="country" placeholder="국가" value={formData.country} onChange={onChange} required />
+                <input name="city" placeholder="도시" value={formData.city} onChange={onChange} required />
+                <input name="region" placeholder="지역" value={formData.region} onChange={onChange} required />
+                <input name="address" placeholder="주소" value={formData.address} onChange={onChange} required />
+                <input type="file" name="images"  multiple onChange={handleImageChange} required />
                 {previewUrl.length > 0 && (
                     <div className="">
                         {previewUrl.map((url, idx) => (

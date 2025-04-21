@@ -1,4 +1,4 @@
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 const HttpError = require('../models/http-error');
 const Post = require('../models/post');
 const User = require('../models/user');

@@ -4,13 +4,14 @@ const reviewController = require('../controller/review-controller');
 const router = express.Router();
 
 
+router.use(checkAuth);
+
 // 특정 장소의 리뷰 조회
 router.get('/:id/review', reviewController.PlacesByReview);
 
-router.use(checkAuth);
 
 // 여행 리뷰 작성
-router.post('/', reviewController.addReview);
+router.post('/add', reviewController.addReview);
 
 //여행 리뷰 조회
 router.get('/:id/review/:id');

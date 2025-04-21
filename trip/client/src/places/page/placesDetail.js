@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Map from '../components/map';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import './placesDetail.css';
 import { useAuth } from '../../shared/context/auth-context';
+
 
 const PlacesDetail = () => {
     const { token, user } = useAuth();
     const { id } = useParams();
-    const  Navigate  = useNavigate();
+    const Navigate = useNavigate();
     const [place, setPlace] = useState(null);
 
 
@@ -49,7 +50,7 @@ const PlacesDetail = () => {
                 <p className="detail-description">{place.description}</p>
 
                 <div className="detail-info">
-                    <span>⭐ {place.review || ''}리뷰 보러가기</span>
+                    <span>⭐<Link to="/">리뷰 보러가기</Link></span>
                     <span>📍 {place.address}</span>
                     <span>조회수{place.view}</span>
                 </div>
@@ -58,8 +59,14 @@ const PlacesDetail = () => {
                     <Map lat={place.location.lat} lng={place.location.lng} />
                 </div>
                 {user.role === 'admin' && (
-                    <div>
+                    <div className='flex justify-around'>
                         <button onClick={handleDelete}>삭제</button>
+
+                    </div>
+                )}
+                {user.role === 'User' && (
+                    <div>
+                        <Link to={`/places/${id}/review/add`}>후기작성</Link>
                     </div>
                 )}
             </div>
