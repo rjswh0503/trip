@@ -188,6 +188,7 @@ const getUserbyId = async (req, res, next) => {
 
     res.status(200).json({
         message: '프로필 불러오기 성공',
+        id: profile.id,
         name: profile.name,
         email: profile.email,
         post: profile.post || [],

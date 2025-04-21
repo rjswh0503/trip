@@ -10,8 +10,8 @@ const reviewSchema = new mongoose.Schema(
         content: { type: String, required: true },
         image: { type: String, required: true },
         rating: { type: Number, required: true, default: 0 },
-        comments: [{ type: mongoose.Types.ObjectId, ref: 'Comment'}],
-        likes: { type: Number, required: true, default: 0 }
+        view: { type: Number, default: 0 },
+        likes: [{ type: Number, required: true, ref: 'User'}]
     },
     { timestamps: true }
 );

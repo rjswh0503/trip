@@ -48,6 +48,7 @@ const PostDetail = () => {
                         },
                     })
                 setDetail(response.data.post);
+                console.log(response.data.post);
 
             } catch (e) {
                 console.log(e);
@@ -143,9 +144,10 @@ const PostDetail = () => {
                         <h1 className="post-title"> {detail.title}</h1>
                         <div className="post-meta">
                             <span>
-
-                                <Link to={`/${detail.author._id}/mypage`} className="post-author-link">
-                                    {detail.author?.name}
+                                <Link to={`/${detail.author._id}/mypage`} className="flex items-center gap-3 ">
+                                <img className="w-10 h-10 rounded-full hover:shadow-md" src={detail.author?.image} alt='프로필 이미지'></img>
+                                <p className='text-sm font-black text-yellow-500 hover:text-yellow-700 hover:underline'>{detail.author?.name}</p>
+                                    
                                 </Link>
                             </span>
                             <span>{new Date(detail.createdAt).toLocaleString()}</span>

@@ -33,7 +33,9 @@ const PostList = () => {
 
 
     if (!posts || posts.length === 0) {
-        return <p style={{ textAlign: 'center', marginTop: '10rem' }}>게시글이 없습니다...</p>
+        return <div style={{ textAlign: 'center', marginTop: '10rem' }}>게시글이 없습니다...
+        <p><Link to="/posts/add" style={{ textDecoration: 'none' }}>게시글작성</Link></p>
+        </div>
     }
 
 
@@ -43,7 +45,7 @@ const PostList = () => {
         <div>
             <div className='post-list'>
                 <h1 style={{ marginBottom: '10rem' }}>여행 게시판</h1>
-                <p><Link to="/posts/add" style={{ textDecoration: 'none' }}>게시글작성</Link></p>
+                
                 <div className='post-grid'>
                     {posts && posts.map(post => (
                         <Card

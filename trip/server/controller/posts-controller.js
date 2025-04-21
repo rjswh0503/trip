@@ -5,10 +5,6 @@ const User = require('../models/user');
 
 
 
-
-
-
-
 // 게시글 전체 조회
 
 const getPostList = async (req, res, next) => {
@@ -32,6 +28,7 @@ const getPostList = async (req, res, next) => {
 
 const addPost = async (req, res, next) => {
     const { title, content } = req.body;
+    const userId = req.userData.userId;
     const imageUrls = req.files?.map(file => file.location) || [];
 
     const createPost = new Post({
@@ -44,7 +41,7 @@ const addPost = async (req, res, next) => {
     let user;
 
     try {
-        user = await User.findById(req.userData.userId);
+        user = await User.findById(userId);
 
     } catch (e) {
         const error = new HttpError('게시글 생성하는데 실패했습니다.', 500);
@@ -84,7 +81,7 @@ const getPostById = async (req, res, next) => {
 
     let post;
     try {
-        post = await Post.findById(postId).populate('author', 'name').populate({
+        post = await Post.findById(postId).populate('author', 'name image').populate({
             path: 'comments',
             select: 'content author',
             populate: {

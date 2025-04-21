@@ -8,6 +8,7 @@ const userRoutes = require('./routes/users-routes');
 const postRoutes = require('./routes/post-routes');
 const commentRoutes = require('./routes/comment-routes');
 const placesRoutes = require('./routes/places-routes');
+const reviewRoutes = require('./routes/review-routes');
 
 const app = express();
 const port = 5000;
@@ -30,6 +31,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comment', commentRoutes);
 app.use('/api/places', placesRoutes);
+app.use('/api/review', reviewRoutes);
 
 
 //애러 관련 로직

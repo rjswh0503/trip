@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 
 const UserDelete = () => {
 
-    const { token, setToken, setIsLoggedIn, setUser } = useAuth();
+    const { token, setToken, setIsLoggedIn } = useAuth();
     const { id } = useParams();
     const navigate = useNavigate();
 
