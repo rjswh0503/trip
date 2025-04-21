@@ -184,17 +184,10 @@ const getUserbyId = async (req, res, next) => {
 
 
 
-    res.json({
-        name: profile.name,
-        email: profile.email,
-        image: profile.image,
-        review: profile.review,
-        post: profile.post,
-        comment: profile.comments,
-        role: profile.role,
-        createdAt: profile.createdAt
-
-    });
+    res.status(200).json({
+        message: '프로필 불러오기 성공',
+        user: profile
+    })
 
 }
 
@@ -311,8 +304,6 @@ const getBookMarks = async (req, res, next) => {
     const userId = req.userData.userId;
     let user;
 
-
-
     try {
         user = await User.findById(userId).populate('bookMark', 'title content images');
 
@@ -357,7 +348,6 @@ exports.register = register;
 exports.login = login;
 exports.getUserbyId = getUserbyId;
 exports.updateUserById = updateUserById;
-exports.checkPassword = checkPassword;
 exports.deleteUserById = deleteUserById;
 exports.getBookMarks = getBookMarks;
 exports.getLikes = getLikes;

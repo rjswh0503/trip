@@ -22,6 +22,9 @@ import PlacesDetail from './places/page/placesDetail';
 import MyBookMark from './users/components/myBookMark';
 import MyLikes from './users/components/myLikes';
 import UserUpdate from './users/components/userUpdate';
+import UserDelete from './users/components/userDelete';
+
+
 const App = () => {
 
   return (
@@ -50,6 +53,7 @@ const App = () => {
             <Route path='/places/list' element={<PlacesList />} />
             <Route path='/places/:id' element={<PlacesDetail />} />
             <Route path="/users/:id/edit" element={<UserUpdate />} />
+            <Route path="/users/:id/delete" element={<UserDelete />} />
           </Routes>
         </main>
       </AuthProvider>

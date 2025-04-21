@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../shared/context/auth-context';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
+import UserDelete from './userDelete';
 
 
 
@@ -26,6 +27,11 @@ const UserInfo = () => {
         fetchData();
     }, [id, token]);
 
+    
+
+
+
+
     const formattedDate = user
         ? new Date(user.createdAt).toLocaleDateString('ko-KR', {
             year: 'numeric',
@@ -43,7 +49,8 @@ const UserInfo = () => {
                         <div className="profile-text">
                             <div className='flex items-center gap-2'>
                                 <h1 className='text-2xl font-black'>{user.name}</h1>
-                                <p className='text-sm text-gray-500 hover:text-gray-700 hover:underline cursor-pointer'><Link to={`/users/${id}/edit`}>회원정보 수정</Link></p>
+                                <p className='text-sm text-gray-500 hover:text-gray-700 hover:underline cursor-pointer'><Link to={`/users/${id}/edit`}>회원정보 수정</Link> </p>
+                                <UserDelete/>
                             </div>
                             <p>{user.email}</p>
                             <span className='text-sm text-gray-500'>가입일 : {formattedDate}</span>

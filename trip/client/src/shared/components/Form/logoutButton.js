@@ -12,6 +12,7 @@ const LogoutButton = () => {
         localStorage.removeItem('token');
         setToken(null);
         setIsLoggedIn(false);
+        navigate('/login');
        await Swal.fire({
             title: '로그아웃 성공',
             icon: 'success',
@@ -21,7 +22,7 @@ const LogoutButton = () => {
             timer: 2000,
             timerProgressBar: true,
         });
-        navigate('/login');
+        
     };
 
     return <button onClick={logoutHandler}>로그아웃</button>

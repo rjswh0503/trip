@@ -60,8 +60,8 @@ const UserUpdate = () => {
             navigate(`/${id}/mypage`);
 
         } catch (e) {
-            console.log('수정 실패', e);
-            alert('수정 실패');
+            console.log('회원정보 수정 실패', e);
+            alert('회원정보 수정 실패');
         }
     }
 
