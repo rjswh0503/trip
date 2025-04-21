@@ -251,41 +251,6 @@ const updateUserById = async (req, res, next) => {
 }
 
 
-// 비밀번호 확인 로직 (회원 탈퇴 및 회원정보 수정 시 사용)
-const checkPassword = async (req, res, next) => {
-    const userId = req.userData.userId;
-    const { password } = req.body;
-
-    let user;
-
-    try {
-        user = await User.findById(userId);
-
-        if (!user) {
-            const error = new HttpError('해당하는 유저가 없습니다.', 404);
-            return next(error);
-        }
-
-        const isValidPassword = await bcrypt.compare(password, user.password);
-
-        if (isValidPassword) {
-            res.json({
-                message: '비밀번호가 일치합니다.',
-                isValid: true
-            })
-        } else {
-            res.json({
-                message: '비밀번호가 일치하지 않습니다.',
-                isValid: false
-            })
-        }
-
-    } catch (e) {
-        const error = new HttpError('비밀번호 확인 실패', 500);
-        return next(error);
-    }
-
-}
 
 
 // 회원 탈퇴 로직
