@@ -50,7 +50,7 @@ const PlacesDetail = () => {
                 <p className="detail-description">{place.description}</p>
 
                 <div className="detail-info">
-                    <span>⭐<Link to="/">리뷰 보러가기</Link></span>
+                    <span>⭐<Link to={`/places/${id}/review/list`}>리뷰 보러가기</Link></span>
                     <span>📍 {place.address}</span>
                     <span>조회수{place.view}</span>
                 </div>

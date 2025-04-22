@@ -24,6 +24,7 @@ import MyLikes from './users/components/myLikes';
 import UserUpdate from './users/components/userUpdate';
 import UserDelete from './users/components/userDelete';
 import NewReview from './reviews/page/newReview';
+import ReviewList from './reviews/page/reviewList';
 
 
 const App = () => {
@@ -56,6 +57,7 @@ const App = () => {
             <Route path="/users/:id/edit" element={<UserUpdate />} />
             <Route path="/users/:id/delete" element={<UserDelete />} />
             <Route path="/places/:id/review/add" element={<NewReview />} />
+            <Route path="/places/:id/review/list" element={<ReviewList/>}/>
           </Routes>
         </main>
       </AuthProvider>

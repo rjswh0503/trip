@@ -5,12 +5,12 @@ import { useAuth } from '../../shared/context/auth-context';
 
 const NewReview = () => {
     const { token } = useAuth();
-    const { id } = useParams(); 
+    const { id } = useParams();
     const navigate = useNavigate();
     const [formData, setFormData] = useState({
         title: '',
         content: '',
-       
+
     });
 
     const onChange = (e) => {
@@ -22,24 +22,24 @@ const NewReview = () => {
 
     const newReviewHandler = async (e) => {
         e.preventDefault();
-        
+
         try {
             await axios.post(
-                'http://localhost:5000/api/review/add',
+                `http://localhost:5000/api/review/place/${id}/review/add`,
                 {
                     title: formData.title,
                     content: formData.content,
-                    placeId: id 
+                    placeId: id
                 },
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 }
-                
+
             );
-            
-            
+
+
 
             console.log("리뷰 등록 완료!");
             alert('리뷰 작성 완료!!');

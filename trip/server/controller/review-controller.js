@@ -11,8 +11,8 @@ const mongoose = require('mongoose');
 const addReview = async (req, res, next) => {
     const { title, content, rating, placeId } = req.body;
     const userId = req.userData.userId;
-    
-   
+
+
 
     let user, place;
 
@@ -27,7 +27,7 @@ const addReview = async (req, res, next) => {
         }
 
         if (!place) {
-            const error = new HttpError('해당 장소가 없습니다.', 401);
+            const error = new HttpError('해당 장소가 없습니다.', 404);
             return next(error);
 
         }
@@ -49,9 +49,6 @@ const addReview = async (req, res, next) => {
 
         place.reviews.push(createReview);
         await place.save({ session });
-
-
-
 
         await session.commitTransaction();
         session.endSession();
@@ -76,28 +73,31 @@ const addReview = async (req, res, next) => {
 // 특정 장소의 리뷰 조회
 
 const PlacesByReview = async (req, res, next) => {
-    const placeId = req.body.id;
+    const placeId = req.params.id;
 
-    let review;
+    console.log('받은 placeId:', placeId);
+    let reviews;
 
     try {
-        review = await Place.findById({ placeId }).populate('author', 'name image');
+        reviews = await Review.find({ places: placeId }).populate('author', 'title');
 
-
-        if (!review) {
-            const error = new HttpError('해당 장소의 리뷰를 찾을 수 없습니다.', 401);
+        if (!reviews || reviews.length === 0) {
+            const error = new HttpError('해당 장소의 리뷰를 찾을 수 없습니다.', 404); // 404로 변경
             return next(error);
         }
 
-
     } catch (e) {
-        const error = new HttpError('리뷰 조회 실패!', e);
+        console.error('리뷰 조회 중 에러:', e);
+        const error = new HttpError('리뷰 조회 실패!', 500); // 서버 에러는 500 코드
+        return next(error);
     }
+
     res.status(200).json({
         message: '리뷰 조회 성공',
-        review
-    })
+        reviews
+    });
 }
+
 
 
 

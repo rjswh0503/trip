@@ -31,7 +31,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/posts', postRoutes);
 app.use('/api/comment', commentRoutes);
 app.use('/api/places', placesRoutes);
-app.use('/api/review', reviewRoutes);
+app.use('/api/review/place', reviewRoutes);
 
 
 //애러 관련 로직

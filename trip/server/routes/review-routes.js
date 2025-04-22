@@ -7,13 +7,13 @@ const router = express.Router();
 router.use(checkAuth);
 
 // 특정 장소의 리뷰 조회
-router.get('/:id/review', reviewController.PlacesByReview);
+router.get('/:id/review/list', reviewController.PlacesByReview);
 
 
 // 여행 리뷰 작성
-router.post('/add', reviewController.addReview);
+router.post('/:id/review/add', reviewController.addReview);
 
-//여행 리뷰 조회
+//여행 리뷰 상세조회
 router.get('/:id/review/:id');
 
 //여행 리뷰 수정
