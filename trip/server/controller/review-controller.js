@@ -37,7 +37,7 @@ const addReview = async (req, res, next) => {
 
         const createReview = new Review({
             author: userId,
-            placeId,
+            places: placeId,
             title,
             content,
         });
@@ -49,6 +49,8 @@ const addReview = async (req, res, next) => {
 
         place.reviews.push(createReview);
         await place.save({ session });
+
+
 
 
         await session.commitTransaction();

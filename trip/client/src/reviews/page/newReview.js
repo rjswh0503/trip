@@ -42,6 +42,7 @@ const NewReview = () => {
             
 
             console.log("리뷰 등록 완료!");
+            alert('리뷰 작성 완료!!');
             navigate(`/places/${id}`); // 등록 성공 후 이동
         } catch (err) {
             console.error('리뷰 등록 실패', err);
