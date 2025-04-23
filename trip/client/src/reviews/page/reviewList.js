@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
-
+import { AiTwotoneLike } from "react-icons/ai";
 
 
 
@@ -56,10 +56,8 @@ const PlaceByReview = () => {
                                         <p>작성시간</p>
                                     </div>
                                 </div>
-                                <div className='flex justify-end items-center'>
-                                    <p>👍
-                                        <span>{review.recommend.length}</span>
-                                    </p>
+                                <div>
+                                    <p className='flex justify-end items-center'><AiTwotoneLike />{review.recommend.length}</p>
                                 </div>
                             </div>
                         </div>
