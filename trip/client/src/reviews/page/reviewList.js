@@ -38,10 +38,10 @@ const PlaceByReview = () => {
 
     return (
         <div>
-            <div className='container mx-auto'>
-                <div className='grid grid-cols-2 md:grid-cols-4 gap-4 py-[150px] max-w-screen-2xl'>
+            <div className='container mx-auto max-w-screen-xl'>
+                <div className='grid grid-cols-2 md:grid-cols-4 gap-4 py-[150px]'>
                     {reviewList && reviewList.map(review => (
-                        <div className='bg-white border border-gray-200 rounded-lg shadow-sm' key={review._id}>
+                        <div className='bg-white border border-gray-200 rounded-lg shadow-lg' key={review._id}>
                             <div className='p-4 text-center'>
                                 <Link to={`/places/${id}/review/${review._id}`}>
                                     <h5 className='text-2xl font-bold p-2 text-gray-900'>{review.title}</h5>
