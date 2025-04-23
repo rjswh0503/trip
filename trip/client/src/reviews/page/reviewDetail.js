@@ -19,6 +19,7 @@ const ReviewDetail = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                
                 const response = await axios.get(`http://localhost:5000/api/review/place/${placeId}/review/${reviewId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -49,7 +50,7 @@ const ReviewDetail = () => {
                 }
             );
 
-            setrecommendByUser(response.data.recommendedByUser);
+            setrecommendByUser(true);
             alert(response.data.recommendedByUser ? '추천 추가' : '추천 취소');
         } catch (e) {
             console.error(e);
