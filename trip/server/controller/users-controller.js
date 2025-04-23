@@ -52,6 +52,7 @@ const register = async (req, res, next) => {
         password: hashPassword,
         image: imageUrl || null,
         likes: [],
+        recommend: [],
         bookMark: [],
         review: [],
         post: [],

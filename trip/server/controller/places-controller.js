@@ -85,7 +85,6 @@ const addPlaces = async (req, res, next) => {
 
 //여행지 리스트
 
-// controllers/places-controllers.js
 
 const getAllPlaces = async (req, res, next) => {
     let places;
@@ -134,11 +133,6 @@ const getPlacesById = async (req, res, next) => {
     })
 
 };
-
-
-//여행지 수정
-
-
 
 
 
@@ -239,8 +233,7 @@ const toggleLike = async (req, res, next) => {
         }
 
     } catch (e) {
-        await session.abortTransaction();
-        session.endSession();
+        
         const error = new HttpError('좋아요 실패', 500);
         return next(error);
     }

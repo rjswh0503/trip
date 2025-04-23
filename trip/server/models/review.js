@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
 
-const reviewSchema = new mongoose.Schema(
+const reviewSchema = new Schema(
     {
         author: { type: mongoose.Types.ObjectId, require: true, ref: 'User'},
         places: [{ type: mongoose.Types.ObjectId, required: true, ref: 'Place'}],
@@ -11,7 +11,8 @@ const reviewSchema = new mongoose.Schema(
         image: { type: String },
         rating: { type: Number, default: 0 },
         view: { type: Number, default: 0 },
-        likes: [{ type: Number, ref: 'User'}]
+        recommend: [{ type: mongoose.Types.ObjectId, ref: 'User'}]
+        
     },
     { timestamps: true }
 );

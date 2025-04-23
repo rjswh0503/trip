@@ -73,13 +73,13 @@ const addReview = async (req, res, next) => {
 // 특정 장소의 리뷰 조회
 
 const PlacesByReview = async (req, res, next) => {
-    const placeId = req.params.id;
+    const placeId = req.params.placeId;
 
-    console.log('받은 placeId:', placeId);
+
     let reviews;
 
     try {
-        reviews = await Review.find({ places: placeId }).populate('author', 'title');
+        reviews = await Review.find({ places: placeId }).populate('author', 'name');
 
         if (!reviews || reviews.length === 0) {
             const error = new HttpError('해당 장소의 리뷰를 찾을 수 없습니다.', 404); // 404로 변경
@@ -100,7 +100,141 @@ const PlacesByReview = async (req, res, next) => {
 
 
 
+// 특정 리뷰 상세보기
 
+const getReviewById = async (req, res, next) => {
+    const reviewId = req.params.reviewId;
+
+    let review;
+
+    try {
+        review = await Review.findById(reviewId);
+    } catch (e) {
+        console.error(e);
+        const error = new HttpError('리뷰 상세보기 실패', 500);
+        return next(error);
+
+    }
+
+    res.status(202).json({
+        message: '리뷰 상세보기 성공',
+        success: true,
+        review: review
+    });
+}
+
+
+// 리뷰 수정 
+
+const updateReview =  async (req, res, next) => {
+    const { title, content } = req.body;
+    const reviewId = req.params.reviewId;
+    let updateReview;
+
+    try {
+        updateReview = await Review.findById(reviewId);
+
+        
+
+    } catch(e){
+        console.error(e);
+        const error = new HttpError('리뷰 수정 실패', 500);
+        return next(error);
+    }
+
+    if(updateReview.author.toString() !== req.userData.userId){
+        const error = new HttpError('수정 권한이 없습니다.', 401);
+        return next(error);
+    }
+    updateReview.title;
+    updateReview.content;
+
+    try {
+        await updateReview.save();
+    } catch(e){
+        const error = new HttpError('리뷰 수정 실패했습니다.',500);
+        return next(error);
+    };
+
+    res.status(200).json({
+        updateReview: updateReview
+    })
+}
+
+
+
+
+
+// 리뷰 추천  
+
+const toggleRecommend = async (req, res, next) => {
+    const userId = req.userData.userId;
+    const reviewId = req.params.reviewId;
+
+    let user, review;
+
+    
+
+    try {
+        user = await User.findById(userId);
+        review = await Review.findById(reviewId);
+        
+
+        if (!review) {
+            const error = new HttpError('리뷰가 없습니다.', 404);
+            return next(error);
+        }
+
+    } catch (e) {
+        console.error(e);
+        const error = new HttpError('서버 오류', 500);
+        return next(error);
+    }
+
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
+    let IsLiked;
+    try {
+
+        IsLiked = review.recommend.includes(userId);
+
+        if (IsLiked) {
+            review.recommend.pull(userId);
+            user.recommend.pull(reviewId);
+            await review.save({ session });
+            await user.save({ session });
+            await session.commitTransaction();
+            session.endSession();
+            return res.status(200).json({
+                message: '리뷰 추천 취소',
+                recommendedByUser: false
+            });
+
+        } else {
+            review.recommend.push(userId);
+            user.recommend.push(reviewId);
+            await review.save({ session });
+            await user.save({ session });
+            await session.commitTransaction();
+            session.endSession();
+            return res.status(200).json({
+                message: '리뷰 추천 추가',
+                recommendedByUser: true
+            })
+
+        }
+
+
+    } catch (e) {
+        console.error(e);
+        await session.abortTransaction();
+        session.endSession();
+        const error = new HttpError('좋아요 실패', 500);
+        return next(error);
+    }
+
+}
 
 
 
@@ -108,3 +242,6 @@ const PlacesByReview = async (req, res, next) => {
 
 exports.addReview = addReview;
 exports.PlacesByReview = PlacesByReview;
+exports.getReviewById = getReviewById;
+exports.updateReview = updateReview;
+exports.toggleRecommend = toggleRecommend;

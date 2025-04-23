@@ -1,4 +1,4 @@
-// components/PlaceCard.js
+
 import React from 'react';
 import './travelCard.css';
 import { Link } from 'react-router-dom';

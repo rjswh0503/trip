@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
+
 
 
 
@@ -33,16 +34,21 @@ const PlaceByReview = () => {
         return <p>해당 장소의 리뷰가 없습니다...</p>
     }
 
+    
 
     return (
         <div>
             <div>
                 <h1>리뷰</h1>
-                <div>
+                <div className='grid grid-cols-2 md:grid-cols-4 gap-4 mx-auto py-[150px]  max-w-screen-2xl'>
                     {reviewList && reviewList.map(review => (
-                        <div key={review._id}>
-                            <h2>{review.title}</h2>
+                        <div className='' key={review._id}>
+                            <Link to={`/places/${id}/review/${review._id}`}>
+                                <h2>{review.title}</h2>
+                            </Link>
                             <p>{review.content}</p>
+                            <p>작성자:{review.author?.name}</p>
+                            
                         </div>
                     ))}
                 </div>
