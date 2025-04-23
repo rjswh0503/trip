@@ -26,6 +26,7 @@ import UserDelete from './users/components/userDelete';
 import NewReview from './reviews/page/newReview';
 import ReviewList from './reviews/page/reviewList';
 import ReviewDetail from './reviews/page/reviewDetail';
+import UpdateReview from './reviews/page/updateReview';
 
 
 const App = () => {
@@ -60,6 +61,7 @@ const App = () => {
             <Route path="/places/:id/review/add" element={<NewReview />} />
             <Route path="/places/:id/review/list" element={<ReviewList />} />
             <Route path='/places/:id/review/:reviewId' element={<ReviewDetail />} />
+            <Route path="/places/:id/review/:reviewId/edit" element={<UpdateReview />} />
           </Routes>
         </main>
       </AuthProvider>

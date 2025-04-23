@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
-
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 
 
 
 
+
 const ReviewDetail = () => {
-    const { token } = useAuth();
+    const { token, user } = useAuth();
     const { placeId, reviewId } = useParams();
+    const navigate = useNavigate();
     const [detail, setDetail] = useState(null);
 
 
@@ -23,13 +24,17 @@ const ReviewDetail = () => {
                     },
                 });
                 setDetail(response.data.review);
-                console.log(response.data.review);
+                
             } catch (e) {
                 console.error(e);
             }
         }
         fetchData();
     }, [placeId, reviewId, token]);
+
+
+
+
 
     const recommendHandler = async () => {
 
@@ -42,6 +47,7 @@ const ReviewDetail = () => {
                     }
                 }
             );
+
             if (response.data.recommendedByUser) {
                 alert('리뷰추천 추가');
             } else {
@@ -54,6 +60,12 @@ const ReviewDetail = () => {
         }
     }
 
+    const updateHandler = () => {
+        navigate(`/places/${placeId}/review/${reviewId}/edit`)
+    }
+
+    
+
     return (
         <div>
             {detail ? (
@@ -64,6 +76,12 @@ const ReviewDetail = () => {
                     <span className="cursor-pointer" onClick={recommendHandler} >
                         👍
                     </span>
+                    {detail.author && user.userId === detail.author._id && (
+                        <div className='flex gap-4'>
+                            <button onClick={updateHandler}>수정</button>
+                            <button>삭제</button>
+                        </div>
+                    )}
                 </div>
 
             ) : (

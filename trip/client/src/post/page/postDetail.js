@@ -10,10 +10,6 @@ import './postDetail.css';
 
 
 
-
-
-
-
 const PostDetail = () => {
     const { token, user } = useAuth();
     const { id } = useParams();

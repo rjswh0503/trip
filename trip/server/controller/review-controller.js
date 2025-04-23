@@ -108,7 +108,7 @@ const getReviewById = async (req, res, next) => {
     let review;
 
     try {
-        review = await Review.findById(reviewId);
+        review = await Review.findById(reviewId).populate('author', 'name');
     } catch (e) {
         console.error(e);
         const error = new HttpError('리뷰 상세보기 실패', 500);
@@ -146,8 +146,8 @@ const updateReview =  async (req, res, next) => {
         const error = new HttpError('수정 권한이 없습니다.', 401);
         return next(error);
     }
-    updateReview.title;
-    updateReview.content;
+    updateReview.title = title;
+    updateReview.content = content;
 
     try {
         await updateReview.save();

@@ -18,10 +18,10 @@ router.post('/:placeId/review/add', reviewController.addReview);
 router.get('/:placeId/review/:reviewId', reviewController.getReviewById);
 
 //여행 리뷰 수정
-router.patch('/:placeId/review/:reviewId', reviewController.updateReview);
+router.patch('/:placeId/review/:reviewId/edit', reviewController.updateReview);
 
 //여행 리뷰 삭제
-router.delete('/:placeId/review/:reviewId');
+router.delete('/:placeId/review/:reviewId/delete');
 
 
 //여행 리뷰 좋아요
