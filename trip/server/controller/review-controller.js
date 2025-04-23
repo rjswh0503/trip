@@ -79,7 +79,7 @@ const PlacesByReview = async (req, res, next) => {
     let reviews;
 
     try {
-        reviews = await Review.find({ places: placeId }).populate('author', 'name');
+        reviews = await Review.find({ places: placeId }).populate('author', 'name image');
 
         if (!reviews || reviews.length === 0) {
             const error = new HttpError('해당 장소의 리뷰를 찾을 수 없습니다.', 404); // 404로 변경
@@ -108,7 +108,7 @@ const getReviewById = async (req, res, next) => {
     let review;
 
     try {
-        review = await Review.findById(reviewId).populate('author', 'name');
+        review = await Review.findById(reviewId).populate('author', 'name image');
     } catch (e) {
         console.error(e);
         const error = new HttpError('리뷰 상세보기 실패', 500);
@@ -194,12 +194,12 @@ const toggleRecommend = async (req, res, next) => {
     const session = await mongoose.startSession();
     session.startTransaction();
 
-    let IsLiked;
+    let IsRecommend;
     try {
 
-        IsLiked = review.recommend.includes(userId);
+        IsRecommend = review.recommend.includes(userId);
 
-        if (IsLiked) {
+        if (IsRecommend) {
             review.recommend.pull(userId);
             user.recommend.pull(reviewId);
             await review.save({ session });
@@ -208,7 +208,8 @@ const toggleRecommend = async (req, res, next) => {
             session.endSession();
             return res.status(200).json({
                 message: '리뷰 추천 취소',
-                recommendedByUser: false
+                recommendedByUser: false,
+                recommendedCount: review.recommend.length
             });
 
         } else {
@@ -220,7 +221,8 @@ const toggleRecommend = async (req, res, next) => {
             session.endSession();
             return res.status(200).json({
                 message: '리뷰 추천 추가',
-                recommendedByUser: true
+                recommendedByUser: true,
+                recommendedCount: review.recommend.length
             })
 
         }

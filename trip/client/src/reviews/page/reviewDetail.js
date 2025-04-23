@@ -12,6 +12,7 @@ const ReviewDetail = () => {
     const { placeId, reviewId } = useParams();
     const navigate = useNavigate();
     const [detail, setDetail] = useState(null);
+    const [recommendByUser, setrecommendByUser] = useState(false);
 
 
 
@@ -48,12 +49,8 @@ const ReviewDetail = () => {
                 }
             );
 
-            if (response.data.recommendedByUser) {
-                alert('리뷰추천 추가');
-            } else {
-                alert('리뷰추천 제거');
-            }
-
+            setrecommendByUser(response.data.recommendedByUser);
+            alert(response.data.recommendedByUser ? '추천 추가' : '추천 취소');
         } catch (e) {
             console.error(e);
             alert('리뷰 추천 실패');
@@ -74,7 +71,7 @@ const ReviewDetail = () => {
                     <div>{detail?.content}</div>
                     <div>{detail?.author?.name}</div>
                     <span className="cursor-pointer" onClick={recommendHandler} >
-                        👍
+                        {recommendByUser ? '🌟' : '👍'}
                     </span>
                     {detail.author && user.userId === detail.author._id && (
                         <div className='flex gap-4'>
