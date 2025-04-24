@@ -13,6 +13,7 @@ const UserInfo = () => {
     const [profile, setProfile] = useState(null);
 
     useEffect(() => {
+        if (!token) return;
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/users/${id}/profile`, {
@@ -21,11 +22,11 @@ const UserInfo = () => {
                     },
                 });
                 setProfile(response.data);
-                console.log(response.data.id)
+                
             } catch (error) {
                 if (error.response && error.response.status === 404) {
                     console.log('회원탈퇴로 유저 정보 없음');
-                   
+
                     navigate('/');
                 } else {
                     console.error(error);
@@ -58,7 +59,7 @@ const UserInfo = () => {
                             <div className='flex items-center gap-2'>
                                 <h1 className='text-2xl font-black'>{profile.name}</h1>
                                 {profile.id.toString() === user.userId && (
-                                    <div className='flex gap-2'>    
+                                    <div className='flex gap-2'>
                                         <p className='text-sm text-gray-500 hover:text-gray-700 hover:underline cursor-pointer'><Link to={`/users/${id}/edit`}>회원정보 수정</Link> </p>
                                         <UserDelete />
                                     </div>

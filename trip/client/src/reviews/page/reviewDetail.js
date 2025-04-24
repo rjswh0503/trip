@@ -9,7 +9,7 @@ import { useAuth } from '../../shared/context/auth-context';
 
 const ReviewDetail = () => {
     const { token, user } = useAuth();
-    const { placeId, reviewId } = useParams();
+    const { id, reviewId } = useParams();
     const navigate = useNavigate();
     const [detail, setDetail] = useState(null);
     const [recommendByUser, setrecommendByUser] = useState(false);
@@ -20,19 +20,19 @@ const ReviewDetail = () => {
         const fetchData = async () => {
             try {
                 
-                const response = await axios.get(`http://localhost:5000/api/review/place/${placeId}/review/${reviewId}`, {
+                const response = await axios.get(`http://localhost:5000/api/review/place/${id}/review/${reviewId}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     },
                 });
                 setDetail(response.data.review);
-                
+
             } catch (e) {
                 console.error(e);
             }
         }
         fetchData();
-    }, [placeId, reviewId, token]);
+    }, [id, reviewId, token]);
 
 
 
@@ -41,7 +41,7 @@ const ReviewDetail = () => {
     const recommendHandler = async () => {
 
         try {
-            const response = await axios.post(`http://localhost:5000/api/review/place/${placeId}/review/${reviewId}/recommend`, {
+            const response = await axios.post(`http://localhost:5000/api/review/place/${id}/review/${reviewId}/recommend`, {
             },
                 {
                     headers: {
@@ -59,7 +59,30 @@ const ReviewDetail = () => {
     }
 
     const updateHandler = () => {
-        navigate(`/places/${placeId}/review/${reviewId}/edit`)
+        navigate(`/places/${id}/review/${reviewId}/edit`)
+    }
+
+
+    const deleteHandler = async ()=> {
+        if(window.confirm('정말 삭제하시겠습니까?')) {
+            try {
+                const response = await axios.delete(`http://localhost:5000/api/review/place/${id}/review/${reviewId}/delete`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                });
+                console.log(id)
+                console.log("삭제 성공", response);
+                alert('삭제 성공');
+                setDetail(null);
+                navigate(`/places/${id}/review/list`)
+            } catch(e){
+                console.error(e);
+                alert('리뷰 삭제 실패');
+            }
+        }
+
+        
     }
 
     
@@ -77,7 +100,7 @@ const ReviewDetail = () => {
                     {detail.author && user.userId === detail.author._id && (
                         <div className='flex gap-4'>
                             <button onClick={updateHandler}>수정</button>
-                            <button>삭제</button>
+                            <button onClick={deleteHandler}>삭제</button>
                         </div>
                     )}
                 </div>

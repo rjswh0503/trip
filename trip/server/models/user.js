@@ -14,7 +14,7 @@ const userSchema = new Schema(
         bookMark: [{ type: mongoose.Types.ObjectId, ref: 'Place' }],
         likes: [{ type: mongoose.Types.ObjectId, ref: 'Place'}],
         recommend : [{ type: mongoose.Types.ObjectId, ref: 'Review'}],
-        review: [{ type: mongoose.Types.ObjectId, ref: 'Review' }],
+        reviews: [{ type: mongoose.Types.ObjectId, ref: 'Review' }],
         post: [{ type: mongoose.Types.ObjectId, ref: 'Post' }],
         places: [{ type: mongoose.Types.ObjectId, ref: 'Place'}],
         comments: [{ type: mongoose.Types.ObjectId, ref: 'Comment' }],

@@ -20,7 +20,7 @@ const Card = ({ id, title, author, date, content, images }) => {
 
         <div className='card'>
             <Link to={`/posts/${id}`} style={{ textDecoration: 'none' }}>
-                <img src={images} alt='게시글 이미지' className='image' />
+                <img src={images} alt='기본 이미지' className='image' />
                 <div className='content'>
                     <h3 style={{ textDecoration: 'none' }}>{title}</h3>
                     <p className='meta'> {author} · {relativeDate}</p>

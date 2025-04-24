@@ -13,6 +13,7 @@ const MyPost = () => {
     const [myPost, setMyPost] = useState([]);
 
     useEffect(() => {
+        if (!token) return;
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/users/${id}/posts`, {

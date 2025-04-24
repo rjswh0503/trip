@@ -27,6 +27,7 @@ import NewReview from './reviews/page/newReview';
 import ReviewList from './reviews/page/reviewList';
 import ReviewDetail from './reviews/page/reviewDetail';
 import UpdateReview from './reviews/page/updateReview';
+import WriteReviews from './users/components/writeReviews';
 
 
 const App = () => {
@@ -46,6 +47,7 @@ const App = () => {
               <Route path='comments' element={<MyComment />} />
               <Route path='bookmarks' element={<MyBookMark />} />
               <Route path='likes' element={<MyLikes />} />
+              <Route path='reviews' element={<WriteReviews />} />
             </Route>
             <Route path='/posts/add' element={<NewPost />} />
             <Route path='/posts/list' element={<PostList />} />

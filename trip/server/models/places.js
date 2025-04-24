@@ -9,7 +9,6 @@ const placesSchema = new Schema(
         description: { type: String, required: true },
         images: [{ type: String }],
         category: { type: String, required: true },
-        country: { type: String, required: true},
         city: { type: String, required: true },
         region: { type: String, required: true },
         address: { type: String, required: true },

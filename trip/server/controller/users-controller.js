@@ -163,8 +163,7 @@ const login = async (req, res, next) => {
 }
 
 
-// 특정 유저 프로필 조회 & 작성한 게시글 조회 & 작성한 덧글 조회 
-// 수정 필요
+// 특정 유저 프로필 조회 & 작성한 게시글 조회 & 작성한 덧글 조회 & 작성한 리뷰 조회
 const getUserbyId = async (req, res, next) => {
 
     const userId = req.params.id;
@@ -177,7 +176,7 @@ const getUserbyId = async (req, res, next) => {
                 path: 'post',
                 select: 'title'
             }
-        }).populate('post', 'title').populate('bookMark', 'title');
+        }).populate('post', 'title').populate('bookMark', 'title').populate('reviews','title author recommend view');
     } catch (e) {
         const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 500);
         return next(error);
@@ -194,13 +193,13 @@ const getUserbyId = async (req, res, next) => {
         email: profile.email,
         post: profile.post || [],
         comment: profile.comments || [],
+        reviews: profile.reviews || [],
         image: profile.image || '',
         createdAt: profile.createdAt || '',
     });
 }
 
 // 유저 프로필 수정 로직
-// 수정 필요 ( 비밀번호 확인 후 수정 가능하도록 수정 필요 )
 
 const updateUserById = async (req, res, next) => {
 
@@ -340,6 +339,27 @@ const getLikes = async (req, res, next) => {
 }
 
 
+// 추천 누른 리뷰 조회
+
+const getReviews = async(req, res, next) => {
+    const userId = req.userData.userId;
+    let user;
+
+    try {
+        user = await User.findById(userId).populate('recommend', 'title image content');
+
+    } catch(e){
+        console.error(e);
+        const error = new HttpError('추천 누른 여행지 조회 실패', 500);
+        return next(error);
+    }
+    res.status(200).json({
+        message: '조회 성공!',
+        recommend: user.recommend
+    })
+}
+
+
 // 친구추가 로직
 
 
@@ -353,6 +373,8 @@ exports.updateUserById = updateUserById;
 exports.deleteUserById = deleteUserById;
 exports.getBookMarks = getBookMarks;
 exports.getLikes = getLikes;
+exports.getReviews = getReviews;
+
 
 
 

@@ -34,10 +34,8 @@ router.post('/login', userController.login);
 router.get('/:id/profile', userController.getUserbyId);
 
 
+
 router.use(checkAuth);
-
-
-
 
 //프로필 수정 router
 router.patch('/:id/edit', userController.updateUserById);
@@ -54,12 +52,21 @@ router.get('/:id/posts', userController.getUserbyId);
 //내가 쓴 덧글
 router.get('/:id/comments', userController.getUserbyId);
 
+//내가 작성한 리뷰 
+
+router.get('/:id/reviews', userController.getUserbyId);
+
 //내가 찜한 여행지 router
 router.get('/:id/bookMark', userController.getBookMarks);
 
 //내가 좋아요 누른 게시글
 
 router.get('/:id/likes', userController.getLikes);
+
+
+// 추천 누른 리뷰
+
+router.get('/:id/reviews/recommend', userController.getReviews);
 
 
 

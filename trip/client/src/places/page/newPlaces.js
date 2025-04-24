@@ -15,7 +15,6 @@ const NewPlaces = () => {
         title: '',
         description: '',
         category: '',
-        country: '',
         city: '',
         region: '',
         address: '',
@@ -47,7 +46,6 @@ const NewPlaces = () => {
         data.append('title', formData.title);
         data.append('description', formData.description);
         data.append('category', formData.category);
-        data.append('country', formData.country);
         data.append('city', formData.city);
         data.append('region', formData.region);
         data.append('address', formData.address);
@@ -67,7 +65,6 @@ const NewPlaces = () => {
                 title: '',
                 description: '',
                 category: '',
-                country: '',
                 city: '',
                 region: '',
                 address: '',
@@ -90,7 +87,6 @@ const NewPlaces = () => {
                 <input name="title" placeholder="제목" value={formData.title} onChange={onChange} required />
                 <textarea name="description" placeholder="설명" value={formData.description} onChange={onChange} required />
                 <input name="category" placeholder="카테고리" value={formData.category} onChange={onChange} required />
-                <input name="country" placeholder="국가" value={formData.country} onChange={onChange} required />
                 <input name="city" placeholder="도시" value={formData.city} onChange={onChange} required />
                 <input name="region" placeholder="지역" value={formData.region} onChange={onChange} required />
                 <input name="address" placeholder="주소" value={formData.address} onChange={onChange} required />

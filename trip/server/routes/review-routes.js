@@ -5,11 +5,12 @@ const reviewController = require('../controller/review-controller');
 const router = express.Router();
 
 
-router.use(checkAuth);
+
 
 // 특정 장소의 리뷰 조회
 router.get('/:placeId/review/list', reviewController.PlacesByReview);
 
+router.use(checkAuth);
 
 // 여행 리뷰 작성
 router.post('/:placeId/review/add', reviewController.addReview);
@@ -21,7 +22,7 @@ router.get('/:placeId/review/:reviewId', reviewController.getReviewById);
 router.patch('/:placeId/review/:reviewId/edit', reviewController.updateReview);
 
 //여행 리뷰 삭제
-router.delete('/:placeId/review/:reviewId/delete');
+router.delete('/:placeId/review/:reviewId/delete', reviewController.deleteReview);
 
 
 //여행 리뷰 좋아요

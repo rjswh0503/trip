@@ -36,6 +36,12 @@ const MyPage = () => {
                 >
                     좋아요 목록
                 </Link>
+                <Link
+                    to="reviews"
+                    className={location.pathname.includes('/reviews') ? 'tab active' : 'tab'}
+                >
+                    리뷰 목록
+                </Link>
             </nav>
 
             <div className="mypage-content">
