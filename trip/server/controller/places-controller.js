@@ -169,6 +169,37 @@ const deletePlace = async (req, res, next) => {
 
 //여행지 인기 5위 리스트 (북마크 많이 한 여행지)
 
+const getTop3HotPlaces = async (req, res, next) => {
+    let top3Places;
+    try {
+
+        top3Places = await Place.aggregate([{
+            $addFields: {
+                bookMarkCount: { $size: "$bookMark" }
+            }
+        },
+        {
+            $sort: { bookMarkCount: -1 }
+        },
+        {
+            $limit: 3
+        }
+        ]);
+
+    } catch (e) {
+        console.error(e);
+        const error = new HttpError('여행지를 불러올 수 없습니다.', 500);
+        return next(error);
+    }
+
+    res.status(200).json({
+        message: '상위top여행지 조회',
+        top3Places: top3Places
+    })
+}
+
+
+
 
 
 
@@ -216,7 +247,7 @@ const toggleLike = async (req, res, next) => {
             session.endSession();
             return res.status(200).json({
                 message: '좋아요가 제거되었습니다.',
-                LikeByUser: false 
+                LikeByUser: false
             });
         } else {
             place.likes.push(userId);
@@ -227,12 +258,12 @@ const toggleLike = async (req, res, next) => {
             session.endSession();
             return res.status(200).json({
                 message: '좋아요 추가되었습니다.',
-                LikeByUser: true 
+                LikeByUser: true
             });
         }
 
     } catch (e) {
-        
+
         const error = new HttpError('좋아요 실패', 500);
         return next(error);
     }
@@ -276,7 +307,7 @@ const toggleBookMark = async (req, res, next) => {
                 session.endSession();
                 return res.status(200).json({
                     message: '북마크가 제거되었습니다.',
-                    BookMarkByUser: false 
+                    BookMarkByUser: false
                 });
             } else {
                 place.bookMark.push(userId);
@@ -287,19 +318,19 @@ const toggleBookMark = async (req, res, next) => {
                 session.endSession();
                 return res.status(200).json({
                     message: '북마크에 추가되었습니다.',
-                    BookMarkByUser: true 
+                    BookMarkByUser: true
                 });
             }
 
         } catch (e) {
-            await session.abortTransaction(); 
+            await session.abortTransaction();
             session.endSession();
-            const error = new HttpError('북마크 실패', 500); 
+            const error = new HttpError('북마크 실패', 500);
             return next(error);
         }
 
     } catch (e) {
-        const error = new HttpError('서버오류', 500); 
+        const error = new HttpError('서버오류', 500);
         return next(error);
     }
 }
@@ -311,5 +342,6 @@ exports.addPlaces = addPlaces;
 exports.getAllPlaces = getAllPlaces;
 exports.getPlacesById = getPlacesById;
 exports.deletePlace = deletePlace;
+exports.getTop3HotPlaces = getTop3HotPlaces;
 exports.toggleLike = toggleLike;
 exports.toggleBookMark = toggleBookMark;

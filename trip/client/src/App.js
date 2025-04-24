@@ -64,6 +64,7 @@ const App = () => {
             <Route path="/places/:id/review/list" element={<ReviewList />} />
             <Route path='/places/:id/review/:reviewId' element={<ReviewDetail />} />
             <Route path="/places/:id/review/:reviewId/edit" element={<UpdateReview />} />
+            
           </Routes>
         </main>
       </AuthProvider>

@@ -10,12 +10,20 @@ const router = express.Router();
 router.get('/', placesController.getAllPlaces);
 
 
+//여행지 인기 top3
+
+router.get('/top3', placesController.getTop3HotPlaces);
+
+//카테고리별 여행지
+
+router.get('/category/');
+
+
 //특정 여행지 조회
 router.get('/:id', placesController.getPlacesById);
 
+
 router.use(checkAuth);
-
-
 
 //새로운 여행지 등록
 router.post('/',
@@ -30,6 +38,9 @@ router.post('/',
     upload.array('images',5),
     placesController.addPlaces
 );
+
+
+
 
 
 //여행지 수정
@@ -50,13 +61,9 @@ router.delete('/:id', placesController.deletePlace);
 
 
 
-//여행지 인기 top5 
 
 
 
-
-
-//카테고리별 여행지
 
 
 
