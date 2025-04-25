@@ -30,7 +30,6 @@ const addPlaces = async (req, res, next) => {
         description,
         images: imageUrls || null,
         category,
-        city,
         region,
         address,
         location: coordinates,
@@ -208,16 +207,21 @@ const getTop3HotPlaces = async (req, res, next) => {
 // 카테고리별 여행지 조회 (관광지, 맛집 등등)
 
 const placesByCategory = async (req, res, next) => {
+    const { category } = req.query;
 
-    let category;
+    const filter = {};
+    if (category) filter.category = category;
+
     try {
-        category = await Place.find()
+        const places = await Place.find(filter).sort({ createdAt: -1 });
 
-    } catch(e){
+        res.status(200).json({ places });
+    } catch (e) {
         const error = new HttpError('카테고리를 찾을 수 없습니다.', 500);
         return next(error);
     }
-}
+};
+
 
 
 
@@ -354,5 +358,6 @@ exports.getAllPlaces = getAllPlaces;
 exports.getPlacesById = getPlacesById;
 exports.deletePlace = deletePlace;
 exports.getTop3HotPlaces = getTop3HotPlaces;
+exports.placesByCategory = placesByCategory;
 exports.toggleLike = toggleLike;
 exports.toggleBookMark = toggleBookMark;

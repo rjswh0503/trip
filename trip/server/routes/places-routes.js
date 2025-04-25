@@ -16,7 +16,11 @@ router.get('/top3', placesController.getTop3HotPlaces);
 
 //카테고리별 여행지
 
-router.get('/category/');
+router.get('/category', placesController.placesByCategory);
+
+
+//지역별 여행지
+router.get('/region');
 
 
 //특정 여행지 조회
@@ -56,14 +60,6 @@ router.patch('/:id',
 
 //여행지 삭제
 router.delete('/:id', placesController.deletePlace);
-
-
-
-
-
-
-
-
 
 
 
