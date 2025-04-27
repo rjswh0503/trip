@@ -12,8 +12,8 @@ const RegionList = () => {
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/places?region=${region}`);
-                setPlaces(response.data.places);
-                console.log(response.data.places);
+                setPlaces(response.data.regions);
+                console.log(response.data.regions);
             } catch (e) {
                 console.error(e);
             }

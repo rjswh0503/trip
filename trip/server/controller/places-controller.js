@@ -210,13 +210,12 @@ const getTop3HotPlaces = async (req, res, next) => {
 const placesByRegion = async (req, res, next) => {
     const { region } = req.query;
 
-    const filter = {};
-    if (region) filter.region = region;
+
 
     try {
-        // sort({ createdAt: -1 }) 지역별 장소를 찾은 오름차순으로 정렬
-        const places = await Place.find(filter).sort({ createdAt: -1 });
-        res.status(200).json({ places });
+        // sort({ createdAt: -1 }) 지역별 장소를 찾은 내림차순으로 정렬
+        const regions = await Place.find({ region: region }).sort({ createdAt: -1 });
+        res.status(200).json({ regions });
     } catch (e) {
         const error = new HttpError('지역을 찾을 수 없습니다.', 500);
         return next(error);
