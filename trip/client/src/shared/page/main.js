@@ -21,7 +21,7 @@ const Main = () => {
                 
             </div>
 
-            <div className="p-10 flex justify-center my-auto">
+            <div className="p-10 ">
                 <RegionList />
             </div>
         </div>
