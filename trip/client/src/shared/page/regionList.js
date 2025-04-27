@@ -40,11 +40,11 @@ const RegionList = () => {
                 </div>
         
 
-            <ul className='flex'>
+            <div className='grid'>
                 {places.map(place => (
-                    <li className='gap-3' key={place._id}>{place.title}</li>
+                    <h5 className='gap-3' key={place._id}>{place.title}</h5>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 };
