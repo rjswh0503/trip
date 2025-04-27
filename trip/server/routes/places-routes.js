@@ -10,9 +10,9 @@ const router = express.Router();
 router.get('/', placesController.getAllPlaces);
 
 
-//여행지 인기 top3
+//여행지 인기 top5
 
-router.get('/top3', placesController.getTop3HotPlaces);
+router.get('/top5', placesController.getTop5HotPlaces);
 
 
 //지역별 여행지

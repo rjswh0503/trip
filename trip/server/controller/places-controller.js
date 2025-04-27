@@ -138,7 +138,7 @@ const getPlacesById = async (req, res, next) => {
 
 const deletePlace = async (req, res, next) => {
     const PlacesId = req.params.id;
-    const ReviewId = req.params.reviewId;
+    
 
     let places;
 
@@ -158,6 +158,14 @@ const deletePlace = async (req, res, next) => {
 
         await Review.deleteMany({ places: PlacesId }, { session });
 
+        const deleteReviews = await Review.find({ places: PlacesId}).select('_id');
+        const deleteReviewId = deleteReviews.map(r => r._id);
+
+        await User.updateMany(
+            { reviews: { $in: deleteReviewId}},
+            {$pull: { reviews: {$in: deleteReviewId}}},
+            {session}
+        );
         await session.commitTransaction();
         session.endSession();
     } catch (e) {
@@ -173,11 +181,11 @@ const deletePlace = async (req, res, next) => {
 
 //여행지 인기 5위 리스트 (북마크 많이 한 여행지)
 
-const getTop3HotPlaces = async (req, res, next) => {
-    let top3Places;
+const getTop5HotPlaces = async (req, res, next) => {
+    let top5Places;
     try {
 
-        top3Places = await Place.aggregate([{
+        top5Places = await Place.aggregate([{
             $addFields: {
                 bookMarkCount: { $size: "$bookMark" }
             }
@@ -198,10 +206,9 @@ const getTop3HotPlaces = async (req, res, next) => {
 
     res.status(200).json({
         message: '상위top여행지 조회',
-        top3Places: top3Places
+        top5Places: top5Places
     })
 }
-
 
 
 
@@ -361,7 +368,7 @@ exports.addPlaces = addPlaces;
 exports.getAllPlaces = getAllPlaces;
 exports.getPlacesById = getPlacesById;
 exports.deletePlace = deletePlace;
-exports.getTop3HotPlaces = getTop3HotPlaces;
+exports.getTop5HotPlaces = getTop5HotPlaces;
 exports.placesByRegion = placesByRegion;
 exports.toggleLike = toggleLike;
 exports.toggleBookMark = toggleBookMark;

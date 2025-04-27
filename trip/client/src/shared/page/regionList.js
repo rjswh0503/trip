@@ -15,7 +15,7 @@ const RegionList = () => {
                 const response = await axios.get(`http://localhost:5000/api/places/region?region=${region}`);
                 setPlaces(response.data.places);
                 console.log(response.data.places);
-                
+
             } catch (e) {
                 console.error(e);
             }
@@ -29,17 +29,20 @@ const RegionList = () => {
 
     return (
         <div>
-            <div>
-                {regions.map(regionName => (
-                    <button key={regionName} onClick={() => handleSelectRegion(regionName)}>
-                        {regionName}
-                    </button>
-                ))}
-            </div>
+            <h2 className='text-2xl font-black py-3 px-6'>지역별 여행지</h2>
+                <div className="flex gap-4">
+                    
+                    {regions.map(regionName => (
+                        <button className='border border-gray-500 bg-blue-500 p-2 rounded-lg font-bold hover:bg-blue-800 active:bg-blue-800' key={regionName} onClick={() => handleSelectRegion(regionName)}>
+                            {regionName}
+                        </button>
+                    ))}
+                </div>
+        
 
-            <ul>
+            <ul className='flex'>
                 {places.map(place => (
-                    <li key={place._id}>{place.title}</li>
+                    <li className='gap-3' key={place._id}>{place.title}</li>
                 ))}
             </ul>
         </div>
