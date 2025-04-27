@@ -12,8 +12,8 @@ const Main = () => {
         <div className="container mx-auto ">
             <div>
 
-            </div>
 
+            </div>
 
             <div className="p-10 flex justify-center my-auto">
                 
