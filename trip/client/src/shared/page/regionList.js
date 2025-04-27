@@ -9,11 +9,13 @@ const RegionList = () => {
 
     useEffect(() => {
         if (!region) return;
+        console.log('현재 region:', region);
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/places?region=${region}`);
-                setPlaces(response.data.regions);
-                console.log(response.data.regions);
+                const response = await axios.get(`http://localhost:5000/api/places/region?region=${region}`);
+                setPlaces(response.data.places);
+                console.log(response.data.places);
+                
             } catch (e) {
                 console.error(e);
             }

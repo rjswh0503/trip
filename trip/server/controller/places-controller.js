@@ -186,7 +186,7 @@ const getTop3HotPlaces = async (req, res, next) => {
             $sort: { bookMarkCount: -1 }
         },
         {
-            $limit: 3
+            $limit: 5
         }
         ]);
 
@@ -210,18 +210,24 @@ const getTop3HotPlaces = async (req, res, next) => {
 const placesByRegion = async (req, res, next) => {
     const { region } = req.query;
 
+    if (!region) {
+        return res.status(400).json({ message: 'region 쿼리 파라미터가 필요합니다.' });
+    }
+
 
 
     try {
-        // sort({ createdAt: -1 }) 지역별 장소를 찾은 내림차순으로 정렬
-        const regions = await Place.find({ region: region }).sort({ createdAt: -1 });
-        res.status(200).json({ regions });
+        // region 값으로 내림차순 정렬해서 장소 찾기
+        const places = await Place.find({ region: region }).sort({ createdAt: -1 });
+
+
+        res.status(200).json({ places });
     } catch (e) {
         const error = new HttpError('지역을 찾을 수 없습니다.', 500);
         return next(error);
-
     }
-}
+};
+
 
 
 
