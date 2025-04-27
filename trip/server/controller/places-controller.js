@@ -1,6 +1,6 @@
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
-const review = require('../models/review');
+const Review = require('../models/review');
 const Place = require('../models/places');
 const getCoordsForAddress = require('../util/location');
 const { default: mongoose } = require('mongoose');
@@ -138,23 +138,28 @@ const getPlacesById = async (req, res, next) => {
 
 const deletePlace = async (req, res, next) => {
     const PlacesId = req.params.id;
+    const ReviewId = req.params.reviewId;
 
     let places;
 
     try {
         places = await Place.findById(PlacesId).populate('creator');
+
     } catch (e) {
         const error = new HttpError('삭제할 수 없습니다.', 500);
         return next(error);
     }
 
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try {
-        const session = await mongoose.startSession();
-        session.startTransaction();
-        await places.deleteOne({ session });
-        places.creator.places.pull(places);
-        await places.creator.save({ session });
+        await Place.deleteOne({ _id: PlacesId }, { session });
+
+        await Review.deleteMany({ places: PlacesId }, { session });
+
         await session.commitTransaction();
+        session.endSession();
     } catch (e) {
         const error = new HttpError('삭제할 수 없습니다.', 500);
         return next(error);
@@ -200,30 +205,24 @@ const getTop3HotPlaces = async (req, res, next) => {
 
 
 
+// 지역별 여행지 조회 (서울, 부산, 제주, 경주 등등)
 
-
-
-
-// 카테고리별 여행지 조회 (관광지, 맛집 등등)
-
-const placesByCategory = async (req, res, next) => {
-    const { category } = req.query;
+const placesByRegion = async (req, res, next) => {
+    const { region } = req.query;
 
     const filter = {};
-    if (category) filter.category = category;
+    if (region) filter.region = region;
 
     try {
+        // sort({ createdAt: -1 }) 지역별 장소를 찾은 오름차순으로 정렬
         const places = await Place.find(filter).sort({ createdAt: -1 });
-
         res.status(200).json({ places });
     } catch (e) {
-        const error = new HttpError('카테고리를 찾을 수 없습니다.', 500);
+        const error = new HttpError('지역을 찾을 수 없습니다.', 500);
         return next(error);
+
     }
-};
-
-
-
+}
 
 
 
@@ -358,6 +357,6 @@ exports.getAllPlaces = getAllPlaces;
 exports.getPlacesById = getPlacesById;
 exports.deletePlace = deletePlace;
 exports.getTop3HotPlaces = getTop3HotPlaces;
-exports.placesByCategory = placesByCategory;
+exports.placesByRegion = placesByRegion;
 exports.toggleLike = toggleLike;
 exports.toggleBookMark = toggleBookMark;

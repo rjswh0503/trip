@@ -14,13 +14,9 @@ router.get('/', placesController.getAllPlaces);
 
 router.get('/top3', placesController.getTop3HotPlaces);
 
-//카테고리별 여행지
-
-router.get('/category', placesController.placesByCategory);
-
 
 //지역별 여행지
-router.get('/region');
+router.get('/region', placesController.placesByRegion);
 
 
 //특정 여행지 조회
