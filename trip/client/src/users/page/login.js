@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 import Swal from 'sweetalert2';
 
-import './login.css';
-
+import { Card, Button, Label, TextInput } from 'flowbite-react';
 
 
 
@@ -49,7 +48,7 @@ const Login = () => {
             });
             Navigate('/');
         } catch (e) {
-            
+
             Swal.fire({
                 title: '로그인 실패',
                 icon: 'error',
@@ -58,11 +57,11 @@ const Login = () => {
                 timer: 2000,
                 timerProgressBar: true,
             });
-            
+
         }
     }
 
-    
+
 
 
 
@@ -75,17 +74,32 @@ const Login = () => {
 
 
     return (
-        <div className='login-container'>
+        <div className='container flex items-center justify-center min-h-screen'>
 
-
-            <form className='login-box' onSubmit={loginHandler}>
-                <h2>로그인</h2>
-                <input type='email' name="email" placeholder='이메일을 입력하세요.' onChange={onChange} />
-                <input type='password' name='password' placeholder='비밀번호를 입력하세요.' onChange={onChange} />
-                <button type='submit'>로그인</button>
-                <p className='login-footer'>계정이 없으신가요? <a href='/register'>회원가입</a> </p>
-            </form>
-
+            <Card className='max-w-sm mx-auto shadow-sm hover:shadow-lg'>
+                <form className='flex flex-col gap-4' onSubmit={loginHandler}>
+                    <h2>로그인</h2>
+                    <div>
+                        <div className='mb-2 block'>
+                            <Label htmlFor='email'>이메일</Label>
+                        </div>
+                        <TextInput name='email' type='email' placeholder='이메일을 입력하세요.' onChange={onChange} required shadow />
+                    </div>
+                    <div>
+                        <div className='mb-2 block'>
+                            <Label htmlFor='password'>비밀번호</Label>
+                        </div>
+                        <TextInput  name='password' type='password' placeholder='비밀번호를 입력하세요.' onChange={onChange} required shadow />
+                    </div>
+                    <Button color="green" type='submit'>로그인</Button>
+                    <div className='flex items-center gap-2'>
+                        <Label>
+                            계정이 없으신가요?
+                        </Label>
+                        <Link to="/register"><p className='text-sm text-blue-600 font-bold'>회원가입</p></Link>
+                    </div>
+                </form>
+            </Card>
         </div>
     )
 }

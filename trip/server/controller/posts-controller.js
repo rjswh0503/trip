@@ -206,9 +206,28 @@ const deletePost = async (req, res, next) => {
 
 };
 
+
+// 새로 등록된 게시글 리스트 5개 까지
+const getLatestPosts = async (req, res, next) => {
+
+    try {
+        const latestPosts = await Post.find().sort({ createdAt: -1 }).limit(5);
+        
+        res.status(200).json({
+            latestPosts
+        })
+        
+    } catch (e) {
+        console.error(e);
+        const error = new HttpError('게시글을 찾을 수 없습니다.', 500);
+        return next(error);
+    }
+}
+
 exports.getPostList = getPostList;
 exports.getPostByUserId = getPostByUserId;
 exports.addPost = addPost;
 exports.getPostById = getPostById;
 exports.updatePost = updatePost;
 exports.deletePost = deletePost;
+exports.getLatestPosts = getLatestPosts;

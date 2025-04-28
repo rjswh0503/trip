@@ -19,7 +19,24 @@ const NavMain = () => {
                             <div className="">
                                 <NavLink to="/"><h2 className="text-3xl font-bold text-yellow-500 hover:text-yellow-600">Trip</h2></NavLink>
                             </div>
-                            <Dropdown
+                            {user?.role === 'admin' ? (
+                                <Dropdown
+                                    label={<Avatar alt="유저프로필" img={user.image} rounded bordered />}
+                                    arrowIcon={false}
+                                    inline
+                                >
+                                    <DropdownHeader>
+                                        <span className='block text-sm'>{user.name}</span>
+                                        <span className='block truncate text-sm font-medium'>{user.email}</span>
+                                    </DropdownHeader>
+                                    <Link to={"/"}><DropdownItem>관리자페이지</DropdownItem></Link>
+                                    <Link to={`/${user.userId}/mypage`}><DropdownItem>내정보</DropdownItem></Link>
+                                    <Link to={'/places/add'}><DropdownItem>여행지 추가</DropdownItem></Link>
+                                    <DropdownDivider />
+                                    <DropdownItem><LogoutButton /></DropdownItem>
+                                </Dropdown>
+                            ) : (
+                                <Dropdown
                                 label={<Avatar alt='유저프로필' img={user.image} rounded bordered />}
                                 arrowIcon={false}
                                 inline
@@ -36,6 +53,7 @@ const NavMain = () => {
                                 <DropdownDivider />
                                 <DropdownItem><LogoutButton /></DropdownItem>
                             </Dropdown>
+                            )}
                         </nav>
                     </header>
                 </div>
@@ -48,7 +66,6 @@ const NavMain = () => {
                             </div>
                             <ul className="flex space-x-4 items-center">
                                 <li className="font-black text-yellow-500 hover:text-yellow-600"><NavLink to="/login">로그인</NavLink></li>
-                                <li className="font-black text-yellow-500 hover:text-yellow-600"><NavLink to="/register">회원가입</NavLink></li>
                             </ul>
                         </nav>
                     </header>

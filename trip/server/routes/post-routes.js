@@ -15,16 +15,17 @@ const router = express.Router();
 // 게시글 전체 조회
 router.get('/list', postController.getPostList);
 
-
+//새로 등록된 게시글 리스트 5개 
+router.get('/latestPost', postController.getLatestPosts);
 
 // 특정 게시글 조회
 router.get('/:id', postController.getPostById);
 
-// 게시글 추가 
-// 게시글 추가 router에 check()함수를 사용해서 검증 확인
-// 
+
 
 router.use(checkAuth);
+// 게시글 추가 
+// 게시글 추가 router에 check()함수를 사용해서 검증 확인
 
 router.post('/add',
     [

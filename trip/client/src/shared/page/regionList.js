@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
 import { Button } from "flowbite-react";
 
 
@@ -43,14 +43,18 @@ const RegionList = () => {
             </div>
 
 
-            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center mt-10'>
+            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center mt-10' >
                 {places.map(place => (
-                    <div className='w-90 sm:w-90 bg-white border border-gray-200 rounded-lg cursor-pointer shadow-sm hover:shadow-lg' key={place._id}>
-                        <img className='rounded-t-lg w-full h-48 object-cover' src={place.images} alt='지역별 이미지'/>
-                        <div className='p-5'>
-                        <h5 className='my-3 text-2xl font-bold tracking-tight text-gray-900'>{place.title}</h5>
-                        <p className='mb-3 font-normal text-gray-700 line-clamp-4'>{place.description}</p>
-                        </div>
+                    <div key={place._id}>
+                        <Link to={`/places/${place._id}`}>
+                            <div className='w-90 sm:w-90 bg-white border border-gray-200 rounded-lg cursor-pointer shadow-sm hover:shadow-lg' >
+                                <img className='rounded-t-lg w-full h-48 object-cover' src={place.images} alt='지역별 이미지' />
+                                <div className='p-5'>
+                                    <h5 className='my-3 text-2xl font-bold tracking-tight text-gray-900'>{place.title}</h5>
+                                    <p className='mb-3 font-normal text-gray-700 line-clamp-4'>{place.description}</p>
+                                </div>
+                            </div>
+                        </Link>
                     </div>
                 ))}
             </div>

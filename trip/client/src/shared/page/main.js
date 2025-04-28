@@ -5,7 +5,7 @@ import Top5Places from "./top5Places";
 
 import RegionList from "./regionList";
 
-
+import NewPostList from './newPostList';
 
 
 const Main = () => {
@@ -16,21 +16,24 @@ const Main = () => {
 
 
             </div>
-
+            {/* 인기 여행지(추천) Top5 리스트 */}
             <div className="p-10 flex justify-center my-auto">
-                
+
                 <Top5Places />
-                
-            </div>
-            
-            <div>
 
             </div>
-            
-            <div>
+            {/* 새 게시글 리스트 limit 5 + 새 리뷰 리스트 limit 5 */}
+            <div className="flex justify-between">
+                <div>
+                    <NewPostList />
+                </div>
 
+                <div>
+
+                </div>
             </div>
 
+            {/* 지역별 여행지 리스트 */}
             <div className="p-10 ">
                 <RegionList />
             </div>

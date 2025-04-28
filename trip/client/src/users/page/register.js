@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { Button, FileInput, Label, Card, TextInput, HelperText } from 'flowbite-react';
 import Swal from 'sweetalert2';
 
 
@@ -43,7 +44,7 @@ const Register = () => {
                 password: ''
             });
 
-            
+
             setImageFile(null);
             setPrviewUrl('');
             console.log(responseData.data.formData);
@@ -86,21 +87,44 @@ const Register = () => {
 
 
     return (
-        <>
-            <h2>Register</h2>
-            <form onSubmit={registerSubmitHandler}>
-                <input type='text' name='name' placeholder='사용자 닉네임' onChange={handleChange} value={formData.name} required />
-                <input type='email' name='email' placeholder='사용자 이메일' onChange={handleChange} value={formData.email} required />
-                <input type='password' name='password' placeholder='사용자 비밀번호' onChange={handleChange} value={formData.password} required />
-                <input type='file' accept='image/*' onChange={handleImageChange}></input>
-                {previewUrl && (
-                    <div style={{ margin: '1rem 0' }}>
-                        <img src={previewUrl} alt='미리보기' width="150"/>
+        <div className='container flex items-center justify-center min-h-screen'>
+            <Card className='max-w-sm mx-auto shadow-sm hover:shadow-lg'>
+                <form className='flex flex-col gap-4' onSubmit={registerSubmitHandler}>
+                    <h2>회원가입</h2>
+                    <div>
+                        <div className='mb-2 block'>
+                            <Label htmlFor='name'>닉네임</Label>
+                        </div>
+                        <TextInput  name='name' type='text' onChange={handleChange} value={formData.name} placeholder='이름을 입력하세요.' required shadow />
                     </div>
-                )}
-                <button type='submit'>회원가입</button>
-            </form>
-        </>
+                    <div>
+                        <div className='mb-2 block'>
+                            <Label htmlFor='email'>이메일</Label>
+                        </div>
+                        <TextInput name='email' type='email' onChange={handleChange} value={formData.email} placeholder='123@123.com' required shadow />
+                    </div>
+                    <div>
+                        <div className='mb-2 block'>
+                            <Label htmlFor='password'>비밀번호</Label>
+                        </div>
+                        <TextInput name='password' type='password' onChange={handleChange} value={formData.password} placeholder='비밀번호 입력하세요.' required shadow />
+                    </div>
+                    <div className='max-w-md'>
+                        <Label className='mb-2 block' htmlFor='file'>
+                            프로필 이미지 업로드
+                        </Label>
+                        <FileInput name='file' accept='image/*' onChange={handleImageChange} />
+                        <HelperText className='mt-1'>프로필 사진을 등록해주세요.</HelperText>
+                    </div>
+                    {previewUrl && (
+                        <div style={{ margin: '1rem 0' }}>
+                            <img src={previewUrl} alt='미리보기' width="150" />
+                        </div>
+                    )}
+                    <Button color="green" type='submit'>회원가입</Button>
+                </form>
+            </Card>
+        </div>
     )
 }
 

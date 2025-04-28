@@ -51,7 +51,7 @@ const PlacesList = () => {
                 });
             } else {
                 Swal.fire({
-                    title: '좋아요 취소',
+                    title: '좋아요 추가',
                     icon: 'success',
                     confirmButtonText: '확인',
                     allowOutsideClick: false,
@@ -86,7 +86,7 @@ const PlacesList = () => {
 
             if (response.data.BookMarkByUser) {
                 Swal.fire({
-                    title: '북마크 누르기',
+                    title: '북마크 추가',
                     icon: 'success',
                     confirmButtonText: '확인',
                     allowOutsideClick: false,
