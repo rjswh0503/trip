@@ -25,7 +25,7 @@ const LatestPost = () => {
 
 
     return (
-        <div>
+        <div className='container mx-auto'>
             <h2 className='text-2xl font-black py-3 '>새로 등록된 게시글</h2>
             <div className='grid grid-rows-2 gap-4 justify-start'>
                 {latestPost.map(post => (
@@ -33,7 +33,7 @@ const LatestPost = () => {
                         <Card className='max-w-sm shadow-sm hover:shadow-lg'>
                             <h5 className='text-2xl font-bold tracking-tight'>{post.title}</h5>
                             <p className='font-nomal text-gray-700'>{post.content}</p>
-                            <Link className='flex' to={`/posts/${post._id}`}><p className='text-sm text-gray-500 hover:text-gray-700 hover:underline justify-end'>자세히보기</p></Link>
+                            <Link to={`/posts/${post._id}`}><p className='text-sm text-gray-500 hover:text-gray-700 hover:underline justify-end'>자세히보기</p></Link>
                         </Card>
                     </div>
                     
