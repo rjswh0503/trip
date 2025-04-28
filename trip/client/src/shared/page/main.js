@@ -1,4 +1,6 @@
 import React from "react";
+
+
 import Top5Places from "./top5Places";
 
 import RegionList from "./regionList";
@@ -19,6 +21,14 @@ const Main = () => {
                 
                 <Top5Places />
                 
+            </div>
+            
+            <div>
+
+            </div>
+            
+            <div>
+
             </div>
 
             <div className="p-10 ">

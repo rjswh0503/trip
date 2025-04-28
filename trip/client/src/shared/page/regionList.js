@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+import { Button } from "flowbite-react";
+
+
 const RegionList = () => {
     const [region, setRegion] = useState('서울');
     const [places, setPlaces] = useState([]);
@@ -9,7 +12,7 @@ const RegionList = () => {
 
     useEffect(() => {
         if (!region) return;
-        console.log('현재 region:', region);
+
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/places/region?region=${region}`);
@@ -33,27 +36,24 @@ const RegionList = () => {
             <div className="flex gap-4">
 
                 {regions.map(regionName => (
-                    <button className='border border-gray-500 bg-blue-500 p-2 rounded-lg font-bold hover:bg-blue-800 active:bg-blue-800 mb-10' key={regionName} onClick={() => handleSelectRegion(regionName)}>
+                    <Button color="green" pill key={regionName} onClick={() => handleSelectRegion(regionName)}>
                         {regionName}
-                    </button>
+                    </Button>
                 ))}
             </div>
 
 
-            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center cursor-pointer mt-10'>
+            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center mt-10'>
                 {places.map(place => (
-                    <div className='w-90 sm:w-90 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg'>
-                        <img className='rounded-t-lg w-full h-48 object-cover' src={place.images} alt='지역별 여행지 이미지' />
+                    <div className='w-90 sm:w-90 bg-white border border-gray-200 rounded-lg cursor-pointer shadow-sm hover:shadow-lg' key={place._id}>
+                        <img className='rounded-t-lg w-full h-48 object-cover' src={place.images} alt='지역별 이미지'/>
                         <div className='p-5'>
-                            <h5 className='my-3 text-xl font-bold tracking-tight text-gray-900' key={place._id}>{place.title}</h5>
-                            <p className='mb-3 font-normal text-gray-700 line-clamp-4'>{place.description}</p>
+                        <h5 className='my-3 text-2xl font-bold tracking-tight text-gray-900'>{place.title}</h5>
+                        <p className='mb-3 font-normal text-gray-700 line-clamp-4'>{place.description}</p>
                         </div>
-
                     </div>
-
                 ))}
             </div>
-
         </div>
     );
 };
