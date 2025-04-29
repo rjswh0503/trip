@@ -207,11 +207,11 @@ const deletePost = async (req, res, next) => {
 };
 
 
-// 새로 등록된 게시글 리스트 5개 까지
+// 새로 등록된 게시글 리스트 3개 까지
 const getLatestPosts = async (req, res, next) => {
 
     try {
-        const latestPosts = await Post.find().sort({ createdAt: -1 }).limit(5);
+        const latestPosts = await Post.find().sort({ createdAt: -1 }).limit(3).populate('author', 'name image');
         
         res.status(200).json({
             latestPosts

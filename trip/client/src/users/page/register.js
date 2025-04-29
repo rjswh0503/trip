@@ -88,7 +88,7 @@ const Register = () => {
 
     return (
         <div className='container flex items-center justify-center min-h-screen'>
-            <Card className='max-w-sm mx-auto shadow-sm hover:shadow-lg'>
+            <Card className='max-w-md mx-auto shadow-sm hover:shadow-lg'>
                 <form className='flex flex-col gap-4' onSubmit={registerSubmitHandler}>
                     <h2>회원가입</h2>
                     <div>
