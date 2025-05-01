@@ -5,6 +5,7 @@ const router = express.Router();
 const checkAuth = require('../middleware/auth-middleware');
 const uploadUser = require('../middleware/uploadUserImg');
 const userController = require('../controller/users-controller');
+const checkAdmin = require('../middleware/check-admin');
 
 
 
@@ -37,6 +38,7 @@ router.get('/:id/profile', userController.getUserbyId);
 
 router.use(checkAuth);
 
+
 //프로필 수정 router
 router.patch('/:id/edit', userController.updateUserById);
 
@@ -67,6 +69,17 @@ router.get('/:id/likes', userController.getLikes);
 // 추천 누른 리뷰
 
 router.get('/:id/reviews/recommend', userController.getReviews);
+
+
+
+// ========== Admin ==========
+
+//어드민 페이지
+router.get('/admin', checkAdmin, userController.getAllitems);
+
+
+//어드민 페이지에서의 새로 가입한 유저 리스트 최대3명
+router.get('/admin/latestUsers', checkAdmin, userController.getLatestUsers);
 
 
 

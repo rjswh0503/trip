@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 
 const LogoutButton = () => {
 
-    const {setToken, setIsLoggedIn} = useAuth();
+    const { setToken, setIsLoggedIn } = useAuth();
     const navigate = useNavigate();
 
     const logoutHandler = async () => {
@@ -13,7 +13,7 @@ const LogoutButton = () => {
         setToken(null);
         setIsLoggedIn(false);
         navigate('/login');
-       await Swal.fire({
+        await Swal.fire({
             title: '로그아웃 성공',
             icon: 'success',
             confirmButtonText: '확인',
@@ -22,11 +22,11 @@ const LogoutButton = () => {
             timer: 2000,
             timerProgressBar: true,
         });
-        
+
     };
 
-    return <button onClick={logoutHandler}>로그아웃</button>
-    
+    return <div onClick={logoutHandler}>로그아웃</div>
+
 }
 
 export default LogoutButton;

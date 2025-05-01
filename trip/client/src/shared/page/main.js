@@ -7,6 +7,8 @@ import RegionList from "./regionList";
 
 import NewPostList from './newPostList';
 
+import LatestReview from "./latestReview";
+
 
 const Main = () => {
 
@@ -23,13 +25,13 @@ const Main = () => {
 
             </div>
             {/* 새 게시글 리스트 limit 5 + 새 리뷰 리스트 limit 5 */}
-            <div className="flex justify-between">
+            <div className="flex justify-around">
                 <div>
                     <NewPostList />
                 </div>
 
                 <div>
-
+                    <LatestReview />
                 </div>
             </div>
 

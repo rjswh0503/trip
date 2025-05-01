@@ -28,6 +28,7 @@ import ReviewList from './reviews/page/reviewList';
 import ReviewDetail from './reviews/page/reviewDetail';
 import UpdateReview from './reviews/page/updateReview';
 import WriteReviews from './users/components/writeReviews';
+import AdminPage from './users/Admin/adminPage';
 
 
 const App = () => {
@@ -42,6 +43,7 @@ const App = () => {
             <Route path='/' element={<Main />} />
             <Route path='/register' element={<Register />} />
             <Route path='/login' element={<Login />} />
+            <Route path='/admin' element={<AdminPage />} />
             <Route path='/:id/mypage' element={<MyPage />}>
               <Route path='post' element={<MyPost />} />
               <Route path='comments' element={<MyComment />} />
@@ -64,7 +66,7 @@ const App = () => {
             <Route path="/places/:id/review/list" element={<ReviewList />} />
             <Route path='/places/:id/review/:reviewId' element={<ReviewDetail />} />
             <Route path="/places/:id/review/:reviewId/edit" element={<UpdateReview />} />
-            
+
           </Routes>
         </main>
       </AuthProvider>

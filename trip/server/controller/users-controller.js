@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 const HttpError = require('../models/http-error');
 const User = require('../models/user');
-
+const Place = require('../models/places');
 const { default: mongoose } = require('mongoose');
 const Post = require('../models/post');
 const Comment = require('../models/comment');
@@ -11,7 +11,7 @@ const Review = require('../models/review');
 
 
 
-// 회원가입 비즈니스 로직
+// 회원가입 
 
 const register = async (req, res, next) => {
 
@@ -92,7 +92,7 @@ const register = async (req, res, next) => {
 
 
 
-// 로그인 비즈니스 로직
+// 로그인 
 
 const login = async (req, res, next) => {
 
@@ -199,7 +199,7 @@ const getUserbyId = async (req, res, next) => {
     });
 }
 
-// 유저 프로필 수정 로직
+// 유저 프로필 수정
 
 const updateUserById = async (req, res, next) => {
 
@@ -253,7 +253,7 @@ const updateUserById = async (req, res, next) => {
 
 
 
-// 회원 탈퇴 로직
+// 회원 탈퇴
 
 const deleteUserById = async (req, res, next) => {
     const userId = req.userData.userId;
@@ -360,7 +360,50 @@ const getReviews = async(req, res, next) => {
 }
 
 
-// 친구추가 로직
+// 친구추가
+
+
+// ========== ADMIN ==========
+
+
+// 전체 유저 조회, 전체 여행지 조회, 전체 리뷰 조회
+
+const getAllitems = async(req,res,next) => {
+
+    try {
+        const userCount = await User.countDocuments();
+        const placeCount = await Place.countDocuments();
+        const reviewCount = await Review.countDocuments();
+
+        res.status(200).json({
+            userCount,
+            placeCount,
+            reviewCount
+        })
+    } catch(e){
+        console.error(e);
+        const erorr = new HttpError('조회 실패', 500);
+        return next(erorr);
+    }
+}
+
+
+// 최근 가입 유저 리스트 
+
+const getLatestUsers = async(req,res,next) => {
+
+    try {
+        const latestUsers = await User.find().sort({ createdAt: -1 }).limit(3)
+        res.status(200).json({
+            latestUsers
+        })
+    } catch(e){
+        console.error(e);
+        const error = new HttpError('유저를 찾을 수 없습니다.', 500);
+        return next(error);
+    }
+}
+
 
 
 
@@ -374,6 +417,8 @@ exports.deleteUserById = deleteUserById;
 exports.getBookMarks = getBookMarks;
 exports.getLikes = getLikes;
 exports.getReviews = getReviews;
+exports.getAllitems = getAllitems;
+exports.getLatestUsers = getLatestUsers;
 
 
 

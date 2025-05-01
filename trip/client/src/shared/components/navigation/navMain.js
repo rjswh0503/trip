@@ -29,7 +29,7 @@ const NavMain = () => {
                                         <span className='block text-sm'>{user.name}</span>
                                         <span className='block truncate text-sm font-medium'>{user.email}</span>
                                     </DropdownHeader>
-                                    <Link to={"/"}><DropdownItem>관리자페이지</DropdownItem></Link>
+                                    <Link to={"/admin"}><DropdownItem>관리자페이지</DropdownItem></Link>
                                     <Link to={`/${user.userId}/mypage`}><DropdownItem>내정보</DropdownItem></Link>
                                     <Link to={'/places/add'}><DropdownItem>여행지 추가</DropdownItem></Link>
                                     <DropdownDivider />
