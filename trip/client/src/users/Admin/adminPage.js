@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useAuth } from '../../shared/context/auth-context';
+import LatestUsers from './latestUsers';
 // import { Link} from 'react-router-dom';
 
 
@@ -10,7 +11,7 @@ import { useAuth } from '../../shared/context/auth-context';
 
 const AdminPage = () => {
 
-    const { token, user } = useAuth();
+    const { token } = useAuth();
     const [page, setPage] = useState('dashboard');
     const [data, setData] = useState({
         userCount: 0,
@@ -19,6 +20,7 @@ const AdminPage = () => {
     });
 
     useEffect(() => {
+        if(!token) return;
         const fetchData = async () => {
             try {
                 const response = await axios.get('http://localhost:5000/api/users/admin', {
@@ -44,7 +46,7 @@ const AdminPage = () => {
         }
         fetchData();
 
-    }, [token, user]);
+    }, [token]);
 
 
     return (
@@ -77,7 +79,8 @@ const AdminPage = () => {
                         </div>
                     </div>
                 )}
-                
+                {/* 최근 가입 유저 테이블 */}
+                <LatestUsers />
             </main>
         </div>
     )
