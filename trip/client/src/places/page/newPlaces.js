@@ -71,7 +71,7 @@ const NewPlaces = () => {
             setImageFiles([]);
             setPreviewUrl([]);
             alert('장소 등록 완료');
-            navigate('/places/list')
+            navigate('/admin')
             console.log(response.data);
         } catch (e) {
             alert(e.response?.data?.message || '장소 등록 실패');
