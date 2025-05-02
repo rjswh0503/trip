@@ -72,6 +72,8 @@ router.get('/:id/reviews/recommend', userController.getReviews);
 
 
 
+
+
 // ========== Admin ==========
 
 //어드민 페이지
@@ -82,5 +84,10 @@ router.get('/admin', checkAdmin, userController.getAllitems);
 router.get('/admin/latestUsers', checkAdmin, userController.getLatestUsers);
 
 
+//어드민 페이지에서의 전체 유저 리스트 (유저삭제 등등);
+router.get('/admin/allUsers', checkAdmin, userController.getAllUsers);
 
+
+//어드민 페이지에서의 유저 검색 기능
+router.get('/admin/users/search', checkAdmin, );
 module.exports = router;

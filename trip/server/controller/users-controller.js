@@ -135,7 +135,7 @@ const login = async (req, res, next) => {
     try {
         token = jwt.sign(
             {
-                userId: existingUser.id, email: existingUser.email, name: existingUser.name, image: existingUser.image, role: existingUser.role
+                userId: existingUser.id, email: existingUser.email, name: existingUser.name, image: existingUser.image, role: existingUser.role, status: existingUser.status
             },
             'Secret-Code',
             {
@@ -393,7 +393,7 @@ const getAllitems = async(req,res,next) => {
 const getLatestUsers = async(req,res,next) => {
 
     try {
-        const latestUsers = await User.find().sort({ createdAt: -1 }).limit(3)
+        const latestUsers = await User.find({role: 'User'}).sort({ createdAt: -1 }).limit(3)
         res.status(200).json({
             latestUsers
         })
@@ -403,6 +403,33 @@ const getLatestUsers = async(req,res,next) => {
         return next(error);
     }
 }
+
+
+// 유저 관리 
+
+
+// 유저 전체 조회
+
+const getAllUsers = async(req,res,next) => {
+
+    try {
+
+        const users = await User.find({role: 'User'}).select('-password');
+
+        res.status(200).json({users});
+
+    } catch(e){
+        console.error(e);
+        const error = new HttpError('유저 전체조회 실패', 500);
+        return next(error);
+    }
+};
+
+
+
+
+
+// 유저 검색 
 
 
 
@@ -419,7 +446,7 @@ exports.getLikes = getLikes;
 exports.getReviews = getReviews;
 exports.getAllitems = getAllitems;
 exports.getLatestUsers = getLatestUsers;
-
+exports.getAllUsers = getAllUsers;
 
 
 

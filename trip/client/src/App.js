@@ -28,7 +28,7 @@ import ReviewList from './reviews/page/reviewList';
 import ReviewDetail from './reviews/page/reviewDetail';
 import UpdateReview from './reviews/page/updateReview';
 import WriteReviews from './users/components/writeReviews';
-import AdminPage from './users/Admin/adminPage';
+import AdminPage from './users/Admin/page/adminPage';
 
 
 const App = () => {

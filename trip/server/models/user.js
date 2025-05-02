@@ -19,7 +19,8 @@ const userSchema = new Schema(
         places: [{ type: mongoose.Types.ObjectId, ref: 'Place'}],
         comments: [{ type: mongoose.Types.ObjectId, ref: 'Comment' }],
         role: { type: String, required: true, default: 'User' },
-        friend: [{ type: mongoose.Types.ObjectId, ref: 'User'}]
+        friend: [{ type: mongoose.Types.ObjectId, ref: 'User'}],
+        status: {type: String, required: true, default: 'Active'}
     },
     { timestamps: true }
 )
