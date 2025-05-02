@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../../shared/context/auth-context';
 import { Avatar } from 'flowbite-react';
-import { FaSortDown, FaSortUp  } from "react-icons/fa6";
+import { FaSortDown, FaSortUp } from "react-icons/fa6";
 import { BsThreeDots } from "react-icons/bs";
 
 const UserManagement = () => {
 
-    const { token } = useAuth();
+    const { token, user } = useAuth();
 
     const [users, setUsers] = useState([]);
     const [createdAtSort, setCreatedAtSort] = useState('desc');
@@ -30,7 +31,7 @@ const UserManagement = () => {
 
         }
         fetchData();
-    }, [token]);
+    }, [token,user]);
 
 
     const sortedUser = [...users].sort((a, b) => {
@@ -51,8 +52,8 @@ const UserManagement = () => {
                         <th className='p-3 text-left'>닉네임</th>
                         <th className='p-3 text-left'>이메일</th>
                         <th className='p-3 text-left flex gap-1'>가입일<p className='cursor-pointer' onClick={() => setCreatedAtSort(createdAtSort === 'asc' ? 'desc' : 'asc')}>
-                            {createdAtSort === 'asc' ? <FaSortUp className='mt-1'/> : <FaSortDown/> }
-                            </p></th>
+                            {createdAtSort === 'asc' ? <FaSortUp className='mt-1' /> : <FaSortDown />}
+                        </p></th>
                         <th className='p-3 text-left'>상태</th>
                         <th className='p-3 text-left'></th>
                     </tr>
@@ -61,7 +62,7 @@ const UserManagement = () => {
                     {sortedUser.map((user) => (
                         <tr key={user._id} className='hover:bg-gray-50 border-b-3 border-b-2'>
                             <td className='p-4'><Avatar className='justify-start' rounded size='xs' /></td>
-                            <td className='p-4 text-blue-500 cursor-pointer hover:underline'>{user.name}</td>
+                            <td className='p-4 text-blue-500 cursor-pointer hover:underline'><Link to={`/${user._id}/mypage`}>{user.name}</Link></td>
                             <td className='p-4'>{user.email}</td>
                             <td className='p-4'>{new Date(user.createdAt).toLocaleDateString()}</td>
                             <td className={`p-1 mt-2.5 inline-block  rounded-lg  ${user.status === 'Active' ? 'bg-green-300' : 'bg-red-300'}`}>

@@ -51,7 +51,7 @@ const RegionList = () => {
                                 <img className='rounded-t-lg w-full h-48 object-cover' src={place.images} alt='지역별 이미지' />
                                 <div className='p-5'>
                                     <h5 className='my-3 text-2xl font-bold tracking-tight text-gray-900'>{place.title}</h5>
-                                    <p className='mb-3 font-normal text-gray-700 line-clamp-4'>{place.description}</p>
+                                    <p className='mb-3 font-normal text-gray-700 line-clamp-5'>{place.description}</p>
                                 </div>
                             </div>
                         </Link>

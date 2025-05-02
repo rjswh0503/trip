@@ -88,6 +88,17 @@ router.get('/admin/latestUsers', checkAdmin, userController.getLatestUsers);
 router.get('/admin/allUsers', checkAdmin, userController.getAllUsers);
 
 
+
 //어드민 페이지에서의 유저 검색 기능
 router.get('/admin/users/search', checkAdmin, );
+
+
+//어드민 페이지에서의 여행지 관리
+
+router.get('/admin/allPlaces', checkAdmin, userController.getAllPlaces);
+
+
+
+
+
 module.exports = router;

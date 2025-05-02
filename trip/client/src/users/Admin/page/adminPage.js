@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useAuth } from '../../../shared/context/auth-context';
 import LatestUsers from '../components/latestUsers';
 import UserManagement from '../components/UserManagement';
-
+import AllPlaces from '../components/allPlaces';
 
 
 
@@ -81,6 +81,16 @@ const AdminPage = () => {
                 {page === 'community' && (
                     <div>
 
+                    </div>
+                )}
+                {page === 'reviews' && (
+                    <div>
+
+                    </div>
+                )}
+                {page === 'places' && (
+                    <div>
+                        <AllPlaces/>
                     </div>
                 )}
             </main>

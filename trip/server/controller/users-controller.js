@@ -176,7 +176,7 @@ const getUserbyId = async (req, res, next) => {
                 path: 'post',
                 select: 'title'
             }
-        }).populate('post', 'title').populate('bookMark', 'title').populate('reviews','title author recommend view');
+        }).populate('post', 'title').populate('bookMark', 'title').populate('reviews', 'title author recommend view');
     } catch (e) {
         const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 500);
         return next(error);
@@ -341,14 +341,14 @@ const getLikes = async (req, res, next) => {
 
 // 추천 누른 리뷰 조회
 
-const getReviews = async(req, res, next) => {
+const getReviews = async (req, res, next) => {
     const userId = req.userData.userId;
     let user;
 
     try {
         user = await User.findById(userId).populate('recommend', 'title image content');
 
-    } catch(e){
+    } catch (e) {
         console.error(e);
         const error = new HttpError('추천 누른 여행지 조회 실패', 500);
         return next(error);
@@ -366,9 +366,9 @@ const getReviews = async(req, res, next) => {
 // ========== ADMIN ==========
 
 
-// 전체 유저 조회, 전체 여행지 조회, 전체 리뷰 조회
+// 대시보드 메인 전체 유저 수 조회, 전체 여행지 수 조회, 전체 리뷰 수 조회
 
-const getAllitems = async(req,res,next) => {
+const getAllitems = async (req, res, next) => {
 
     try {
         const userCount = await User.countDocuments();
@@ -380,7 +380,7 @@ const getAllitems = async(req,res,next) => {
             placeCount,
             reviewCount
         })
-    } catch(e){
+    } catch (e) {
         console.error(e);
         const erorr = new HttpError('조회 실패', 500);
         return next(erorr);
@@ -390,14 +390,14 @@ const getAllitems = async(req,res,next) => {
 
 // 최근 가입 유저 리스트 
 
-const getLatestUsers = async(req,res,next) => {
+const getLatestUsers = async (req, res, next) => {
 
     try {
-        const latestUsers = await User.find({role: 'User'}).sort({ createdAt: -1 }).limit(3)
+        const latestUsers = await User.find({ role: 'User' }).sort({ createdAt: -1 }).limit(3)
         res.status(200).json({
             latestUsers
         })
-    } catch(e){
+    } catch (e) {
         console.error(e);
         const error = new HttpError('유저를 찾을 수 없습니다.', 500);
         return next(error);
@@ -410,15 +410,15 @@ const getLatestUsers = async(req,res,next) => {
 
 // 유저 전체 조회
 
-const getAllUsers = async(req,res,next) => {
+const getAllUsers = async (req, res, next) => {
 
     try {
 
-        const users = await User.find({role: 'User'}).select('-password');
+        const users = await User.find({ role: 'User' }).select('-password');
 
-        res.status(200).json({users});
+        res.status(200).json({ users });
 
-    } catch(e){
+    } catch (e) {
         console.error(e);
         const error = new HttpError('유저 전체조회 실패', 500);
         return next(error);
@@ -431,6 +431,27 @@ const getAllUsers = async(req,res,next) => {
 
 // 유저 검색 
 
+
+
+
+// 전체 여행지 조회 및 관리
+
+const getAllPlaces = async (req, res, next) => {
+
+    try {
+
+        const places = await Place.find();
+        res.status(200).json({
+            message: '전체 여행지 조회 성공!',
+            places
+        })
+
+    } catch(e){
+        console.error(e);
+        const error = new HttpError('여행지 조회 실패', 500);
+        return next(error);
+    }
+}
 
 
 
@@ -447,7 +468,7 @@ exports.getReviews = getReviews;
 exports.getAllitems = getAllitems;
 exports.getLatestUsers = getLatestUsers;
 exports.getAllUsers = getAllUsers;
-
+exports.getAllPlaces = getAllPlaces;
 
 
 
