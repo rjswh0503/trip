@@ -30,8 +30,6 @@ const NavMain = () => {
                                         <span className='block truncate text-sm font-medium'>{user.email}</span>
                                     </DropdownHeader>
                                     <Link to={"/admin"}><DropdownItem>관리자페이지</DropdownItem></Link>
-                                    <Link to={`/${user.userId}/mypage`}><DropdownItem>내정보</DropdownItem></Link>
-                                    
                                     <DropdownDivider />
                                     <DropdownItem><LogoutButton /></DropdownItem>
                                 </Dropdown>
@@ -40,8 +38,6 @@ const NavMain = () => {
                                 label={<Avatar alt='유저프로필' img={user.image} rounded bordered />}
                                 arrowIcon={false}
                                 inline
-
-
                             >
                                 <DropdownHeader>
                                     <span className='block text-sm'>{user.name}</span>

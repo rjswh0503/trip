@@ -434,6 +434,8 @@ const getAllUsers = async (req, res, next) => {
 
 
 
+
+
 // 전체 여행지 조회 
 
 const getAllPlaces = async (req, res, next) => {
@@ -511,18 +513,6 @@ const getAllComment = async (req, res, next) => {
 }
 
 
-// 인기 여행지 top5 (리뷰 수)
-
-const getPopularPlaces = async(req,res,next) => {
-
-    try {
-        const popular = await Place.find
-    } catch(e){
-        console.error(e);
-        const error = new HttpError('인기 여행지 조회 실패', 500);
-        return next(error);
-    }
-}
 
 
 exports.register = register;
