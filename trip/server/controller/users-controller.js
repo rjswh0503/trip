@@ -434,7 +434,7 @@ const getAllUsers = async (req, res, next) => {
 
 
 
-// 전체 여행지 조회 및 관리
+// 전체 여행지 조회 
 
 const getAllPlaces = async (req, res, next) => {
 
@@ -454,7 +454,7 @@ const getAllPlaces = async (req, res, next) => {
 }
 
 
-// 전체 리뷰 조회 및 관리
+// 전체 리뷰 조회
 
 const getAllReviews = async (req, res, next) => {
     try {
@@ -473,7 +473,40 @@ const getAllReviews = async (req, res, next) => {
 }
 
 
+// 전체 게시글 조회 
 
+const getAllPosts = async (req, res, next) => {
+    try {
+
+        const posts = await Post.find().populate('author', 'name').populate({
+            path: 'comments',
+            populate: { path: 'author', select: 'name' }
+        });
+        res.status(200).json({
+            posts
+        })
+
+    } catch (e) {
+        console.error(e);
+        const error = new HttpError('게시글 조회 실패', 500);
+        return next(error);
+    }
+
+}
+
+const getAllComment = async (req, res, next) => {
+    try {
+
+        const comments = await Comment.find().populate('author', 'name');
+        res.status(200).json({
+            comments
+        })
+    } catch (e) {
+        console.error(e);
+        const erorr = new HttpError('덧글 조회 실패', 500);
+        return next(erorr);
+    }
+}
 
 
 exports.register = register;
@@ -489,7 +522,7 @@ exports.getLatestUsers = getLatestUsers;
 exports.getAllUsers = getAllUsers;
 exports.getAllPlaces = getAllPlaces;
 exports.getAllReviews = getAllReviews;
-
-
+exports.getAllPosts = getAllPosts;
+exports.getAllComment = getAllComment;
 
 

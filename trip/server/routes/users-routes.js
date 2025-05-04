@@ -101,4 +101,14 @@ router.get('/admin/allPlaces', checkAdmin, userController.getAllPlaces);
 //어드민 페이지에서의 리뷰 관리
 router.get('/admin/allReviews', checkAdmin, userController.getAllReviews);
 
+
+//어드민 페이지에서의 게시글 관리
+router.get('/admin/allPosts', checkAdmin, userController.getAllPosts);
+
+//어드민 페이지에서의 덧글 관리
+router.get('/admin/allComments', checkAdmin, userController.getAllComment);
+
+
+
+
 module.exports = router;

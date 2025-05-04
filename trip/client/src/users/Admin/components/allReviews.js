@@ -53,7 +53,7 @@ const AllReviews = () => {
                             <td className='p-3'>{review.places[0].region}</td>
                             {/*  places[0]는 places 배열에서 첫 번째 장소(place)의 region 값을 가져오겠다. 라는 뜻! 즉 데이터베이스에 places 필드는 배열로 저장되어 있기 
                                                                     떄문에 places[0] 으로 해야 함. 단일 객체면 places.region 가능 */}
-                            <td className='p-3'>{review.author?.name}</td>
+                            <td className='p-3 text-blue-500 hover:underline cursor-pointer'><Link to={`/${review.author?._id}/mypage`}>{review.author?.name}</Link></td>
                             <td className='p-3'>{review.recommend.length}</td>
                             <td className='p-3'>{new Date(review.createdAt).toLocaleDateString()}</td>
                             

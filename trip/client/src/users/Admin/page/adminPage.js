@@ -5,6 +5,8 @@ import LatestUsers from '../components/latestUsers';
 import UserManagement from '../components/UserManagement';
 import AllPlaces from '../components/allPlaces';
 import AllReviews from '../components/allReviews';
+import AllPosts from '../components/allPosts';
+import AllComment from '../components/allComment';
 
 
 const AdminPage = () => {
@@ -80,7 +82,8 @@ const AdminPage = () => {
                 )}
                 {page === 'community' && (
                     <div>
-
+                        <AllPosts />
+                        <AllComment />
                     </div>
                 )}
                 {page === 'reviews' && (

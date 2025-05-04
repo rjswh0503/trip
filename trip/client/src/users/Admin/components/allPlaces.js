@@ -32,7 +32,7 @@ const AllPlaces = () => {
                     <h3 className='text-2xl font-black mb-10 flex gap-2'>여행지 관리
                         <p className='text-sm font-light mt-2 text-blue-400 hover:underline hover:text-blue-500 cursor-pointer'><Link to={'/places/add'}>여행지 등록하기</Link></p>
                     </h3>
-                    <table className='w-6/12 bg-white shadow-sm rounded'>
+                    <table className='w-full bg-white shadow-sm rounded'>
                         <thead className='bg-gray-100'>
                             <tr>
                                 <th className='p-3 text-left'>제목</th>
@@ -40,7 +40,6 @@ const AllPlaces = () => {
                                 <th className='p-3 text-left'>북마크 수</th>
                                 <th className='p-3 text-left'>좋아요 수</th>
                                 <th className='p-3 text-left'>리뷰 수</th>
-                                <th className='p-3 text-left'>상태</th>
                             </tr>
                         </thead>
                         <tbody>
