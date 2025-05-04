@@ -22,7 +22,7 @@ const UserInfo = () => {
                     },
                 });
                 setProfile(response.data);
-                
+
             } catch (error) {
                 if (error.response && error.response.status === 404) {
                     console.log('회원탈퇴로 유저 정보 없음');
@@ -50,30 +50,36 @@ const UserInfo = () => {
         : '';
 
     return (
-        <div className="container mx-auto mt-10">
+        <div className="max-w-4xl mx-auto mt-10 px-4">
             {profile ? (
-                <div>
-                    <div className="flex items-center gap-4 justify-center">
-                        <img className="w-20 h-20 p-2 rounded-full ring-2 ring-gray-300" src={profile.image} alt="프로필" />
-                        <div className="profile-text">
-                            <div className='flex items-center gap-2'>
-                                <h1 className='text-2xl font-black'>{profile.name}</h1>
-                                {profile.id.toString() === user.userId && (
-                                    <div className='flex gap-2'>
-                                        <p className='text-sm text-gray-500 hover:text-gray-700 hover:underline cursor-pointer'><Link to={`/users/${id}/edit`}>회원정보 수정</Link> </p>
-                                        <UserDelete />
-                                    </div>
-                                )}
-                            </div>
-                            <p>{user.email}</p>
-                            <span className='text-sm text-gray-500'>가입일 : {formattedDate}</span>
+                <div className="flex flex-col items-center sm:flex-row sm:items-start gap-6">
+                    <img
+                        className="w-24 h-24 rounded-full border-4 border-gray-300 shadow-md object-cover"
+                        src={profile.image}
+                        alt="프로필"
+                    />
+
+                    <div className="text-center sm:text-left space-y-1">
+                        <div className="flex items-center justify-center sm:justify-start gap-2">
+                            <h1 className="text-2xl font-bold text-gray-900">{profile.name}</h1>
+                            {profile.id.toString() === user.userId && (
+                                <div className="flex gap-3 text-sm text-gray-500">
+                                    <Link
+                                        to={`/users/${id}/edit`}
+                                        className="hover:underline hover:text-blue-600 transition"
+                                    >
+                                        회원정보 수정
+                                    </Link>
+                                    <UserDelete />
+                                </div>
+                            )}
                         </div>
+                        <p className="text-gray-700">{user.email}</p>
+                        <span className="text-sm text-gray-500">가입일: {formattedDate}</span>
                     </div>
                 </div>
             ) : (
-                <div>
-                    <p>로딩중....</p>
-                </div>
+                <div className="text-center text-gray-500">로딩 중...</div>
             )}
         </div>
     );
