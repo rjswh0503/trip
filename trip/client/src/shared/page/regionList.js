@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-import { Button } from "flowbite-react";
+
 
 
 const RegionList = () => {
@@ -32,13 +32,13 @@ const RegionList = () => {
 
     return (
         <div>
-            <h2 className='text-2xl font-black py-3 px-6'>지역별 여행지</h2>
+            <h2 className='text-2xl font-black py-3 px-6 mb-10'>지역별 여행지</h2>
             <div className="flex gap-4">
 
                 {regions.map(regionName => (
-                    <Button color="green" pill key={regionName} onClick={() => handleSelectRegion(regionName)}>
+                    <button className='text-xl font-light bg-white border border-gray-200 shadow-md hover:shadow-xl p-3 rounded-xl md:' pill key={regionName} onClick={() => handleSelectRegion(regionName)}>
                         {regionName}
-                    </Button>
+                    </button>
                 ))}
             </div>
 

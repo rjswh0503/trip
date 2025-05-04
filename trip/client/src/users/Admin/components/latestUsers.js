@@ -29,9 +29,8 @@ const LatestUsers = () => {
     }, [token])
 
     return (
-        <div className='mt-8'>
-            <h3 className='text-2xl font-black mb-10'>최근 가입 유저</h3>
-            <table className='w-6/12 bg-white shadow-sm rounded'>
+        <div className='mt-20'>
+            <table className='container mx-auto w-8/12 bg-white shadow-sm rounded'>
                 <thead className='bg-gray-100'>
                     <tr>
                         <th className='p-3 text-left'>유저</th>
@@ -43,7 +42,7 @@ const LatestUsers = () => {
                 <tbody>
                     {latestUser.map((user) => (
                         <tr key={user._id} className='hover:bg-gray-50 border-b-2'>
-                            <td className='p-3'><Avatar className='justify-start' rounded size='xs' /></td>
+                            <td className='p-3'><Avatar alt='프로필이미지' img={user.image} className='justify-start' rounded size='xs' /></td>
                             <td className='p-3 text-blue-500 cursor-pointer hover:underline'>{user.name}</td>
                             <td className='p-3'>{user.email}</td>
                             <td className='p-3'>{new Date(user.createdAt).toLocaleDateString()}</td>

@@ -30,10 +30,10 @@ const AllComment = () => {
     }, [token]);
 
     return (
-        <div className='mt-16'>
-            <h3 className='text-2xl font-black mb-10'>덧글 관리
+        <div className='mt-16 '>
+            <h3 className='text-2xl font-black mb-10 text-center'>덧글 관리
             </h3>
-            <table className='container w-full  bg-white shadow-sm rounded'>
+            <table className='container mx-auto w-8/12  bg-white shadow-sm rounded '>
                 <thead className='bg-gray-100'>
                     <tr>
                         <th className='p-3 text-left'>번호</th>

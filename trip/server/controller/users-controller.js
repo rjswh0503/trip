@@ -494,6 +494,8 @@ const getAllPosts = async (req, res, next) => {
 
 }
 
+// 덧글 조회
+
 const getAllComment = async (req, res, next) => {
     try {
 
@@ -505,6 +507,20 @@ const getAllComment = async (req, res, next) => {
         console.error(e);
         const erorr = new HttpError('덧글 조회 실패', 500);
         return next(erorr);
+    }
+}
+
+
+// 인기 여행지 top5 (리뷰 수)
+
+const getPopularPlaces = async(req,res,next) => {
+
+    try {
+        const popular = await Place.find
+    } catch(e){
+        console.error(e);
+        const error = new HttpError('인기 여행지 조회 실패', 500);
+        return next(error);
     }
 }
 

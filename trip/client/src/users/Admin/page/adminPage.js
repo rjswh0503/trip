@@ -52,12 +52,12 @@ const AdminPage = () => {
                 <button onClick={() => setPage('reviews')} className="block w-full text-left hover:text-blue-300">리뷰 관리</button>
                 <button onClick={() => setPage('places')} className='block w-full text-left hover:text-blue-300'>여행지 관리</button>
             </aside>
-            <main className='col-span-10 bg-gray-100 p-6 '>
+            <main className='col-span-10 bg-gray-100 p-6'>
                 {page === 'dashboard' && (
                     <div>
-                        <div className='mx-auto'>
-                            <h2 className='text-2xl font-black mb-10'>대시보드</h2>
-                            <div className='grid grid-cols-3 gap-3'>
+                        <h2 className='text-2xl font-black mb-20'>대시보드</h2>
+                        <div className='flex justify-center'>
+                            <div className='grid grid-cols-3 gap-28'>
                                 <div className='p-5 w-44 h-32 border border-gray-200 bg-white shadow-sm rounded-lg hover:shadow-lg'>
                                     <p className='text-md font-light'>전체 유저 수</p>
                                     <p className={`text-2xl font-bold ${data.userCount >= 5 ? 'text-red-500' : 'text-blue-500'}`}>{data.userCount}</p>
