@@ -19,7 +19,7 @@ const AllPlaces = () => {
                     }
                 })
                 setPlaces(response.data.places);
-                console.log(response.data.places);
+                
             } catch (e) {
                 console.error(e);
             }

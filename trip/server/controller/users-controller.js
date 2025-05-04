@@ -446,9 +446,28 @@ const getAllPlaces = async (req, res, next) => {
             places
         })
 
-    } catch(e){
+    } catch (e) {
         console.error(e);
         const error = new HttpError('여행지 조회 실패', 500);
+        return next(error);
+    }
+}
+
+
+// 전체 리뷰 조회 및 관리
+
+const getAllReviews = async (req, res, next) => {
+    try {
+        const reviews = await Review.find().populate('places', 'title region').populate('author', 'name');
+
+        res.status(200).json({
+            reviews
+        })
+
+        console.log(reviews);
+    } catch (e) {
+        console.error(e);
+        const error = new HttpError('리뷰 조회 실패', 500);
         return next(error);
     }
 }
@@ -469,7 +488,7 @@ exports.getAllitems = getAllitems;
 exports.getLatestUsers = getLatestUsers;
 exports.getAllUsers = getAllUsers;
 exports.getAllPlaces = getAllPlaces;
-
+exports.getAllReviews = getAllReviews;
 
 
 

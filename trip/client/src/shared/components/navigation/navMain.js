@@ -47,8 +47,8 @@ const NavMain = () => {
                                     <span className='block text-sm'>{user.name}</span>
                                     <span className='block truncate text-sm font-medium'>{user.email}</span>
                                 </DropdownHeader>
-                                <Link to={"/"}><DropdownItem>Home</DropdownItem></Link>
-                                <Link to={`/${user.userId}/mypage`}><DropdownItem>내정보</DropdownItem></Link>
+                                
+                                <Link to={`/${user.userId}/mypage`}><DropdownItem>유저페이지</DropdownItem></Link>
                                 <Link to={'/posts/add'}><DropdownItem>게시글작성</DropdownItem></Link>
                                 <DropdownDivider />
                                 <DropdownItem><LogoutButton /></DropdownItem>

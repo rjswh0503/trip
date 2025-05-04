@@ -9,7 +9,6 @@ const reviewSchema = new Schema(
         title: { type: String, required: true },
         content: { type: String, required: true },
         image: { type: String },
-        rating: { type: Number, default: 0 },
         view: { type: Number, default: 0 },
         recommend: [{ type: mongoose.Types.ObjectId, ref: 'User'}]
         

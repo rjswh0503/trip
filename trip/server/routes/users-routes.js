@@ -98,7 +98,7 @@ router.get('/admin/users/search', checkAdmin, );
 router.get('/admin/allPlaces', checkAdmin, userController.getAllPlaces);
 
 
-
-
+//어드민 페이지에서의 리뷰 관리
+router.get('/admin/allReviews', checkAdmin, userController.getAllReviews);
 
 module.exports = router;

@@ -4,7 +4,7 @@ import { useAuth } from '../../../shared/context/auth-context';
 import LatestUsers from '../components/latestUsers';
 import UserManagement from '../components/UserManagement';
 import AllPlaces from '../components/allPlaces';
-
+import AllReviews from '../components/allReviews';
 
 
 const AdminPage = () => {
@@ -85,12 +85,12 @@ const AdminPage = () => {
                 )}
                 {page === 'reviews' && (
                     <div>
-
+                        <AllReviews />
                     </div>
                 )}
                 {page === 'places' && (
                     <div>
-                        <AllPlaces/>
+                        <AllPlaces />
                     </div>
                 )}
             </main>
