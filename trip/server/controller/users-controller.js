@@ -174,9 +174,16 @@ const getUserbyId = async (req, res, next) => {
             select: 'content post',
             populate: {
                 path: 'post',
-                select: 'title'
+                select: 'title author'
             }
-        }).populate('post', 'title').populate('bookMark', 'title').populate('reviews', 'title author recommend view');
+        }).populate('post', 'title').populate('bookMark', 'title').populate({
+            path: 'reviews',
+            select: 'title author recommend view',
+            populate: {
+                path: 'places',
+                select: 'title region'
+            }
+        })
     } catch (e) {
         const error = new HttpError('프로필 불러오기 실패했습니다. 다시 시도해주세요.', 500);
         return next(error);
@@ -304,7 +311,7 @@ const getBookMarks = async (req, res, next) => {
     let user;
 
     try {
-        user = await User.findById(userId).populate('bookMark', 'title content images');
+        user = await User.findById(userId).populate('bookMark', 'title region images');
 
         if (!user) {
             const error = new HttpError('찜한 여행지 조회 실패', 404);
@@ -327,7 +334,7 @@ const getLikes = async (req, res, next) => {
     let user;
 
     try {
-        user = await User.findById(userId).populate('likes', 'title images content');
+        user = await User.findById(userId).populate('likes', 'title images region');
     } catch (e) {
         const error = new HttpError('좋아요 누른 여행지 조회 실패', 500);
         return next(error);
@@ -346,11 +353,19 @@ const getReviews = async (req, res, next) => {
     let user;
 
     try {
-        user = await User.findById(userId).populate('recommend', 'title image content');
+        user = await User.findById(userId)
+            .populate({
+                path: 'recommend',
+                select: 'title image content author',
+                populate: {
+                    path: 'author',
+                    select: 'name image',
+                },
+            });
 
     } catch (e) {
         console.error(e);
-        const error = new HttpError('추천 누른 여행지 조회 실패', 500);
+        const error = new HttpError('추천 누른 리뷰 조회 실패', 500);
         return next(error);
     }
     res.status(200).json({

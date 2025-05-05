@@ -46,7 +46,7 @@ const PlaceByReview = () => {
 
     return (
         <div className='flex justify-center items-center min-h-screen'>
-            <div className='grid grid-cols-2 gap-4'>
+            <div className='grid grid-cols-2 gap-6'>
                 {reviewList && reviewList.map(review => (
                     <div
                         key={review._id}

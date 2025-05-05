@@ -35,16 +35,31 @@ const MyRecommend = () => {
         <div>
             {reCommends ? (
                 <div>
-                    {reCommends.map(reCommend => (
-                        <div key={reCommend._id}>
-                            <p>{reCommend.title}</p>
-                            <p>{reCommend.content}</p>
-                        </div>
-                    ))}
+                    <table className='container mx-auto w8/2 bg-white shadow-sm rounded'>
+                        <thead className='bg-gray-300'>
+                        <tr>
+                            <th className='p-3 text-left'>번호</th>
+                            <th className='p-3 text-left'>제목</th>
+                            <th className='p-3 text-left'>작성자</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {reCommends.map((reCommend, idx) => (
+                            <tr key={reCommend._id} className='hover:bg-gray-50 border-b-2'>
+                                <td className='p-3'>{idx + 1}</td>
+                                <td className='p-3'>{reCommend.title}</td>
+                                <td className='p-3'>{reCommend.author?.name}</td>
+                            </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    
+                        
+                    
                 </div>
             ) : (
                 <div>
-                    <p>추천한 여행지가 없습니다.</p>
+                    <p>추천한 리뷰가 없습니다.</p>
                 </div>
             )}
 

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 import MyRecommend from './myReCommend';
 
-    const WriteReviews = () => {
+const WriteReviews = () => {
     const [myReview, setMyReview] = useState([]);
     const { token } = useAuth();
     const { id } = useParams();
@@ -19,6 +19,7 @@ import MyRecommend from './myReCommend';
                     },
                 });
                 setMyReview(response.data.reviews);
+                console.log(response.data.reviews);
             } catch (e) {
                 console.error(e);
             };
@@ -28,24 +29,41 @@ import MyRecommend from './myReCommend';
 
     return (
         <div>
-            {myReview?.length > 0 ? (
-                <div>
-                    {myReview.map(review => (
-                        <div key={review._id}>
-                            <p>{review.title}</p>
-                        </div>
-                    ))}
+            {myReview ? (
 
+
+                <div>
+                    <h3 className='text-2xl font-bold mb-6'>작성한 리뷰</h3>
+                    <table className='container mx-auto w8/2 bg-white shadow-sm rounded'>
+                        <thead className='bg-gray-300'>
+                            <tr>
+                                <th className='p-3 text-left'>번호</th>
+                                <th className='p-3 text-left'>제목</th>
+                                <th className='p-3 text-left'>여행지</th>
+                                <th className='p-3 text-left'>지역</th>
+                                <th className='p-3 text-left'>추천수</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {myReview.map((review, idx) => (
+                                <tr key={review._id} className='hover:bg-gray-50 border-b-2'>
+                                    <td className='p-3'>{idx + 1}</td>
+                                    <td className='p-3'>{review.title}</td>
+                                    <td className='p-3'>{review.places[0].title}</td>
+                                    <td className='p-3'>{review.places[0].region}</td>
+                                    <td className='p-3'>{review.recommend.length}</td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
                 </div>
             ) : (
                 <div>
-                    <p>작성한 여행지의 리뷰가 없습니다.</p>
+                    <p>작성한 리뷰가 없습니다. </p>
                 </div>
             )}
-            <div className=''>
-                <h2>추천 누른 리뷰 목록</h2>
-            <MyRecommend/>
-            </div>
+            <h3 className='text-2xl font-bold my-6'>추천 누른 리뷰</h3>
+            <MyRecommend />
         </div>
     )
 }

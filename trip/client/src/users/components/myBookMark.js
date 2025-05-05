@@ -33,14 +33,27 @@ const MyBookMark = () => {
 
     return (
         <div>
-            {bookMark.map(bookmark => (
-                <div key={bookmark._id}>
-                    <Link to={`/places/${bookmark._id}`}>
-                        <img src={bookmark.images} alt={bookmark.title} />
-                        <p>{bookmark.title}</p>
-                    </Link>
-                </div>
-            ))}
+            <h3 className='text-2xl font-black mb-6'>찜 목록</h3>
+            <table className='container mx-auto w8/2 bg-white shadow-sm rounded'>
+                <thead className='bg-gray-300'>
+                    <tr>
+                        <th className='p-3 text-left'>번호</th>
+                        <th className='p-3 text-left'>이미지</th>
+                        <th className='p-3 text-left'>여행지</th>
+                        <th className='p-3 text-left'>지역</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {bookMark.map((bookMark, idx) => (
+                        <tr key={bookMark._id} className='hover:bg-gray-50 border-b-2'>
+                            <td className='p-3'>{idx + 1}</td>
+                            <td className='p-3'><img className='w-16 h-16 rounded-md' src={bookMark.images[0]} alt='여행지 이미지' /></td>
+                            <td className='p-3'>{bookMark.title}</td>
+                            <td className='p-3'>{bookMark.region}</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </div>
     )
 

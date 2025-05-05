@@ -34,17 +34,30 @@ const MyComment = () => {
 
     return (
         <div>
+            <h3 className='text-2xl font-black mb-6'>작성한 댓글</h3>
             {myComment && myComment.filter(comment => comment && comment._id).length > 0 ? (
                 <div>
-                    {myComment
+                    <table className='container mx-auto w8/2 bg-white shadow-sm rounded'>
+                        <thead className='bg-gray-300'> 
+                            <tr>
+                                <th className='p-3 text-left'>번호</th>
+                                <th className='p-3 text-left'>내용</th>
+                                <th className='p-3 text-left'>게시글</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {myComment
                         .filter(comment => comment && comment._id)
-                        .map(comment => (
-                            <div key={comment._id}>
-                                <Link to={`/posts/${comment.post?._id}`}>
-                                    <p>{comment.content}</p>
-                                </Link>
-                            </div>
+                        .map((comment, idx) => (
+                            <tr key={comment._id} className='hover:bg-gray-50 border-b-2'>
+                                <td className='p-3'>{idx + 1}</td>
+                                <td className='p-3'>{comment.content}</td>
+                                <td className='p-3 cursor-pointer text-blue-400 hover:underline'><Link to={`/posts/${comment.post._id}`}>{comment.post?.title}</Link></td>
+                            </tr>
                         ))}
+                        </tbody>
+                    </table>
+                    
                 </div>
             ) : (
                 <div>
