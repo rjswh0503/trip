@@ -109,7 +109,7 @@ const getReviewById = async (req, res, next) => {
     let review;
 
     try {
-        review = await Review.findById(reviewId).populate('author', 'name image');
+        review = await Review.findById(reviewId).populate('author', 'name image').populate('places', 'title region');
     } catch (e) {
         console.error(e);
         const error = new HttpError('리뷰 상세보기 실패', 500);

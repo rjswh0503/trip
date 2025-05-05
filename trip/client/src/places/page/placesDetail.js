@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Map from '../components/map';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import './placesDetail.css';
+
 import { useAuth } from '../../shared/context/auth-context';
 import { Button } from 'flowbite-react';
 
@@ -45,7 +45,7 @@ const PlacesDetail = () => {
 
     return (
         <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-10 mb-10">
-            <img className="w-full h-64 object-cover" src={place.images?.[0] || '/default.jpg'} alt={place.title} />
+            <img className="w-full h-64 object-cover" src={place.images?.[0] } alt={place.title} />
             <div className="p-6">
                 <h2 className="text-2xl font-bold mb-2">{place.title}</h2>
                 <p className="text-gray-700 mb-4">{place.description}</p>
