@@ -35,7 +35,7 @@ const AllPlaces = () => {
                 <p className='text-sm font-light mt-2 text-blue-400 hover:underline hover:text-blue-500 cursor-pointer'><Link to={'/places/add'}>여행지 등록하기</Link></p>
             </h3>
             <table className='container mx-auto w-8/12 bg-white shadow-sm rounded '>
-                <thead className='bg-gray-100'>
+                <thead className='bg-gray-300'>
                     <tr>
                         <th className='p-2 text-left'>번호</th>
                         <th className='p-2 text-left'>이미지</th>

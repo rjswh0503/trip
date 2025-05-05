@@ -31,7 +31,7 @@ const LatestUsers = () => {
     return (
         <div className='mt-20'>
             <table className='container mx-auto w-8/12 bg-white shadow-sm rounded'>
-                <thead className='bg-gray-100'>
+                <thead className='bg-gray-300'>
                     <tr>
                         <th className='p-3 text-left'>유저</th>
                         <th className='p-3 text-left'>닉네임</th>
