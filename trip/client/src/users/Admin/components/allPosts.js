@@ -41,6 +41,7 @@ const AllPosts = () => {
                             <th className='p-3 text-left'>작성자</th>
                             <th className='p-3 text-left'>덧글</th>
                             <th className='p-3 text-left'>작성 일</th>
+                            <th className='text-left'>관리</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +54,7 @@ const AllPosts = () => {
                                 <td className='p-3 text-blue-500 hover:underline cursor-pointer'><Link to={`/${post.author?._id}/mypage`}>{post.author?.name}</Link></td>
                                 <td className='p-3'>{post.comments.length}</td>
                                 <td className='p-3'>{new Date(post.createdAt).toLocaleDateString()}</td>
+                                <td className='text-red-400 hover:underline cursor-pointer'>삭제</td>
                             </tr>
                         ))}
                     </tbody>

@@ -40,6 +40,7 @@ const AllComment = () => {
                         <th className='p-3 text-left'>내용</th>
                         <th className='p-3 text-left'>작성자</th>
                         <th className='p-3 text-left'>작성 일</th>
+                        <th className='text-left'>관리</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -49,6 +50,7 @@ const AllComment = () => {
                             <td className='p-3 text-blue-500 hover:underline cursor-pointer'>{comment.content}</td>
                             <td className='p-3 text-blue-500 hover:underline cursor-pointer'><Link to={`/${comment.author?._id}/mypage`}>{comment.author?.name}</Link></td>
                             <td className='p-3'>{new Date(comment.createdAt).toLocaleDateString()}</td>
+                            <td className='text-red-400 hover:underline cursor-pointer'>삭제</td>
                         </tr>
                     ))}
                 </tbody>
