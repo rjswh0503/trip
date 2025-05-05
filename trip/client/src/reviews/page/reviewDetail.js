@@ -95,7 +95,7 @@ const ReviewDetail = () => {
     return (
         <div className="flex justify-center items-center min-h-screen">
             {detail ? (
-                <div className="w-full max-w-3xl px-4">
+                <div className="max-w-3xl px-4">
                     <div className="border border-gray-200 rounded-md shadow-sm hover:shadow-lg p-8 bg-white">
                         <div className="flex gap-2 justify-center items-center mb-2">
                             <Avatar alt="유저프로필" img={detail.author?.image} rounded size="sm" />
@@ -113,7 +113,7 @@ const ReviewDetail = () => {
                         </div>
 
                         <h5 className="text-2xl font-black mt-2 text-center">{detail.title}</h5>
-                        <div className="text-sm font-light my-4 text-gray-700 text-center">{detail.content}</div>
+                        <div className="text-sm font-light my-4 text-gray-700 text-center leading-6">{detail.content}</div>
 
                         <div className="flex gap-2 items-center justify-center text-gray-500">
                             <AiOutlineLike onClick={recommendHandler} className="text-lg cursor-pointer" />

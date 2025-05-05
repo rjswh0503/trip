@@ -50,27 +50,47 @@ const NewReview = () => {
     };
 
     return (
-        <div>
-            <form onSubmit={newReviewHandler}>
-                <h2>리뷰 작성</h2>
-                <input
-                    type='text'
-                    placeholder='제목'
-                    name='title'
-                    value={formData.title}
-                    onChange={onChange}
-                    required
-                />
-                <textarea
-                    placeholder='내용'
-                    name='content'
-                    value={formData.content}
-                    onChange={onChange}
-                    required
-                />
-                <button type='submit'>등록</button>
-            </form>
+        <div className="flex justify-center items-center min-h-screen bg-gray-50">
+            <div className="w-full max-w-md border border-gray-200 shadow-lg rounded-md p-6 bg-white">
+                <form className="flex flex-col gap-4" onSubmit={newReviewHandler}>
+                    <h3 className="text-2xl font-black text-center tracking-wide">리뷰 작성</h3>
+
+                    <div>
+                        <input
+                            type="text"
+                            name="title"
+                            placeholder="제목을 입력하세요"
+                            value={formData.title}
+                            onChange={onChange}
+                            required
+                            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+                    <div>
+                        <textarea
+                            name="content"
+                            placeholder="내용을 입력하세요"
+                            value={formData.content}
+                            onChange={onChange}
+                            required
+                            rows={5}
+                            className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+
+                    <div className="flex justify-center">
+                        <button
+                            type="submit"
+                            className="mt-4 bg-blue-500 p-3 rounded-md hover:bg-blue-600 text-white font-bold shadow-md hover:shadow-lg w-full"
+                        >
+                            리뷰 작성
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
+
     );
 };
 

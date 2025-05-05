@@ -80,7 +80,7 @@ const PlacesByReview = async (req, res, next) => {
     let reviews;
 
     try {
-        reviews = await Review.find({ places: placeId }).populate('author', 'name image');
+        reviews = await Review.find({ places: placeId }).populate('author', 'name image').populate('places', 'title region');
         console.log(placeId);
         if (!reviews || reviews.length === 0) {
             const error = new HttpError('해당 장소의 리뷰를 찾을 수 없습니다.', 404); // 404로 변경

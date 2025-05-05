@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 import { AiTwotoneLike } from "react-icons/ai";
+import { Avatar } from 'flowbite-react';
+import { GiPositionMarker } from "react-icons/gi";
+import { formatDistanceToNow } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 
 
@@ -14,7 +19,7 @@ const PlaceByReview = () => {
     const [reviewList, setReviewList] = useState([]);
 
     useEffect(() => {
-        if(!token) return;
+        if (!token) return;
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/review/place/${id}/review/list`, {
@@ -25,9 +30,9 @@ const PlaceByReview = () => {
                 setReviewList(response.data.reviews);
                 console.log(response.data.reviews);
                 console.log("🔥 placeId:", id);
-                
+
             } catch (e) {
-                
+
             }
         };
         fetchData();
@@ -40,34 +45,53 @@ const PlaceByReview = () => {
 
 
     return (
-        <div>
-            <div className='container mx-auto max-w-screen-xl'>
-                <div className='grid grid-cols-2 md:grid-cols-4 gap-6 py-[150px]'>
-                    {reviewList && reviewList.map(review => (
-                        <div className='bg-white border border-gray-200 rounded-lg shadow-lg' key={review._id}>
-                            <Link to={`/places/${id}/review/${review._id}`}>
-                                <div className='p-4 text-center'>
-                                    <h5 className='text-2xl font-bold p-2 text-gray-900'>{review.title}</h5>
-                                    <p className='mb-4'>{review.content}</p>
-                                    <div className='flex justify-between py-6 items-center'>
-                                        <div className='flex gap-2 font-normal items-center'>
-                                            <img className='w-7 h-7 rounded-full hover:shadow-md' src={review.author?.image} alt='프로필 이미지'></img>
-                                            <p>{review.author?.name}</p>
-                                        </div>
-                                        <div>
-                                            <p>작성시간</p>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p className='flex justify-end items-center'><AiTwotoneLike />{review.recommend.length}</p>
-                                    </div>
+        <div className='flex justify-center items-center min-h-screen'>
+            <div className='grid grid-cols-2 gap-4'>
+                {reviewList && reviewList.map(review => (
+                    <div
+                        key={review._id}
+                        className='max-w-sm border border-gray-300 rounded-md shadow-sm hover:shadow-lg p-6 flex flex-col justify-between min-h-[250px]'
+                    >
+                        <div className='flex gap-2'>
+                            <Avatar alt="유저프로필" img={review.author?.image} rounded size="sm" />
+                            <div className="flex flex-col">
+                                <p className='text-lg font-bold tracking-tighter'>{review.title}</p>
+                                <div className='flex items-center gap-1 text-blue-400'>
+                                    <GiPositionMarker className="text-sm" />
+                                    <p className='text-sm'>{review.places[0].region}</p>
                                 </div>
-                            </Link>
+                            </div>
                         </div>
-                    ))}
-                </div>
+
+                        <div className='flex items-center gap-1'>
+                            <p className='text-sm hover:underline cursor-pointer'><Link to={`/${review.author?._id}/mypage`}>{review.author?.name}</Link></p>
+                            <p className='text-sm text-gray-500'>
+                                {formatDistanceToNow(new Date(review.createdAt), { addSuffix: true, locale: ko })}
+                            </p>
+                        </div>
+
+                        <p className='font-normal text-gray-800 line-clamp-4'>{review.content}</p>
+
+                        <div className='flex justify-between items-center mt-4'>
+                            <div className='flex gap-1 items-center'>
+                                <AiTwotoneLike />
+                                <p>{review.recommend.length}</p>
+                            </div>
+                            <div>
+                                <Link
+                                    className='text-blue-400 text-sm hover:underline'
+                                    to={`/places/${id}/review/${review._id}`}
+                                >
+                                    리뷰 보러 가기
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
+
+
     )
 
 }
