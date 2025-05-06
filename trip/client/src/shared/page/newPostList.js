@@ -27,7 +27,10 @@ const LatestPost = () => {
 
     return (
         <div className='px-6'>
-            <h2 className='text-2xl font-black py-3 '>새로 등록된 게시글</h2>
+            <div className='flex gap-3 items-center mb-10'>
+            <h2 className='text-2xl font-black '>새로 등록된 게시글</h2>
+            <Link className='text-gray-400 hover:underline' to="/posts/list">전체보기</Link>
+            </div>
             <div className='grid grid-rows-2 gap-4 justify-start'>
                 {latestPost.map(post => (
                     <div key={post._id}>

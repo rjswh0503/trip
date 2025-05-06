@@ -250,8 +250,8 @@ const toggleLike = async (req, res, next) => {
         user = await User.findById(userId);
         place = await Place.findById(placesId);
 
-        if (!place || !user) {
-            const error = new HttpError('여행지나 유저를 찾을 수 없습니다.', 404);
+        if(!user){
+            const error = new HttpError('로그인 안되어 있음.', 401);
             return next(error);
         }
     } catch (e) {
@@ -300,7 +300,7 @@ const toggleLike = async (req, res, next) => {
 
 
 
-// 여행지 찜
+// 여행지 북마크
 
 const toggleBookMark = async (req, res, next) => {
     const userId = req.userData.userId;
@@ -313,8 +313,8 @@ const toggleBookMark = async (req, res, next) => {
         users = await User.findById(userId);
         place = await Place.findById(placesId);
 
-        if (!users || !place) {
-            const error = new HttpError('유저나 장소를 찾을 수 없습니다.', 404);
+        if (!users) {
+            const error = new HttpError('로그인 안되어 있음.', 401);
             return next(error);
         }
 

@@ -50,8 +50,15 @@ const RegionList = () => {
                             <div className='w-90 sm:w-90 bg-white border border-gray-200 rounded-lg cursor-pointer shadow-sm hover:shadow-lg' >
                                 <img className='rounded-t-lg w-full h-48 object-cover' src={place.images} alt='지역별 이미지' />
                                 <div className='p-5'>
+                                    <div className='flex justify-between'>
+                                        <p className='font-bold'>{place.region}</p>
+                                        <p className='font-bold text-blue-400'>#{place.category}</p>
+                                    </div>
                                     <h5 className='my-3 text-2xl font-bold tracking-tight text-gray-900'>{place.title}</h5>
-                                    <p className='mb-3 font-normal text-gray-700 line-clamp-5'>{place.description}</p>
+                                    <p className='mb-3 font-normal text-gray-700 line-clamp-2'>{place.description}</p>
+                                </div>
+                                <div className='flex justify-end p-2'>
+                                    <p>{place.reviews.length}리뷰</p>
                                 </div>
                             </div>
                         </Link>

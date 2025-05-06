@@ -41,6 +41,7 @@ const AllReviews = () => {
                         <th className='p-3 text-left'>작성자</th>
                         <th className='p-3 text-left'>추천수</th>
                         <th className='p-3 text-left'>작성 일</th>
+                        <th className='text-left'>관리</th>
                         
                     </tr>
                 </thead>
@@ -56,7 +57,7 @@ const AllReviews = () => {
                             <td className='p-3 text-blue-500 hover:underline cursor-pointer'><Link to={`/${review.author?._id}/mypage`}>{review.author?.name}</Link></td>
                             <td className='p-3'>{review.recommend.length}</td>
                             <td className='p-3'>{new Date(review.createdAt).toLocaleDateString()}</td>
-                            
+                            <td className='text-red-400 hover:underline cursor-pointer'>삭제</td>
                         </tr>
                     ))}
                 </tbody>

@@ -6,6 +6,10 @@ const upload = require('../middleware/uploadPlacesImg');
 const router = express.Router();
 
 
+
+
+
+
 // 모든 여행지 조회
 router.get('/', placesController.getAllPlaces);
 

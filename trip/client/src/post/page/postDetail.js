@@ -22,11 +22,7 @@ const PostDetail = () => {
 
     const fetchComments = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/comment/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-            });
+            const response = await axios.get(`http://localhost:5000/api/comment/${id}`);
             setComments(response.data.comments);
         } catch (e) {
             console.log(e)
@@ -34,15 +30,9 @@ const PostDetail = () => {
     };
 
     useEffect(() => {
-
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/posts/${id}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                    })
+                const response = await axios.get(`http://localhost:5000/api/posts/${id}`);
                 setDetail(response.data.post);
                 console.log(response.data.post);
 
@@ -71,6 +61,7 @@ const PostDetail = () => {
             fetchComments();
         } catch (e) {
             console.log(e);
+            throw e;
         }
     }
 
@@ -162,7 +153,7 @@ const PostDetail = () => {
                         )}
                     </div>
 
-                    {user.userId === detail.author._id && (
+                    {user?.userId === detail.author._id && (
                         <div className="post-actions">
                             <button onClick={handleEdit} className="edit-button">수정</button>
                             <button onClick={handleDelete} className="delete-button">삭제</button>

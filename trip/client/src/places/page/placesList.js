@@ -61,14 +61,21 @@ const PlacesList = () => {
                 });
             }
         } catch (e) {
-            console.log('좋아요 실패', e);
-            Swal.fire({
-                title: '좋아요 실패',
-                icon: 'error',
-                confirmButtonText: '확인',
-                allowOutsideClick: false,
-                text: '좋아요 처리 중 오류가 발생했습니다. 다시 시도해주세요.',
-            });
+            if (e.response && e.response.status === 401) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '로그인이 필요합니다.',
+                    text: '먼저 로그인해주세요.',
+                    confirmButtonText: '확인',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '요청 실패',
+                    text: '잠시 후 다시 시도해주세요.',
+                })
+            }
+
         }
     };
 
@@ -107,16 +114,20 @@ const PlacesList = () => {
             }
 
         } catch (e) {
-            
-            Swal.fire({
-                title:'북마크 처리 오류',
-                icon:'error',
-                confirmButtonText: '확인',
-                allowOutsideClick: false,
-                text: '북마크 처리 중 오류가 발생했습니다. 다시 시도해주세요.',
-                timer: 2000,
-                timerProgressBar: true,
-            });
+            if (e.response && e.response.status === 401) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '로그인이 필요합니다.',
+                    text: '먼저 로그인해주세요.',
+                    confirmButtonText: '확인',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '요청 실패',
+                    text: '잠시 후 다시 시도해주세요.',
+                })
+            }
         }
     }
 

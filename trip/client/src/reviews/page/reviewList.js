@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 import { useParams, Link } from 'react-router-dom';
-import { useAuth } from '../../shared/context/auth-context';
 import { AiTwotoneLike } from "react-icons/ai";
 import { Avatar } from 'flowbite-react';
 import { GiPositionMarker } from "react-icons/gi";
@@ -12,20 +11,13 @@ import { ko } from 'date-fns/locale';
 
 
 const PlaceByReview = () => {
-
-    const { token } = useAuth();
-
     const { id } = useParams();
     const [reviewList, setReviewList] = useState([]);
 
     useEffect(() => {
-        if (!token) return;
         const fetchData = async () => {
             try {
                 const response = await axios.get(`http://localhost:5000/api/review/place/${id}/review/list`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
                 })
                 setReviewList(response.data.reviews);
                 console.log(response.data.reviews);
@@ -36,7 +28,7 @@ const PlaceByReview = () => {
             }
         };
         fetchData();
-    }, [token, id]);
+    }, [id]);
 
     if (!reviewList || reviewList.length === 0) {
         return <p>해당 장소의 리뷰가 없습니다...</p>

@@ -7,6 +7,7 @@ import { GiPositionMarker } from "react-icons/gi";
 import { AiOutlineLike } from "react-icons/ai";
 import { formatDistanceToNow } from 'date-fns';
 import { ko } from 'date-fns/locale';
+import Swal from 'sweetalert2';
 
 const ReviewDetail = () => {
     const { token, user } = useAuth();
@@ -18,15 +19,9 @@ const ReviewDetail = () => {
 
 
     useEffect(() => {
-        if (!token) return;
         const fetchData = async () => {
             try {
-
-                const response = await axios.get(`http://localhost:5000/api/review/place/${id}/review/${reviewId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    },
-                });
+                const response = await axios.get(`http://localhost:5000/api/review/place/${id}/review/${reviewId}`);
                 setDetail(response.data.review);
                 console.log(response.data.review);
             } catch (e) {
@@ -41,7 +36,6 @@ const ReviewDetail = () => {
 
 
     const recommendHandler = async () => {
-
         try {
             const response = await axios.post(`http://localhost:5000/api/review/place/${id}/review/${reviewId}/recommend`, {
             },
@@ -53,10 +47,36 @@ const ReviewDetail = () => {
             );
 
             setrecommendByUser(true);
-            alert(response.data.recommendedByUser ? '추천' : '추천 취소');
+            if (response.data.recommendByUser) {
+                            Swal.fire({
+                                title: '추천 했습니다.',
+                                icon: 'success',
+                                confirmButtonText: '확인',
+                                text: '해당 게시글을 추천했습니다.',
+                            });
+                        } else {
+                            Swal.fire({
+                                title: '추천 취소',
+                                icon: 'question',
+                                confirmButtonText: '확인',
+                                text: '해당 게시글의 추천을 취소했습니다.',
+                            });
+                        }
         } catch (e) {
-            console.error(e);
-            alert('리뷰 추천 실패');
+            if (e.response && e.response.status === 401) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: '로그인이 필요합니다.',
+                    text: '먼저 로그인해주세요.',
+                    confirmButtonText: '확인',
+                });
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: '요청 실패',
+                    text: '잠시 후 다시 시도해주세요.',
+                })
+            }
         }
     }
 
@@ -83,14 +103,7 @@ const ReviewDetail = () => {
                 alert('리뷰 삭제 실패');
             }
         }
-
-
     }
-
-
-
-
-
 
     return (
         <div className="flex justify-center items-center min-h-screen">
@@ -118,10 +131,10 @@ const ReviewDetail = () => {
                         <div className="flex gap-2 items-center justify-center text-gray-500">
                             <AiOutlineLike onClick={recommendHandler} className="text-lg cursor-pointer" />
                             <span>추천</span>
-                            
+
                         </div>
 
-                        {detail.author && user.userId === detail.author._id && (
+                        {detail.author && user?.userId === detail.author._id && (
                             <div className="flex justify-center gap-4 mt-4">
                                 <button className="text-green-500 hover:underline" onClick={updateHandler}>
                                     수정

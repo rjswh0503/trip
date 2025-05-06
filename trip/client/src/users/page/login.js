@@ -74,32 +74,33 @@ const Login = () => {
 
 
     return (
-        <div className='container flex items-center justify-center min-h-screen'>
-
-            <Card className='max-w-sm mx-auto shadow-sm hover:shadow-lg'>
-                <form className='flex flex-col gap-4' onSubmit={loginHandler}>
-                    <h2>로그인</h2>
-                    <div>
-                        <div className='mb-2 block'>
-                            <Label htmlFor='email'>이메일</Label>
+        <div>
+            <div className='flex items-center justify-center min-h-screen'>
+                <Card className=' mx-auto shadow-lg'>
+                    <form className='flex flex-col gap-4' onSubmit={loginHandler}>
+                        <h2>로그인</h2>
+                        <div>
+                            <div className='mb-2 block'>
+                                <Label htmlFor='email'>이메일</Label>
+                            </div>
+                            <TextInput name='email' type='email' placeholder='이메일을 입력하세요.' onChange={onChange} required shadow />
                         </div>
-                        <TextInput name='email' type='email' placeholder='이메일을 입력하세요.' onChange={onChange} required shadow />
-                    </div>
-                    <div>
-                        <div className='mb-2 block'>
-                            <Label htmlFor='password'>비밀번호</Label>
+                        <div>
+                            <div className='mb-2 block'>
+                                <Label htmlFor='password'>비밀번호</Label>
+                            </div>
+                            <TextInput name='password' type='password' placeholder='비밀번호를 입력하세요.' onChange={onChange} required shadow />
                         </div>
-                        <TextInput  name='password' type='password' placeholder='비밀번호를 입력하세요.' onChange={onChange} required shadow />
-                    </div>
-                    <Button color="green" type='submit'>로그인</Button>
-                    <div className='flex items-center gap-2'>
-                        <Label>
-                            계정이 없으신가요?
-                        </Label>
-                        <Link to="/register"><p className='text-sm text-blue-600 font-bold'>회원가입</p></Link>
-                    </div>
-                </form>
-            </Card>
+                        <Button color="green" type='submit'>로그인</Button>
+                        <div className='flex items-center gap-2'>
+                            <Label>
+                                계정이 없으신가요?
+                            </Label>
+                            <Link to="/register"><p className='text-sm text-blue-600 font-bold'>회원가입</p></Link>
+                        </div>
+                    </form>
+                </Card>
+            </div>
         </div>
     )
 }

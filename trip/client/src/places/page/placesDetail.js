@@ -8,7 +8,7 @@ import { Button } from 'flowbite-react';
 
 
 const PlacesDetail = () => {
-    const { token, user } = useAuth();
+    const { user } = useAuth();
     const { id } = useParams();
     const Navigate = useNavigate();
     const [place, setPlace] = useState(null);
@@ -28,9 +28,7 @@ const PlacesDetail = () => {
     const handleDelete = async () => {
         try {
             const response = await axios.delete(`http://localhost:5000/api/places/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
+                
             });
 
             console.log('삭제성공', response);
@@ -67,13 +65,13 @@ const PlacesDetail = () => {
                         <span>👁 {place.view}</span>
                     </div>
                 </div>
-                {user.role === 'admin' && (
+                {user?.role === 'admin' && (
                     <div className='flex justify-around'>
                         <Button color="green" onClick={handleDelete}>삭제</Button>
 
                     </div>
                 )}
-                {user.role === 'User' && (
+                {user?.role === 'User' && (
                     <div className='mt-6'>
                         <Button color="green"><Link to={`/places/${id}/review/add`}>리뷰작성</Link></Button>
                     </div>

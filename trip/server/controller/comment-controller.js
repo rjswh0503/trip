@@ -24,9 +24,9 @@ const addComment = async (req, res, next) => {
     let user;
 
     try {
-        user = await User.findById(req.userData.userId);
+        user = await User.findById(userId);
     } catch (e) {
-        const error = new HttpError('덧글 생성하는데 실패했습니다.', 500);
+        const error = new HttpError('덧글 작성 실패', 401);
         return next(error);
     };
 

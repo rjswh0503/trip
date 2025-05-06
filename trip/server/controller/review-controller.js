@@ -235,8 +235,8 @@ const toggleRecommend = async (req, res, next) => {
         review = await Review.findById(reviewId);
 
 
-        if (!review) {
-            const error = new HttpError('리뷰가 없습니다.', 404);
+        if (!user) {
+            const error = new HttpError('로그인 안되어 있음.', 401);
             return next(error);
         }
 

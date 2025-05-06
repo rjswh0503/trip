@@ -18,7 +18,7 @@ const CommentList = ({ comments, onDelete }) => {
                         <p className="comment-content">
                             <strong style={{color:'black'}} className="comment-author"><Link to={`/${comment.author._id}/mypage`} style={{ textDecoration: 'none' }}>{comment.author?.name}</Link></strong>
                             <span className="comment-text">: {comment.content}</span>
-                            {user.userId === comment.author._id && (
+                            {user?.userId === comment.author._id && (
                                 <span
                                 className="comment-delete-icon"
                                 onClick={() => onDelete(comment._id)}
