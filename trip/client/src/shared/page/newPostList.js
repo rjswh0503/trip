@@ -45,10 +45,10 @@ const LatestPost = () => {
                         className="border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-between min-h-[260px]"
                     >
                         <div>
-                            <h5 className="text-lg font-bold text-gray-900 line-clamp-1 mb-2">
+                            <h5 className="text-lg font-bold text-gray-900 mb-2">
                                 {post.title}
                             </h5>
-                            <p className="text-sm text-gray-700 font-normal line-clamp-3 mb-4">
+                            <p className="text-sm text-gray-700 font-normal mb-4 line-clamp-1 ">
                                 {post.content}
                             </p>
                         </div>
