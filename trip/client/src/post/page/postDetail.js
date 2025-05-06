@@ -17,7 +17,7 @@ const PostDetail = () => {
     const [detail, setDetail] = useState(null);
     const [comments, setComments] = useState([]);
 
-    
+
 
 
     const fetchComments = async () => {
@@ -87,7 +87,7 @@ const PostDetail = () => {
                 alert('삭제되었습니다.');
                 setDetail(null);
                 navigate('/posts/list');
-                
+
 
             } catch (e) {
 
@@ -124,56 +124,74 @@ const PostDetail = () => {
 
 
     return (
-        <div className="post-detail-container-pc">
+        <div className="max-w-[1000px] min-w-[800px] mx-auto my-16 p-10 bg-white rounded-xl shadow-xl">
             {detail ? (
                 <>
-                    <div className="post-detail-header">
-                        <h1 className="post-title"> {detail.title}</h1>
-                        <div className="post-meta">
+                    <div className="border-b border-gray-300 pb-4 mb-6">
+                        <h1 className="text-[32px] font-bold mb-2">{detail.title}</h1>
+                        <div className="flex justify-between items-center text-sm text-gray-500">
                             <span>
-                                <Link to={`/${detail.author._id}/mypage`} className="flex items-center gap-3 ">
-                                <img className="w-10 h-10 rounded-full hover:shadow-md" src={detail.author?.image} alt='프로필 이미지'></img>
-                                <p className='text-sm font-black text-yellow-500 hover:text-yellow-700 hover:underline'>{detail.author?.name}</p>
-                                    
+                                <Link
+                                    to={`/${detail.author._id}/mypage`}
+                                    className="flex items-center gap-3"
+                                >
+                                    <img
+                                        className="w-10 h-10 rounded-full hover:shadow-md"
+                                        src={detail.author?.image}
+                                        alt="프로필 이미지"
+                                    />
+                                    <p className="font-bold text-yellow-500 hover:text-yellow-700 hover:underline">
+                                        {detail.author?.name}
+                                    </p>
                                 </Link>
                             </span>
                             <span>{new Date(detail.createdAt).toLocaleString()}</span>
                         </div>
                     </div>
-
-                    <div className="post-body-pc">
-                        <p className="post-content">{detail.content}</p>
-
+                    <div className="mb-10">
+                        <p className="text-lg leading-8 text-gray-800 mb-6">{detail.content}</p>
                         {Array.isArray(detail.images) && detail.images.length > 0 && (
-                            <div className="post-image-list-pc">
+                            <div className="flex flex-wrap gap-3">
                                 {detail.images.map((imgUrl, idx) => (
-                                    <img key={idx} src={imgUrl} alt={`게시글 이미지 ${idx + 1}`} className="post-image-pc" />
+                                    <img
+                                        key={idx}
+                                        src={imgUrl}
+                                        alt={`게시글 이미지 ${idx + 1}`}
+                                        className="w-[280px] rounded-lg border border-gray-300 object-cover"
+                                    />
                                 ))}
                             </div>
                         )}
                     </div>
-
                     {user?.userId === detail.author._id && (
-                        <div className="post-actions">
-                            <button onClick={handleEdit} className="edit-button">수정</button>
-                            <button onClick={handleDelete} className="delete-button">삭제</button>
+                        <div className="flex justify-end gap-3 mb-10">
+                            <button
+                                onClick={handleEdit}
+                                className="px-4 py-2 text-sm font-medium rounded-md bg-blue-600 text-white hover:bg-blue-700"
+                            >
+                                수정
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="px-4 py-2 text-sm font-medium rounded-md bg-red-600 text-white hover:bg-red-700"
+                            >
+                                삭제
+                            </button>
                         </div>
                     )}
-
-
-
-                    <div className="comment-list-wrapper">
+                    
+                    <div className="mt-10">
                         <CommentList comments={comments} onDelete={deleteHandler} />
                     </div>
-
-                    <div className="comment-form-wrapper">
+                    <div className="mt-10">
                         <NewComment onAddComment={handleAddComment} />
                     </div>
                 </>
             ) : (
-                <p className="loading-text">로딩중...</p>
+                <p className="text-center mt-20 text-gray-500">로딩중...</p>
             )}
         </div>
+
 
 
     )
