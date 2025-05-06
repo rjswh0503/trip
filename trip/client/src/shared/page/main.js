@@ -24,12 +24,12 @@ const Main = () => {
                 <Top5Places />
 
             </div>
-            {/* 새 게시글 리스트 limit 5 + 새 리뷰 리스트 limit 5 */}
+            {/* 새 게시글 리스트 limit 3 + 새 리뷰 리스트 limit 3 */}
             <div className="flex justify-around">
                 <div>
                     <NewPostList />
                 </div>
-
+                {/* 인기 리뷰 (추천 많이 받은 수) */}
                 <div>
                     <LatestReview />
                 </div>

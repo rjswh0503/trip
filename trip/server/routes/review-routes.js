@@ -14,6 +14,9 @@ router.get('/:placeId/review/list', reviewController.PlacesByReview);
 //여행 리뷰 상세조회
 router.get('/:placeId/review/:reviewId', reviewController.getReviewById);
 
+//인기 리뷰 조회 (추천수)
+router.get('/popular', reviewController.getTopReviews);
+
 router.use(checkAuth);
 
 // 여행 리뷰 작성

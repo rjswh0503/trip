@@ -294,6 +294,22 @@ const toggleRecommend = async (req, res, next) => {
 }
 
 
+// 추천 많이 받은 인기 리뷰 3개
+
+const getTopReviews = async (req,res,next) => {
+    try {
+        const topReviews = await Review.find().sort({
+            recommend: -1, createdAt: -1 
+        }).limit(3).populate('places', 'name region').populate('author', 'name image');
+        res.status(200).json({
+            topReviews
+        })
+    } catch(e){
+        console.error(e);
+        const error = new HttpError('인기 리뷰 조회 실패', 500);
+        return next(error);
+    }
+}
 
 
 
@@ -304,3 +320,4 @@ exports.getReviewById = getReviewById;
 exports.updateReview = updateReview;
 exports.deleteReview = deleteReview;
 exports.toggleRecommend = toggleRecommend;
+exports.getTopReviews = getTopReviews;

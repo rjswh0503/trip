@@ -6,7 +6,7 @@ import { useAuth } from '../../shared/context/auth-context';
 import NewComment from '../../comment/page/newComment';
 import CommentList from '../../comment/page/commentList';
 
-import './postDetail.css';
+
 
 
 

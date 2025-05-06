@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../shared/context/auth-context';
-import './newPost.css';
+
 
 
 const NewPost = () => {
@@ -53,7 +53,7 @@ const NewPost = () => {
         }
 
     }
-    
+
     // 이미지 추가 핸들러
     const handleImageChange = (e) => {
         const files = Array.from(e.target.files);
@@ -62,7 +62,7 @@ const NewPost = () => {
         setPreviewUrl(prev => [...prev, ...previews]);
     }
 
-    
+
     const onChange = (e) => {
         setFormData({
             ...formData,
@@ -72,9 +72,9 @@ const NewPost = () => {
     };
 
     return (
-        <div className="create-post-wrapper">
-            <h2>게시글 작성</h2>
-            <form className="create-post-form" onSubmit={NewPostHandler}>
+        <div className="max-w-[700px] mx-auto mt-40 mb-16 p-8 bg-white rounded-xl shadow-[0_4px_12px_rgba(0,0,0,0.05)]">
+            <h2 className="text-2xl font-bold mb-6">게시글 작성</h2>
+            <form className="flex flex-col gap-5" onSubmit={NewPostHandler}>
                 <input
                     type="text"
                     name="title"
@@ -82,41 +82,45 @@ const NewPost = () => {
                     onChange={onChange}
                     value={formData.title}
                     required
-                    className="post-input title-input"
+                    className="h-12 px-4 py-3 border border-gray-300 rounded-lg text-base w-full"
                 />
-
                 <textarea
                     name="content"
                     placeholder="내용을 작성하세요."
                     onChange={onChange}
                     value={formData.content}
                     required
-                    className="post-textarea"
+                    className="min-h-[160px] px-4 py-3 border border-gray-300 rounded-lg text-base w-full resize-y"
                 />
-
                 <input
                     type="file"
                     name="files"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="image-upload-input"
+                    className="text-sm"
                     multiple
                 />
-
                 {previewUrl.length > 0 && (
-                    <div className="image-preview-list">
+                    <div className="flex flex-wrap gap-3 my-4">
                         {previewUrl.map((url, idx) => (
-                            <img key={idx} src={url} alt={`미리보기-${idx}`} className="image-preview"/>
-                            
+                            <img
+                                key={idx}
+                                src={url}
+                                alt={`미리보기-${idx}`}
+                                className="w-[150px] rounded-lg border border-gray-300 object-cover"
+                            />
                         ))}
                     </div>
                 )}
-
-                <button type="submit" className="submit-button">
+                <button
+                    type="submit"
+                    className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-base font-medium transition-colors"
+                >
                     작성하기
                 </button>
             </form>
         </div>
+
 
     )
 }
