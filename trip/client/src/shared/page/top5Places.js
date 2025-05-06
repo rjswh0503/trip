@@ -27,8 +27,8 @@ const Top3Places = () => {
 
     return (
         <div>
-            <h2 className='text-2xl font-black py-3 px-6'>추천 여행지</h2>
-            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center '>
+            <h2 className='text-2xl font-black py-6 px-6'>추천 여행지</h2>
+            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center mt-6'>
 
                 {top5.map(top => (
                     <div key={top._id}>

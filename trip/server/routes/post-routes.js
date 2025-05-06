@@ -16,7 +16,7 @@ const router = express.Router();
 router.get('/list', postController.getPostList);
 
 //새로 등록된 게시글 리스트 5개 
-router.get('/latestPost', postController.getLatestPosts);
+router.get('/popular', postController.getTopPosts);
 
 // 특정 게시글 조회
 router.get('/:id', postController.getPostById);

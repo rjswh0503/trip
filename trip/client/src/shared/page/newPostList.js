@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Avatar } from 'flowbite-react';
-
+import { formatDistanceToNow } from 'date-fns';
+import { ko } from 'date-fns/locale';
 
 const LatestPost = () => {
 
@@ -12,9 +14,9 @@ const LatestPost = () => {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/posts/latestPost');
-                setLatesPost(response.data.latestPosts);
-                console.log(response.data.latestPosts);
+                const response = await axios.get('http://localhost:5000/api/posts/popular');
+                setLatesPost(response.data.topPosts);
+                console.log(response.data.topPosts);
 
             } catch (e) {
                 console.error("애러발생", e);
@@ -26,30 +28,56 @@ const LatestPost = () => {
 
 
     return (
-        <div className='px-6'>
-            <div className='flex gap-3 items-center mb-10'>
-            <h2 className='text-2xl font-black '>새로 등록된 게시글</h2>
-            <Link className='text-gray-400 hover:underline' to="/posts/list">전체보기</Link>
+        <div className="px-6 max-w-7xl mx-auto">
+            <div className="flex gap-1 items-center justify-between mb-20">
+                <h2 className="text-2xl font-bold">🆕 새로 등록된 게시글</h2>
+                <Link
+                    to="/posts/list"
+                    className="text-sm text-gray-400 hover:underline hover:text-gray-600"
+                >
+                    전체보기
+                </Link>
             </div>
-            <div className='grid grid-rows-2 gap-4 justify-start'>
-                {latestPost.map(post => (
-                    <div key={post._id}>
-                        <div className='max-w-2xl border border-gray-200 mx-auto shadow-sm rounded-xl hover:shadow-lg px-10 py-2'>
-                            <h5 className='text-2xl font-bold tracking-tight mb-2'>{post.title}</h5>
-                            <p className='font-nomal text-gray-700 mb-4'>{post.content}</p>
-                            <div className='flex justify-start items-center gap-4 mb-6'>
-                                <Avatar alt='유저프로필' img={post.author?.image} rounded bordered />
-                                <p>{post.author?.name}</p>
+            <div className="grid grid-rows-1 gap-6">
+                {latestPost.map((post) => (
+                    <div
+                        key={post._id}
+                        className="border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-between min-h-[260px]"
+                    >
+                        <div>
+                            <h5 className="text-lg font-bold text-gray-900 line-clamp-1 mb-2">
+                                {post.title}
+                            </h5>
+                            <p className="text-sm text-gray-700 font-normal line-clamp-3 mb-4">
+                                {post.content}
+                            </p>
+                        </div>
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-2">
+                                <Avatar alt="유저프로필" img={post.author?.image} rounded size="sm" />
+                                <p className="text-sm text-gray-800">{post.author?.name}</p>
                             </div>
-
-                            <Link to={`/posts/${post._id}`}><p className='text-sm text-gray-500 hover:text-gray-700 hover:underline justify-end'>자세히보기</p></Link>
+                            <p className="text-xs text-gray-500">
+                                {formatDistanceToNow(new Date(post.createdAt), {
+                                    addSuffix: true,
+                                    locale: ko,
+                                })}
+                            </p>
+                        </div>
+                        <div className="mt-4 text-right">
+                            <Link
+                                to={`/posts/${post._id}`}
+                                className="text-sm text-blue-500 hover:underline"
+                            >
+                                자세히 보기
+                            </Link>
                         </div>
                     </div>
-
                 ))}
-
             </div>
         </div>
+
+
     )
 }
 
