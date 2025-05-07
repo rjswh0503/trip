@@ -42,13 +42,13 @@ const LatestPost = () => {
                 {latestPost.map((post) => (
                     <div
                         key={post._id}
-                        className="border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-between min-h-[260px]"
+                        className="w-96 border border-gray-200 rounded-md shadow-sm hover:shadow-md transition-shadow p-6 flex flex-col justify-between min-h-[270px]"
                     >
                         <div>
                             <h5 className="text-lg font-bold text-gray-900 mb-2">
                                 {post.title}
                             </h5>
-                            <p className="text-sm text-gray-700 font-normal mb-4 line-clamp-1 ">
+                            <p className=" text-gray-700  font-normal mb-4 line-clamp-2">
                                 {post.content}
                             </p>
                         </div>

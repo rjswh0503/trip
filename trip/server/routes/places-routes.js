@@ -7,7 +7,7 @@ const router = express.Router();
 
 
 
-
+router.use(checkAuth);
 
 
 // 모든 여행지 조회
@@ -27,7 +27,6 @@ router.get('/region', placesController.placesByRegion);
 router.get('/:id', placesController.getPlacesById);
 
 
-router.use(checkAuth);
 
 //새로운 여행지 등록
 router.post('/',

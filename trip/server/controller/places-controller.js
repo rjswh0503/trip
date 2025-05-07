@@ -138,7 +138,6 @@ const getPlacesById = async (req, res, next) => {
 
 const deletePlace = async (req, res, next) => {
     const PlacesId = req.params.id;
-    
 
     let places;
 
@@ -158,13 +157,13 @@ const deletePlace = async (req, res, next) => {
 
         await Review.deleteMany({ places: PlacesId }, { session });
 
-        const deleteReviews = await Review.find({ places: PlacesId}).select('_id');
+        const deleteReviews = await Review.find({ places: PlacesId }).select('_id');
         const deleteReviewId = deleteReviews.map(r => r._id);
 
         await User.updateMany(
-            { reviews: { $in: deleteReviewId}},
-            {$pull: { reviews: {$in: deleteReviewId}}},
-            {session}
+            { reviews: { $in: deleteReviewId } },
+            { $pull: { reviews: { $in: deleteReviewId } } },
+            { session }
         );
         await session.commitTransaction();
         session.endSession();
@@ -182,21 +181,25 @@ const deletePlace = async (req, res, next) => {
 //여행지 인기 5위 리스트 (북마크 많이 한 여행지)
 
 const getTop5HotPlaces = async (req, res, next) => {
-    let top5Places;
+    const userId = req.userData?.userId;
+    let places;
+
     try {
 
-        top5Places = await Place.aggregate([{
-            $addFields: {
-                bookMarkCount: { $size: "$bookMark" }
-            }
-        },
-        {
-            $sort: { bookMarkCount: -1 }
-        },
-        {
-            $limit: 5
-        }
-        ]);
+        places = await Place.find().sort({ reviews: -1, createdAt: -1 }).limit(5).lean();
+
+        const likeBookMark = places.map(place => ({
+            ...place,
+            userLiked: Array.isArray(place.likes) && userId
+                ? place.likes.some(id => id?.toString() === userId.toString())
+                : false,
+                userBookmarked: Array.isArray(place.bookMark) && userId ? place.bookMark.some(id => id?.toString() === userId.toString()) : false,
+        }));
+
+        res.status(200).json({
+            message: '상위top여행지 조회',
+            top5Places: likeBookMark
+        })
 
     } catch (e) {
         console.error(e);
@@ -204,11 +207,9 @@ const getTop5HotPlaces = async (req, res, next) => {
         return next(error);
     }
 
-    res.status(200).json({
-        message: '상위top여행지 조회',
-        top5Places: top5Places
-    })
+
 }
+
 
 
 
@@ -242,7 +243,7 @@ const placesByRegion = async (req, res, next) => {
 
 const toggleLike = async (req, res, next) => {
     const userId = req.userData.userId; // 현재 로그인한 유저
-    const placesId = req.params.id;
+    const placesId = req.params.id; // 장소 id
 
     let place, user;
 
@@ -250,7 +251,7 @@ const toggleLike = async (req, res, next) => {
         user = await User.findById(userId);
         place = await Place.findById(placesId);
 
-        if(!user){
+        if (!user) {
             const error = new HttpError('로그인 안되어 있음.', 401);
             return next(error);
         }
@@ -262,9 +263,9 @@ const toggleLike = async (req, res, next) => {
     session.startTransaction();
 
     try {
-        const isBookmarked = place.likes.includes(userId);
+        const isLiked = place.likes.includes(userId);
 
-        if (isBookmarked) {
+        if (isLiked) {
             place.likes.pull(userId);
             user.likes.pull(placesId);
             await place.save({ session });
@@ -291,6 +292,7 @@ const toggleLike = async (req, res, next) => {
     } catch (e) {
 
         const error = new HttpError('좋아요 실패', 500);
+        console.error(e);
         return next(error);
     }
 }
