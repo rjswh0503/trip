@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth } from '../context/auth-context';
 import Swal from 'sweetalert2';
 import { BsHeart, BsHeartFill } from "react-icons/bs";
-import { FaBookmark, FaRegBookmark  } from "react-icons/fa";
+import { FaBookmark, FaRegBookmark } from "react-icons/fa";
 
 const Top3Places = () => {
     const { token } = useAuth();
@@ -84,7 +84,7 @@ const Top3Places = () => {
         }
     };
 
-    const toggleBookMarkHandler = async ( placeId ) => {
+    const toggleBookMarkHandler = async (placeId) => {
         if (!token) {
             return Swal.fire({
                 icon: 'warning',
@@ -106,7 +106,7 @@ const Top3Places = () => {
             const userBookMarked = response.data.BookMarkByUser;
             setBookMarkPlaces(prev => ({
                 ...prev,
-                [placeId]:userBookMarked,
+                [placeId]: userBookMarked,
             }));
 
             Swal.fire({
@@ -127,53 +127,52 @@ const Top3Places = () => {
     }
     return (
         <div>
-            <h2 className='text-2xl font-black py-6 px-6'>추천 여행지</h2>
-            <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center mt-6'>
+            <h2 className="text-2xl font-black py-6 px-6">추천 여행지</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 px-4">
                 {top5.map((top, idx) => (
-                    <div key={top._id || idx}>
-                        <div className='w-90 sm:w-90 bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg cursor-pointer'>
-                            <div className='relative'>
+                    <div key={top._id || idx} className="w-full max-w-sm">
+                        <div className="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-lg cursor-pointer w-full">
+                            <div className="relative">
                                 <img
-                                    className='rounded-t-lg w-full h-48 object-cover'
+                                    className="rounded-t-lg w-full h-48 object-cover"
                                     src={top.images}
-                                    alt='여행지 이미지'
+                                    alt="여행지 이미지"
                                 />
                                 <p
                                     onClick={() => toggleLikeHandler(top._id)}
-                                    className='absolute top-2 right-12 z-10 bg-white/80 rounded-full p-2 shadow-lg hover:bg-white'
+                                    className="absolute top-2 right-12 z-10 bg-white/80 rounded-full p-2 shadow-lg hover:bg-white"
                                 >
                                     {likedPlaces[top._id] ? (
-                                        <BsHeartFill className='text-red-600' />
+                                        <BsHeartFill className="text-red-600" />
                                     ) : (
                                         <BsHeart />
                                     )}
                                 </p>
                                 <p
                                     onClick={() => toggleBookMarkHandler(top._id)}
-                                    className='absolute top-2 right-2 z-40 bg-white/80 rounded-full p-2 shadow-lg hover:bg-white'
+                                    className="absolute top-2 right-2 z-40 bg-white/80 rounded-full p-2 shadow-lg hover:bg-white"
                                 >
                                     {bookMarkPlaces[top._id] ? (
-                                        <FaBookmark className='text-yellow-500' />
+                                        <FaBookmark className="text-yellow-500" />
                                     ) : (
                                         <FaRegBookmark />
                                     )}
                                 </p>
-
                             </div>
                             <Link to={`/places/${top._id}`}>
-                                <div className='p-5'>
-                                    <div className='flex justify-between'>
-                                        <p className='font-bold'>{top.region}</p>
-                                        <p className='font-bold text-blue-400'>#{top.category}</p>
+                                <div className="p-5">
+                                    <div className="flex justify-between">
+                                        <p className="font-bold">{top.region}</p>
+                                        <p className="font-bold text-blue-400">#{top.category}</p>
                                     </div>
-                                    <h5 className='my-2 text-xl font-bold tracking-tight text-gray-900'>
+                                    <h5 className="my-2 text-xl font-bold tracking-tight text-gray-900">
                                         {top.title}
                                     </h5>
-                                    <p className='mb-3 font-normal text-gray-700 line-clamp-2'>
+                                    <p className="mb-3 font-normal text-gray-700 line-clamp-2">
                                         {top.description}
                                     </p>
                                 </div>
-                                <div className='flex justify-end p-2'>
+                                <div className="flex justify-end p-2">
                                     <p>{top.reviews?.length ?? 0}리뷰</p>
                                 </div>
                             </Link>
@@ -182,6 +181,7 @@ const Top3Places = () => {
                 ))}
             </div>
         </div>
+
     );
 };
 

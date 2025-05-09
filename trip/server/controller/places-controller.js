@@ -226,7 +226,7 @@ const placesByRegion = async (req, res, next) => {
 
     try {
         // region 값으로 내림차순 정렬해서 장소 찾기
-        const places = await Place.find({ region: region }).sort({ createdAt: -1 });
+        const places = await Place.find({ region: region }).sort({ createdAt: -1 }).lean();
 
 
         res.status(200).json({ places });

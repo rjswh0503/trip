@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 
 
 const RegionList = () => {
-    const [region, setRegion] = useState('서울');
+    const [region, setRegion] = useState('전체');
     const [places, setPlaces] = useState([]);
 
     const regions = ['서울', '부산', '인천', '경주', '제주', '전주', '강릉'];
@@ -34,14 +34,12 @@ const RegionList = () => {
         <div>
             <h2 className='text-2xl font-black py-3 px-6 mb-10'>지역별 여행지</h2>
             <div className="flex gap-4">
-
                 {regions.map(regionName => (
-                    <button className='text-xl font-light bg-white border border-gray-200 shadow-md hover:shadow-xl p-3 rounded-xl md:' pill key={regionName} onClick={() => handleSelectRegion(regionName)}>
+                    <button className='text-xl font-light bg-white border border-gray-200 shadow-md hover:shadow-xl p-3 rounded-xl md:' key={regionName} onClick={() => handleSelectRegion(regionName)}>
                         {regionName}
                     </button>
                 ))}
             </div>
-
 
             <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center mt-10' >
                 {places.map(place => (
