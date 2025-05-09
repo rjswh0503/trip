@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useAuth } from '../../shared/context/auth-context';
 import Swal from 'sweetalert2';
 import TravelCard from '../../shared/components/UI/travelCard';
-import './placesList.css';
 
 
 const PlacesList = () => {

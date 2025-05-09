@@ -4,7 +4,7 @@ import Map from '../components/map';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 
 import { useAuth } from '../../shared/context/auth-context';
-import { Button } from 'flowbite-react';
+
 
 
 const PlacesDetail = () => {
@@ -66,14 +66,13 @@ const PlacesDetail = () => {
                     </div>
                 </div>
                 {user?.role === 'admin' && (
-                    <div className='flex justify-around'>
-                        <Button color="green" onClick={handleDelete}>삭제</Button>
-
+                    <div className='flex justify-end my-4'>
+                        <button className='w-44 bg-red-500 hover:bg-red-600 font-bold text-white p-2 rounded-md' onClick={handleDelete}>삭제</button>
                     </div>
                 )}
                 {user?.role === 'User' && (
-                    <div className='mt-6'>
-                        <Button color="green"><Link to={`/places/${id}/review/add`}>리뷰작성</Link></Button>
+                    <div className='flex justify-start my-4'>
+                        <button className='w-44 bg-blue-500 hover:bg-blue-600 text-white font-bold p-2 rounded-md'><Link to={`/places/${id}/review/add`}>리뷰작성</Link></button>
                     </div>
                 )}
             </div>

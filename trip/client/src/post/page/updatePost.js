@@ -65,22 +65,57 @@ const UpdatePost = () => {
         }
     }
 
+    const updateCancel = () => {
+        navigate(`/posts/${id}`);
+    }
+
 
     return (
-        <div>
-            <h2>게시글 수정</h2>
-            <form onSubmit={handlerSubmit}>
-                <div>
-                    <label>제목</label>
-                    <input type='text' name='title' value={post.title} onChange={handleChange} />
-                </div>
-                <div>
-                    <label>내용</label>
-                    <textarea name='content' value={post.content} onChange={handleChange} rows={8} />
-                </div>
-                <button type='submit'>수정</button>
-            </form>
+        <div className="flex justify-center items-center min-h-screen bg-gray-50 px-4">
+            <div className="w-full max-w-2xl bg-white shadow-md rounded-lg p-8">
+                <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">게시글 수정</h2>
+                <form onSubmit={handlerSubmit} className="space-y-6">
+                    <div>
+                        <label className="block text-gray-700 font-medium mb-1">제목</label>
+                        <input
+                            type="text"
+                            name="title"
+                            value={post.title}
+                            onChange={handleChange}
+                            placeholder="제목을 입력하세요"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        />
+                    </div>
+                    <div>
+                        <label className="block text-gray-700 font-medium mb-1">내용</label>
+                        <textarea
+                            name="content"
+                            value={post.content}
+                            onChange={handleChange}
+                            rows={8}
+                            placeholder="내용을 입력하세요"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+                        />
+                    </div>
+                    <div className="flex justify-end gap-3">
+                        <button
+                            type="submit"
+                            className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                        >
+                            수정
+                        </button>
+                        <button
+                            type="button"
+                            onClick={updateCancel}
+                            className="bg-gray-200 hover:bg-gray-300 text-gray-800 px-4 py-2 rounded-md"
+                        >
+                            취소
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
+
     )
 
 }
