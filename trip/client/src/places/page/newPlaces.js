@@ -97,7 +97,7 @@ const NewPlaces = () => {
                         ))}
                     </div>
                 )}
-                <button className="mt-10 w-full bg-yellow-500 text-white px-4 py-2 rounded-lg " type="submit">등록하기</button>
+                <button className="mt-10 bg-blue-400 px-4 py-2 text-white font-bold rounded-lg" type="submit">등록하기</button>
             </form>
 
 

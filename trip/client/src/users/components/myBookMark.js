@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../shared/context/auth-context';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 const MyBookMark = () => {
