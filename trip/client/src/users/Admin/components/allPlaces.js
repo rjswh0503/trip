@@ -1,13 +1,20 @@
 import React, { useState, useEffect } from 'react';
+
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../../../shared/context/auth-context';
-
+import { Pagination } from 'flowbite-react';
 
 const AllPlaces = () => {
 
     const { token } = useAuth();
     const [places, setPlaces] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+        const itemsPerPage = 5;
+    
+        const lastItem = currentPage * itemsPerPage;
+        const firstItem = lastItem - itemsPerPage;
+        const currentItem = places.slice(firstItem,lastItem)
 
     useEffect(() => {
 
@@ -48,7 +55,7 @@ const AllPlaces = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {places.map((place, idx) => (
+                    {currentItem.map((place, idx) => (
                         <tr key={place._id} className='hover:bg-gray-50 border-b-2'>
                             <td className='p-2'>{idx + 1}</td>
                             <td className='p-2'><img className='w-16 h-16 rounded-md' src={place.images[0]} alt='여행지 이미지' /></td>
@@ -58,12 +65,20 @@ const AllPlaces = () => {
                             <td className='p-2'>{place.likes.length}</td>
                             <td className='p-2'>{place.reviews.length}</td>
                             <td className='p-2'>
-                                    <button className='text-red-600 font-light hover:underline'>삭제</button>
+                                <button className='text-red-600 font-light hover:underline'>삭제</button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+            <div className='flex justify-center mt-10'>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(places.length / itemsPerPage)}
+                    onPageChange={(page) => setCurrentPage(page)}
+                    showIcons
+                />
+            </div>
         </div>
     )
 }

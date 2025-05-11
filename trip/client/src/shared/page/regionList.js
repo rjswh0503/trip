@@ -14,7 +14,7 @@ const RegionList = () => {
     const [places, setPlaces] = useState([]);
     const [likedPlaces, setLikedPlaces] = useState({});
     const [bookmarkedPlaces, setBookMarkPlaces] = useState({});
-    const regions = ['서울', '부산', '인천', '경주', '제주', '전주', '강릉'];
+    const regions = ['서울', '부산', '인천', '경주', '제주', '전주', '속초'];
 
     useEffect(() => {
         if (!region) return;
