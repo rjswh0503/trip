@@ -40,7 +40,6 @@ const RegionList = () => {
                     </button>
                 ))}
             </div>
-
             <div className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-5 gap-4 justify-items-center mt-10' >
                 {places.map(place => (
                     <div key={place._id}>

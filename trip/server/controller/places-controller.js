@@ -193,7 +193,7 @@ const getTop5HotPlaces = async (req, res, next) => {
             userLiked: Array.isArray(place.likes) && userId
                 ? place.likes.some(id => id?.toString() === userId.toString())
                 : false,
-                userBookmarked: Array.isArray(place.bookMark) && userId ? place.bookMark.some(id => id?.toString() === userId.toString()) : false,
+            userBookmarked: Array.isArray(place.bookMark) && userId ? place.bookMark.some(id => id?.toString() === userId.toString()) : false,
         }));
 
         res.status(200).json({
@@ -222,11 +222,9 @@ const placesByRegion = async (req, res, next) => {
         return res.status(400).json({ message: 'region 쿼리 파라미터가 필요합니다.' });
     }
 
-
-
     try {
         // region 값으로 내림차순 정렬해서 장소 찾기
-        const places = await Place.find({ region: region }).sort({ createdAt: -1 }).lean();
+        const places = await Place.find({ region: region }).sort({ createdAt: -1 }).lean().limit(5);
 
 
         res.status(200).json({ places });
@@ -334,7 +332,7 @@ const toggleBookMark = async (req, res, next) => {
                 await session.commitTransaction();
                 session.endSession();
                 return res.status(200).json({
-                    message: '북마크가 제거되었습니다.',
+                    message: '북마크 제거되었습니다.',
                     BookMarkByUser: false
                 });
             } else {
@@ -345,7 +343,7 @@ const toggleBookMark = async (req, res, next) => {
                 await session.commitTransaction();
                 session.endSession();
                 return res.status(200).json({
-                    message: '북마크에 추가되었습니다.',
+                    message: '북마크 추가되었습니다.',
                     BookMarkByUser: true
                 });
             }

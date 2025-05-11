@@ -11,10 +11,10 @@ const NavMain = () => {
     const { user, isLoggedIn } = useAuth();
 
     return (
-        <div className="">
+        <div>
             {isLoggedIn && user ? (
                 <div>
-                    <header className=" bg-white text-black mx-auto p-4 z-50 shadow-md">
+                    <header className="bg-white text-black mx-auto p-4 z-50 shadow-md">
                         <nav className="container mx-auto flex justify-between">
                             <div className="">
                                 <NavLink to="/"><h2 className="text-3xl font-bold text-yellow-500 hover:text-yellow-600">Trip</h2></NavLink>
