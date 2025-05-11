@@ -85,19 +85,27 @@ const addPlaces = async (req, res, next) => {
 
 
 const getAllPlaces = async (req, res, next) => {
+    const userId = req.userData?.userId;
     let places;
-
     try {
-        places = await Place.find().populate('creator', 'name');
+        places = await Place.find().lean();
+        const likeBookMark = places.map(place => ({
+            ...place,
+            userLiked: Array.isArray(place.likes) && userId
+                ? place.likes.some(id => id?.toString() === userId.toString())
+                : false,
+            userBookmarked: Array.isArray(place.bookMark) && userId ? place.bookMark.some(id => id?.toString() === userId.toString()) : false,
+        }));
+        res.json({
+            places: likeBookMark
+        });
     } catch (e) {
         const error = new HttpError('여행지 리스트 불러오는데 실패했습니다.', 500);
         return next(error);
     }
 
 
-    res.json({
-        places: places
-    });
+
 };
 
 
@@ -216,6 +224,7 @@ const getTop5HotPlaces = async (req, res, next) => {
 // 지역별 여행지 조회 (서울, 부산, 제주, 경주 등등)
 
 const placesByRegion = async (req, res, next) => {
+    const userId = req.userData?.userId;
     const { region } = req.query;
 
     if (!region) {
@@ -225,9 +234,18 @@ const placesByRegion = async (req, res, next) => {
     try {
         // region 값으로 내림차순 정렬해서 장소 찾기
         const places = await Place.find({ region: region }).sort({ createdAt: -1 }).lean().limit(5);
+        const likeBookMark = places.map(place => ({
+            ...place,
+            userLiked: Array.isArray(place.likes) && userId
+                ? place.likes.some(id => id?.toString() === userId.toString())
+                : false,
+            userBookmarked: Array.isArray(place.bookMark) && userId ? place.bookMark.some(id => id?.toString() === userId.toString()) : false,
+        }));
 
+        res.status(200).json({
+            places: likeBookMark
 
-        res.status(200).json({ places });
+        });
     } catch (e) {
         const error = new HttpError('지역을 찾을 수 없습니다.', 500);
         return next(error);

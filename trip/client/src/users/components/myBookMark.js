@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../shared/context/auth-context';
 import { useParams } from 'react-router-dom';
+import { Pagination } from 'flowbite-react';
 
 
 const MyBookMark = () => {
@@ -9,7 +10,12 @@ const MyBookMark = () => {
     const { token } = useAuth();
     const { id } = useParams();
     const [bookMark, setBookMark] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
 
+    const lastItem = currentPage * itemsPerPage;
+    const firstItem = lastItem - itemsPerPage;
+    const currentItem = bookMark.slice(firstItem, lastItem);
 
     useEffect(() => {
         if (!token) return;
@@ -21,7 +27,7 @@ const MyBookMark = () => {
                     },
                 });
                 setBookMark(response.data.bookMark);
-                
+
             } catch (e) {
                 console.log(e);
             }
@@ -44,7 +50,7 @@ const MyBookMark = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {bookMark.map((bookMark, idx) => (
+                    {currentItem.map((bookMark, idx) => (
                         <tr key={bookMark._id} className='hover:bg-gray-50 border-b-2'>
                             <td className='p-3'>{idx + 1}</td>
                             <td className='p-3'><img className='w-16 h-16 rounded-md' src={bookMark.images[0]} alt='여행지 이미지' /></td>
@@ -54,6 +60,14 @@ const MyBookMark = () => {
                     ))}
                 </tbody>
             </table>
+            <div className='flex justify-center mt-10'>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(bookMark.length / itemsPerPage)}
+                    onPageChange={(page) => setCurrentPage(page)}
+                    showIcons
+                />
+            </div>
         </div>
     )
 

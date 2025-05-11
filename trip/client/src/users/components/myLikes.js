@@ -2,11 +2,20 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
+import { Pagination } from 'flowbite-react';
 
 const MyLikes = () => {
-    const [likes, setLikes] = useState([]);
     const { token } = useAuth();
     const { id } = useParams();
+    const [likes, setLikes] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+
+    const lastItem = currentPage * itemsPerPage;
+    const firstItem = lastItem - itemsPerPage;
+    const currentItem = likes.slice(firstItem, lastItem);
+
+
 
     useEffect(() => {
         if (!token) return;
@@ -39,7 +48,7 @@ const MyLikes = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {likes.map((like, idx) => (
+                    {currentItem.map((like, idx) => (
                         <tr key={like._id} className='hover:bg-gray-50 border-b-2'>
                             <td className='p-3'>{idx + 1}</td>
                             <td className='p-3'><img className='w-16 h-16 rounded-md' src={like.images[0]} alt='여행지 이미지' /></td>
@@ -49,6 +58,14 @@ const MyLikes = () => {
                     ))}
                 </tbody>
             </table>
+            <div className='flex justify-center mt-10'>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(likes.length / itemsPerPage)}
+                    onPageChange={(page) => setCurrentPage(page)}
+                    showIcons
+                />
+            </div>
         </div>
     )
 

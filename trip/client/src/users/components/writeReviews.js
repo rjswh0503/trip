@@ -1,13 +1,24 @@
 import React, { useState, useEffect } from 'react';
+
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 import MyRecommend from './myReCommend';
+import { Pagination } from 'flowbite-react';
+
+
 
 const WriteReviews = () => {
-    const [myReview, setMyReview] = useState([]);
     const { token } = useAuth();
     const { id } = useParams();
+
+    const [myReview, setMyReview] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+        const itemsPerPage = 5;
+    
+        const lastItem = currentPage * itemsPerPage;
+        const firstItem = lastItem - itemsPerPage;
+        const currentItem = myReview.slice(firstItem, lastItem);
 
     useEffect(() => {
         if (!token) return;
@@ -45,7 +56,7 @@ const WriteReviews = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            {myReview.map((review, idx) => (
+                            {currentItem.map((review, idx) => (
                                 <tr key={review._id} className='hover:bg-gray-50 border-b-2'>
                                     <td className='p-3'>{idx + 1}</td>
                                     <td className='p-3'>{review.title}</td>
@@ -62,6 +73,16 @@ const WriteReviews = () => {
                     <p>작성한 리뷰가 없습니다. </p>
                 </div>
             )}
+            <div>
+                <div className='flex justify-center mt-10'>
+                    <Pagination
+                        currentPage={currentPage}
+                        totalPages={Math.ceil(myReview.length / itemsPerPage)}
+                        onPageChange={(page) => setCurrentPage(page)}
+                        showIcons
+                    />
+                </div>
+            </div>
             <h3 className='text-2xl font-bold my-6'>추천 누른 리뷰</h3>
             <MyRecommend />
         </div>
