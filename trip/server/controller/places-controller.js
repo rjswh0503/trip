@@ -88,7 +88,8 @@ const getAllPlaces = async (req, res, next) => {
     const userId = req.userData?.userId;
     let places;
     try {
-        places = await Place.find().lean();
+        places = await Place.find().sort({ title: 1 }).lean();
+
         const likeBookMark = places.map(place => ({
             ...place,
             userLiked: Array.isArray(place.likes) && userId
@@ -194,7 +195,7 @@ const getTop5HotPlaces = async (req, res, next) => {
 
     try {
 
-        places = await Place.find().sort({ reviews: -1, createdAt: -1 }).limit(5).lean();
+        places = await Place.find().sort({ reviews: -1, createdAt: 1 }).limit(5).lean();
 
         const likeBookMark = places.map(place => ({
             ...place,
@@ -233,7 +234,8 @@ const placesByRegion = async (req, res, next) => {
 
     try {
         // region 값으로 내림차순 정렬해서 장소 찾기
-        const places = await Place.find({ region: region }).sort({ createdAt: -1 }).lean().limit(5);
+        const places = await Place.find({ region: region }).sort({ title: 1 }).lean().limit(5);
+
         const likeBookMark = places.map(place => ({
             ...place,
             userLiked: Array.isArray(place.likes) && userId

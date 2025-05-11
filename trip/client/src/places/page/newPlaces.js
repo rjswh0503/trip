@@ -79,29 +79,82 @@ const NewPlaces = () => {
     }
 
     return (
-        <div className="container max-w-screen-2xl mx-auto p-4 ">
-            <h2 className="text-2xl font-black mt-[150px]">여행지 등록</h2>
-            <form className="grid gap-6 mb-6 md:grid-cols-2 mt-10 border border-gray-300 rounded-lg p-4" onSubmit={handleSubmit}>
-
-                <input name="title" placeholder="제목" value={formData.title} onChange={onChange} required />
-                <textarea name="description" placeholder="설명" value={formData.description} onChange={onChange} required />
-                <input name="category" placeholder="카테고리" value={formData.category} onChange={onChange} required />
-                <input name="region" placeholder="지역" value={formData.region} onChange={onChange} required />
-                <input name="address" placeholder="주소" value={formData.address} onChange={onChange} required />
-                <input type="file" name="images"  multiple onChange={handleImageChange} required />
+        <div className="container max-w-screen-xl mx-auto px-4 py-20">
+            <h2 className="text-3xl font-bold mb-10">여행지 등록</h2>
+            <form
+                className="grid gap-6 md:grid-cols-2 bg-white border border-gray-300 rounded-xl shadow-sm p-8"
+                onSubmit={handleSubmit}
+            >
+                <input
+                    name="title"
+                    placeholder="제목"
+                    value={formData.title}
+                    onChange={onChange}
+                    required
+                    className="input-style"
+                />
+                <input
+                    name="category"
+                    placeholder="카테고리"
+                    value={formData.category}
+                    onChange={onChange}
+                    required
+                    className="input-style"
+                />
+                <input
+                    name="region"
+                    placeholder="지역"
+                    value={formData.region}
+                    onChange={onChange}
+                    required
+                    className="input-style"
+                />
+                <input
+                    name="address"
+                    placeholder="주소"
+                    value={formData.address}
+                    onChange={onChange}
+                    required
+                    className="input-style"
+                />
+                <textarea
+                    name="description"
+                    placeholder="설명"
+                    value={formData.description}
+                    onChange={onChange}
+                    required
+                    rows={4}
+                    className="input-style md:col-span-2"
+                />
+                <input
+                    type="file"
+                    name="images"
+                    multiple
+                    onChange={handleImageChange}
+                    required
+                    className="md:col-span-2"
+                />
                 {previewUrl.length > 0 && (
-                    <div className="">
+                    <div className="md:col-span-2 grid grid-cols-2 sm:grid-cols-3 gap-4 mt-4">
                         {previewUrl.map((url, idx) => (
-                            <img key={idx} src={url} alt={`미리보기-${idx}`} className="image-preview" />
-
+                            <img
+                                key={idx}
+                                src={url}
+                                alt={`미리보기-${idx}`}
+                                className="w-full h-48 object-cover rounded-lg border border-gray-300"
+                            />
                         ))}
                     </div>
                 )}
-                <button className="mt-10 bg-blue-400 px-4 py-2 text-white font-bold rounded-lg" type="submit">등록하기</button>
+                <button
+                    type="submit"
+                    className="md:col-span-2 mt-6 bg-blue-500 hover:bg-blue-600 transition text-white font-semibold py-3 rounded-lg"
+                >
+                    등록하기
+                </button>
             </form>
-
-
         </div>
+
     )
 
 }

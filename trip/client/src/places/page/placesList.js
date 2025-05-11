@@ -149,7 +149,7 @@ const PlacesList = () => {
 
 
     return (
-        <div>
+        <div className='container mx-auto'>
             <h2 className="text-2xl font-black my-10 px-6">여행지</h2>
             <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 px-4'>
                 {currentItem.map((place) => (
