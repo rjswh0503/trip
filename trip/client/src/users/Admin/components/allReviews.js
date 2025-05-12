@@ -3,13 +3,17 @@ import { useAuth } from '../../../shared/context/auth-context';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import DeleteButton from './reviewDelete';
-
+import { Pagination } from 'flowbite-react';
 
 const AllReviews = () => {
     const { token } = useAuth();
     const [reviews, setReviews] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 5;
+    const lastItem = currentPage * itemsPerPage;
+    const firstItem = lastItem - itemsPerPage;
+    const currentItem = reviews.slice(firstItem, lastItem)
 
-    
 
     const fetchData = useCallback(async () => {
         try {
@@ -23,7 +27,7 @@ const AllReviews = () => {
         } catch (e) {
             console.error(e);
         }
-    },[token]);
+    }, [token]);
 
     useEffect(() => {
         fetchData();
@@ -48,7 +52,7 @@ const AllReviews = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {reviews.map((review, idx) => (
+                    {currentItem.map((review, idx) => (
                         <tr key={review._id} className='hover:bg-gray-50 border-b-2'>
                             <td className='p-3'>{idx + 1}</td>
                             <td className='p-3 text-blue-500 hover:underline cursor-pointer'><Link to={`/places/${review.places[0]._id}/review/${review._id}`}>{review.title}</Link></td>
@@ -70,6 +74,14 @@ const AllReviews = () => {
                     ))}
                 </tbody>
             </table>
+            <div className='flex justify-center mt-10'>
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={Math.ceil(reviews.length / itemsPerPage)}
+                    onPageChange={(page) => setCurrentPage(page)}
+                    showIcons
+                />
+            </div>
 
         </div>
     )

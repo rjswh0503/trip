@@ -146,8 +146,8 @@ const deleteComment = async (req, res, next) => {
         const error = new HttpError('해당하는 유저의 덧글이 없습니다.', 404);
         return next(error);
     }
-    if(comment.author._id.toString() !== req.userData.userId){
-        const error = new HttpError('삭제할 권한이 없습니다.', 401);
+    if(comment.author._id.toString() !== req.userData.userId && req.userData.role !== 'admin'){
+        const error = new HttpError('삭제할 권한이 없습니다.', 403);
         return next(error);
     }
 

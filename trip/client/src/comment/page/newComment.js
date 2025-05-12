@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 
-import './comment.css';
+
 import Swal from 'sweetalert2';
 
 
@@ -30,7 +30,7 @@ const NewComment = ({ onAddComment }) => {
             setFormData({ content: '' });
             alert('댓글작성 성공!');
         } catch (e) {
-            if(e.response && e.response.status === 401){
+            if (e.response && e.response.status === 401) {
                 Swal.fire({
                     icon: 'warning',
                     title: '로그인이 필요합니다.',
@@ -50,8 +50,11 @@ const NewComment = ({ onAddComment }) => {
 
 
     return (
-        <div className="comment-form-wrapper">
-            <form className="comment-form" onSubmit={NewCommentHandler}>
+        <div className="mt-6">
+            <form
+                className="flex items-center gap-2"
+                onSubmit={NewCommentHandler}
+            >
                 <input
                     type="text"
                     name="content"
@@ -59,13 +62,17 @@ const NewComment = ({ onAddComment }) => {
                     onChange={onChange}
                     value={formData.content}
                     required
-                    className="comment-input"
+                    className="flex-grow border border-gray-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
-                <button type="submit" className="comment-submit-button">
+                <button
+                    type="submit"
+                    className="bg-blue-500 text-white text-sm px-4 py-2 rounded-lg hover:bg-blue-600 transition"
+                >
                     덧글 작성
                 </button>
             </form>
         </div>
+
 
     )
 

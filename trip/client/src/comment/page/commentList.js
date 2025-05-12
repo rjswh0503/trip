@@ -9,30 +9,42 @@ const CommentList = ({ comments, onDelete }) => {
 
 
     return (
-        <div className="comment-section">
-            <h1 className="comment-title">댓글</h1>
+        <div className="mt-6">
+            <h2 className="text-lg font-bold mb-4">💬 댓글</h2>
 
             {comments.length > 0 ? (
                 comments.map((comment) => (
-                    <div key={comment._id} className="comment-item">
-                        <p className="comment-content">
-                            <strong style={{color:'black'}} className="comment-author"><Link to={`/${comment.author._id}/mypage`} style={{ textDecoration: 'none' }}>{comment.author?.name}</Link></strong>
-                            <span className="comment-text">: {comment.content}</span>
+                    <div
+                        key={comment._id}
+                        className="bg-gray-50 p-4 rounded-md shadow-sm mb-3"
+                    >
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <Link
+                                    to={`/${comment.author._id}/mypage`}
+                                    className="text-sm font-semibold text-blue-600 hover:underline"
+                                >
+                                    {comment.author?.name}
+                                </Link>
+                                <span className="ml-2 text-sm text-gray-800">{comment.content}</span>
+                            </div>
+
                             {user?.userId === comment.author._id && (
-                                <span
-                                className="comment-delete-icon"
-                                onClick={() => onDelete(comment._id)}
-                            >
-                                <MdDelete />
-                            </span>
+                                <button
+                                    onClick={() => onDelete(comment._id)}
+                                    className="text-red-500 hover:text-red-700 p-1"
+                                >
+                                    <MdDelete size={18} />
+                                </button>
                             )}
-                        </p>
+                        </div>
                     </div>
                 ))
             ) : (
-                <p className="no-comment-text">덧글이 없습니다.</p>
+                <p className="text-sm text-gray-400 italic">덧글이 없습니다.</p>
             )}
         </div>
+
     );
 };
 
