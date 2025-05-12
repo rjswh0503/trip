@@ -25,13 +25,13 @@ const Top3Places = () => {
                 setTop5(response.data.top5Places);
                 // 서버에서 받아온 데이터로 좋아요 상태 저장
                 const likedPlaces = {};
-                response.data.top5Places.forEach(place => {
+                response.data.top5Places?.forEach(place => {
                     likedPlaces[place._id] = place.userLiked; // 여행지 ID를 키로, 좋아요 여부를 값으로 저장
                 });
                 setLikedPlaces(likedPlaces);
                 // 서버에서 받아온 데이터로 북마크 상태 저장
                 const bookmarkedPlaces = {};
-                response.data.top5Places.forEach(place => {
+                response.data.top5Places?.forEach(place => {
                     bookmarkedPlaces[place._id] = place.userBookmarked; // 여행지 ID를 키로, 북마크 여부를 값으로 저장
                 });
                 setBookMarkPlaces(bookmarkedPlaces)

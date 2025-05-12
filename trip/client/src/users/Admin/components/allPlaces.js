@@ -5,16 +5,17 @@ import axios from 'axios';
 import { useAuth } from '../../../shared/context/auth-context';
 import { Pagination } from 'flowbite-react';
 
+
 const AllPlaces = () => {
 
     const { token } = useAuth();
+    
     const [places, setPlaces] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-        const itemsPerPage = 5;
-    
-        const lastItem = currentPage * itemsPerPage;
-        const firstItem = lastItem - itemsPerPage;
-        const currentItem = places.slice(firstItem,lastItem)
+    const itemsPerPage = 5;
+    const lastItem = currentPage * itemsPerPage;
+    const firstItem = lastItem - itemsPerPage;
+    const currentItem = places.slice(firstItem, lastItem)
 
     useEffect(() => {
 
@@ -34,7 +35,23 @@ const AllPlaces = () => {
         fetchData();
     }, [token]);
 
+    const handleDelete = async (placeId) => {
+        try {
+            const response = await axios.delete(`http://localhost:5000/api/places/${placeId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
+
+            setPlaces(prev => prev.filter(place => place._id !== placeId));
+            alert('삭제되었습니다.');
+            console.log('삭제성공', response);
+        } catch (e) {
+            alert('삭제 실패');
+            console.log('삭제실패:', e);
+        }
+    }
 
     return (
         <div className='mt-8 mx-auto'>
@@ -55,9 +72,9 @@ const AllPlaces = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {currentItem.map((place, idx) => (
+                    {currentItem?.map((place, idx) => (
                         <tr key={place._id} className='hover:bg-gray-50 border-b-2'>
-                            <td className='p-2'>{idx + 1}</td>
+                            <td className='p-2'>{idx + 1 + (currentPage -1 ) * itemsPerPage}</td>
                             <td className='p-2'><img className='w-16 h-16 rounded-md' src={place.images[0]} alt='여행지 이미지' /></td>
                             <td className='p-2 text-blue-500 hover:underline cursor-pointer'><Link to={`/places/${place._id}`}>{place.title}</Link></td>
                             <td className='p-2'>{place.view}</td>
@@ -65,7 +82,7 @@ const AllPlaces = () => {
                             <td className='p-2'>{place.likes.length}</td>
                             <td className='p-2'>{place.reviews.length}</td>
                             <td className='p-2'>
-                                <button className='text-red-600 font-light hover:underline'>삭제</button>
+                                <button onClick={() => handleDelete(place._id)} className='text-red-600 font-light hover:underline'>삭제</button>
                             </td>
                         </tr>
                     ))}

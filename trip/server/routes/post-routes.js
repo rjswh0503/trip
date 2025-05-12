@@ -4,6 +4,7 @@ const checkAuth = require('../middleware/auth-middleware');
 
 const upload = require('../middleware/uploadPostImg');
 const postController = require('../controller/posts-controller');
+const checkAdmin = require('../middleware/check-admin');
 const router = express.Router();
 
 
@@ -51,7 +52,7 @@ router.patch('/:id/edit',
 
 
 // 게시글 삭제 router
-router.delete('/:id', postController.deletePost);
+router.delete('/:id', checkAdmin, postController.deletePost);
 
 
 // 게시글 댓글 리스트 조회

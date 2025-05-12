@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
+import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
-import Swal from 'sweetalert2';
-
 import { Card, Button, Label, TextInput } from 'flowbite-react';
 
 
@@ -33,37 +31,14 @@ const Login = () => {
                 password: ''
             });
             const token = responseData.data.token;
-            console.log(token);
             localStorage.setItem('token', token);
             setToken(token);
             setIsLoggedIn(true);
-            await Swal.fire({
-                title: '로그인 성공',
-                icon: 'success',
-                confirmButtonText: '확인',
-                allowOutsideClick: false,
-                text: '로그인 성공!!!',
-                timer: 2000,
-                timerProgressBar: true,
-            });
             Navigate('/');
         } catch (e) {
-
-            Swal.fire({
-                title: '로그인 실패',
-                icon: 'error',
-                confirmButtonText: '확인',
-                text: '이메일이 틀렸거나, 없는 이메일 입니다.',
-                timer: 2000,
-                timerProgressBar: true,
-            });
-
+            console.error('로그인 실패',e);
         }
     }
-
-
-
-
 
     const onChange = (e) => {
         setFormData({

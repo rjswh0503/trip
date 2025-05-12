@@ -76,7 +76,7 @@ const PlacesByReview = async (req, res, next) => {
     const placeId = req.params.placeId;
 
 
-    
+
     let reviews;
 
     try {
@@ -129,7 +129,7 @@ const getReviewById = async (req, res, next) => {
 
 const updateReview = async (req, res, next) => {
     const { title, content } = req.body;
-    
+
     const reviewId = req.params.reviewId;
 
     let updateReview;
@@ -177,45 +177,39 @@ const deleteReview = async (req, res, next) => {
     try {
         review = await Review.findById(reviewId).populate('author');
         place = await Place.findById(placeId);
-        
     } catch (e) {
         console.error(e);
-        return next(new HttpError('리뷰 삭제 오류', 500));
+        return next(new HttpError('리뷰 삭제 중 서버 오류가 발생했습니다.', 500)); // 내부 서버 오류
     }
 
     if (!review || !place) {
-        return next(new HttpError('해당 장소의 리뷰가 없습니다.', 404));
+        return next(new HttpError('해당 장소 또는 리뷰를 찾을 수 없습니다.', 404)); // 리소스 없음
     }
 
-    if (review.author._id.toString() !== req.userData.userId) {
-        return next(new HttpError('삭제 권한이 없습니다.', 401));
+    // 작성자도 아니고, 관리자도 아니라면 권한 없음
+    if (review.author._id.toString() !== req.userData.userId && req.userData.role !== 'admin') {
+        return next(new HttpError('삭제 권한이 없습니다.', 403)); // 권한 없음
     }
 
     const session = await mongoose.startSession();
     session.startTransaction();
+
     try {
-        await review.deleteOne({ session });
-
-        
-
-        place.reviews.pull(review._id);
+        await review.deleteOne({ session }); // 리뷰 삭제
+        place.reviews.pull(review._id);      // 장소에서 리뷰 참조 제거
         await place.save({ session });
 
         await session.commitTransaction();
     } catch (e) {
         console.error(e);
         await session.abortTransaction();
-        return next(new HttpError('삭제 실패', 500));
+        return next(new HttpError('리뷰 삭제 중 오류가 발생했습니다.', 500)); // 트랜잭션 실패
     } finally {
         session.endSession();
     }
 
     res.status(200).json({ message: '삭제 성공' });
 };
-
-
-
-
 
 
 
@@ -296,15 +290,15 @@ const toggleRecommend = async (req, res, next) => {
 
 // 추천 많이 받은 인기 리뷰 3개
 
-const getTopReviews = async (req,res,next) => {
+const getTopReviews = async (req, res, next) => {
     try {
         const topReviews = await Review.find().sort({
-            recommend: -1, createdAt: -1 
+            recommend: -1, createdAt: -1
         }).limit(3).populate('places', 'name region').populate('author', 'name image');
         res.status(200).json({
             topReviews
         })
-    } catch(e){
+    } catch (e) {
         console.error(e);
         const error = new HttpError('인기 리뷰 조회 실패', 500);
         return next(error);

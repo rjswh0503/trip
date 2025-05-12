@@ -27,6 +27,9 @@ const LatestPost = () => {
     // [빈배열]은 처음 한 번만 랜더링 함.
 
 
+    
+
+
     return (
         <div className="px-6 max-w-7xl mx-auto">
             <div className="flex gap-1 items-center justify-between mb-20">

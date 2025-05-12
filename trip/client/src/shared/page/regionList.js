@@ -30,7 +30,7 @@ const RegionList = () => {
                 console.log(response.data.places);
                 const likedPlaces = {};
                 const bookmarkedPlaces = {};
-                response.data.places.forEach(place => {
+                response.data.places?.forEach(place => {
                     likedPlaces[place._id] = place.userLiked;
                     bookmarkedPlaces[place._id] = place.userBookmarked;
                 });
@@ -141,7 +141,7 @@ const RegionList = () => {
                     <p className='text-sm text-gray-400 font-light hover:underline'><Link to="/places/list">전체 보기</Link></p>
                 </div>
                 <div className="flex gap-4 my-10">
-                    {regions.map(regionName => (
+                    {regions?.map(regionName => (
                         <button className='text-xl font-light bg-white border border-gray-200 shadow-md hover:shadow-xl p-3 rounded-xl md:' key={regionName} onClick={() => handleSelectRegion(regionName)}>
                             {regionName}
                         </button>

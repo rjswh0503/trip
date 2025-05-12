@@ -180,9 +180,9 @@ const deletePost = async (req, res, next) => {
         return next(error);
     }
 
-    if (post.author._id.toString() !== req.userData.userId) {
+    if (post.author._id.toString() !== req.userData.userId && req.userData.role !== 'admin') {
 
-        const error = new HttpError('삭제할 권한이 없습니다.', 401);
+        const error = new HttpError('삭제할 권한이 없습니다.', 403);
         return next(error);
 
     }

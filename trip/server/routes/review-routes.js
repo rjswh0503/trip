@@ -1,6 +1,7 @@
 const express = require('express');
 const checkAuth = require('../middleware/auth-middleware');
 const reviewController = require('../controller/review-controller');
+const checkAdmin = require('../middleware/check-admin');
 
 const router = express.Router();
 
@@ -26,7 +27,7 @@ router.post('/:placeId/review/add', reviewController.addReview);
 router.patch('/:placeId/review/:reviewId/edit', reviewController.updateReview);
 
 //여행 리뷰 삭제
-router.delete('/:placeId/review/:reviewId/delete', reviewController.deleteReview);
+router.delete('/:placeId/review/:reviewId/delete',checkAdmin, reviewController.deleteReview);
 
 
 //여행 리뷰 좋아요

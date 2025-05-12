@@ -9,6 +9,7 @@ const postRoutes = require('./routes/post-routes');
 const commentRoutes = require('./routes/comment-routes');
 const placesRoutes = require('./routes/places-routes');
 const reviewRoutes = require('./routes/review-routes');
+const cors = require('cors');
 
 const app = express();
 const port = 5000;
@@ -18,13 +19,14 @@ const port = 5000;
 
 app.use(bodyParser.json());
 
+app.use(cors({
+    origin: 'http://localhost:3000',
+    methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-COntrol-Allow-Headers', 'Origin, X-Request-With, Content-Type, Accept, Authorization');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
-    next();
-})
+
+
 
 
 app.use('/api/users', userRoutes);

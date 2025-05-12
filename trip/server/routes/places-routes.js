@@ -4,7 +4,7 @@ const placesController = require('../controller/places-controller');
 const checkAuth = require('../middleware/auth-middleware');
 const upload = require('../middleware/uploadPlacesImg');
 const router = express.Router();
-
+const checkAdmin = require('../middleware/check-admin');
 
 
 router.use(checkAuth);
@@ -58,7 +58,7 @@ router.patch('/:id',
 
 
 //여행지 삭제
-router.delete('/:id', placesController.deletePlace);
+router.delete('/:id', checkAdmin, placesController.deletePlace);
 
 
 

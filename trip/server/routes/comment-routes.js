@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 const checkAuth = require('../middleware/auth-middleware');
 const router = express.Router();
 const commentController = require('../controller/comment-controller');
+const checkAdmin = require('../middleware/check-admin');
 
 
 
@@ -37,7 +38,7 @@ router.patch('/:id', commentController.updateComment)
 
 
 // 덧글 삭제 router
-router.delete('/:id', commentController.deleteComment);
+router.delete('/:id', checkAdmin, commentController.deleteComment);
 
 
 

@@ -1,31 +1,33 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '../../../shared/context/auth-context';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import DeleteButton from './reviewDelete';
 
 
 const AllReviews = () => {
     const { token } = useAuth();
-    
     const [reviews, setReviews] = useState([]);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/api/users/admin/allReviews', {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                })
-                setReviews(response.data.reviews);
-                console.log(response.data.reviews);
-            } catch (e) {
-                console.error(e);
+    
 
-            }
+    const fetchData = useCallback(async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/users/admin/allReviews', {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setReviews(response.data.reviews);
+            console.log(response.data.reviews);
+        } catch (e) {
+            console.error(e);
         }
+    },[token]);
+
+    useEffect(() => {
         fetchData();
-    }, [token]);
+    }, [fetchData]);
 
     return (
         <div className='mt-8'>
@@ -42,7 +44,7 @@ const AllReviews = () => {
                         <th className='p-3 text-left'>추천수</th>
                         <th className='p-3 text-left'>작성 일</th>
                         <th className='text-left'>관리</th>
-                        
+
                     </tr>
                 </thead>
                 <tbody>
@@ -57,7 +59,13 @@ const AllReviews = () => {
                             <td className='p-3 text-blue-500 hover:underline cursor-pointer'><Link to={`/${review.author?._id}/mypage`}>{review.author?.name}</Link></td>
                             <td className='p-3'>{review.recommend.length}</td>
                             <td className='p-3'>{new Date(review.createdAt).toLocaleDateString()}</td>
-                            <td className='text-red-400 hover:underline cursor-pointer'>삭제</td>
+                            <td className='text-red-400 hover:underline cursor-pointer'>
+                                <DeleteButton
+                                    reviewId={review._id}
+                                    placeId={review.places[0]._id}
+                                    onDelete={fetchData}
+                                />
+                            </td>
                         </tr>
                     ))}
                 </tbody>

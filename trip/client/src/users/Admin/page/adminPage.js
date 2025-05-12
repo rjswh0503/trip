@@ -47,7 +47,7 @@ const AdminPage = () => {
             <aside className="col-span-2 justify-center bg-gray-800 text-white p-4 space-y-4">
                 <h2 className="text-2xl font-bold mb-6"><a href='/admin'>Admin</a></h2>
                 <button onClick={() => setPage('dashboard')} className="block w-full text-left hover:text-blue-300">대시보드</button>
-                <button onClick={() => setPage('users')} className="block w-full text-left hover:text-blue-300">유저 관리</button>
+                <button onClick={() => setPage('users')} className="block w-full text-left hover:text-blue-300">전체유저 조회</button>
                 <button onClick={() => setPage('community')} className="block w-full text-left hover:text-blue-300">커뮤니티 관리</button>
                 <button onClick={() => setPage('reviews')} className="block w-full text-left hover:text-blue-300">리뷰 관리</button>
                 <button onClick={() => setPage('places')} className='block w-full text-left hover:text-blue-300'>여행지 관리</button>
@@ -77,7 +77,7 @@ const AdminPage = () => {
                 )}
                 {page === 'users' && (
                     <div>
-                        <UserManagement />
+                        <UserManagement userCount={data.userCount} />
                     </div>
                 )}
                 {page === 'community' && (
