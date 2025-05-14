@@ -115,7 +115,7 @@ const login = async (req, res, next) => {
 
 
 
-    let IsValidPassword = false;
+    let IsValidPassword;
 
     try {
         IsValidPassword = await bcrypt.compare(password, existingUser.password);
@@ -154,11 +154,9 @@ const login = async (req, res, next) => {
             email: existingUser.email,
             image: existingUser.image,
             role: existingUser.role,
-            token: token
+            token: token,
         }
     );
-
-    console.log(`로그인한 ${existingUser.name}의 토큰은 : [` + token + ']');
 
 }
 
@@ -545,5 +543,3 @@ exports.getAllPlaces = getAllPlaces;
 exports.getAllReviews = getAllReviews;
 exports.getAllPosts = getAllPosts;
 exports.getAllComment = getAllComment;
-
-

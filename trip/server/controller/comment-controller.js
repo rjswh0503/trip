@@ -13,7 +13,7 @@ const { default: mongoose } = require('mongoose');
 const addComment = async (req, res, next) => {
     const { postId } = req.params;
     const { content } = req.body;
-    const userId = req.userData.userId;
+    const userId = req.userData?.userId;
 
     const createComment = new Comment({
         content,

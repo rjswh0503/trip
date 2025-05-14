@@ -36,7 +36,7 @@ const Login = () => {
             setIsLoggedIn(true);
             Navigate('/');
         } catch (e) {
-            console.error('로그인 실패',e);
+            console.error('로그인 실패', e);
         }
     }
 

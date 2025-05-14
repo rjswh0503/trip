@@ -57,7 +57,7 @@ const MyComment = () => {
                                     <tr key={comment._id} className='hover:bg-gray-50 border-b-2'>
                                         <td className='p-3'>{idx + 1}</td>
                                         <td className='p-3'>{comment.content}</td>
-                                        <td className='p-3 cursor-pointer text-blue-400 hover:underline'><Link to={`/posts/${comment.post._id}`}>{comment.post?.title}</Link></td>
+                                        <td className='p-3 cursor-pointer text-blue-400 hover:underline'><Link to={`/posts/${comment.post?._id}`}>{comment.post?.title}</Link></td>
                                     </tr>
                                 ))}
                         </tbody>

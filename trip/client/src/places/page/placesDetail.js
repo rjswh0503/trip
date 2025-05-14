@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Map from '../components/map';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 
 import { useAuth } from '../../shared/context/auth-context';
 
@@ -10,7 +10,6 @@ import { useAuth } from '../../shared/context/auth-context';
 const PlacesDetail = () => {
     const { user } = useAuth();
     const { id } = useParams();
-    const Navigate = useNavigate();
     const [place, setPlace] = useState(null);
 
 
@@ -25,21 +24,7 @@ const PlacesDetail = () => {
 
     if (!place) return <p className="loading">불러오는 중...</p>;
 
-    const handleDelete = async () => {
-        try {
-            const response = await axios.delete(`http://localhost:5000/api/places/${id}`, {
-                
-            });
-
-            console.log('삭제성공', response);
-            alert('삭제되었습니다.');
-            Navigate('/places/list');
-        } catch (e) {
-            alert('삭제 실패');
-            console.log('삭제실패:', e);
-        }
-    }
-
+    
 
     return (
         <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-md overflow-hidden mt-10 mb-10">
@@ -65,11 +50,6 @@ const PlacesDetail = () => {
                         <span>👁 {place.view}</span>
                     </div>
                 </div>
-                {user?.role === 'admin' && (
-                    <div className='flex justify-end my-4'>
-                        <button className='w-44 bg-red-500 hover:bg-red-600 font-bold text-white p-2 rounded-md' onClick={handleDelete}>삭제</button>
-                    </div>
-                )}
                 {user?.role === 'User' && (
                     <div className='flex justify-start my-4'>
                         <button className='w-44 bg-blue-500 hover:bg-blue-600 text-white font-bold p-2 rounded-md'><Link to={`/places/${id}/review/add`}>리뷰작성</Link></button>

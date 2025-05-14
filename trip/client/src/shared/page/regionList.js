@@ -10,11 +10,11 @@ import TravelCard from '../components/UI/travelCard';
 
 const RegionList = () => {
     const { token } = useAuth();
-    const [region, setRegion] = useState('전체');
+    const [region, setRegion] = useState('');
     const [places, setPlaces] = useState([]);
     const [likedPlaces, setLikedPlaces] = useState({});
     const [bookmarkedPlaces, setBookMarkPlaces] = useState({});
-    const regions = ['서울', '부산', '인천', '경주', '제주', '전주', '속초'];
+    const regions = ['서울', '부산', '인천', '경주', '제주', '전주'];
 
     useEffect(() => {
         if (!region) return;
