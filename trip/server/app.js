@@ -18,7 +18,7 @@ const PORT = process.env.PORT;
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: 'https://trip-ojvx.onrender.com',  // 프론트 주소
+    origin: 'https://trip-ojvx.onrender.com', 
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true  // <- 중요!
@@ -51,7 +51,7 @@ app.use((error, req, res, next) => {
 
 
 
-mongoose.connect(process.env.MONGO)
+mongoose.connect(process.env.MONGO_URL)
     .then(() => {
         app.listen(PORT, () => {
             console.log(`포트번호${PORT}에서 서버가 실행중....`)
