@@ -8,7 +8,7 @@ const UserUpdate = () => {
 
     const { token } = useAuth();
     const { id } = useParams();
-    const  navigate = useNavigate();
+    const navigate = useNavigate();
     const [user, setUser] = useState({
         name: '',
         password: '',
@@ -27,7 +27,7 @@ const UserUpdate = () => {
                 setUser({
                     name: response.data.user.name,
                     email: response.data.user.email,
-                    
+
                 })
 
 
@@ -67,17 +67,41 @@ const UserUpdate = () => {
 
 
     return (
-        <div>
-            <h2>회원정보 수정</h2>
-            <form onSubmit={handleSubmit}>
-                <label>닉네임</label>
-                <input type='text' name='name' value={user.name} onChange={handleChange} />
-                <label>비밀번호</label>
-                <input type='password' name='password' onChange={handleChange} />
-                <button type='submit'>수정</button>
-            </form>
+        <div className="max-w-md mx-auto mt-10 bg-white shadow-md rounded-lg p-8">
+            <h2 className="text-2xl font-bold mb-6 text-center">회원정보 수정</h2>
+            <form onSubmit={handleSubmit} className="space-y-6">
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">닉네임</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={user.name}
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="새 닉네임 입력"
+                    />
+                </div>
 
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">비밀번호</label>
+                    <input
+                        type="password"
+                        name="password"
+                        onChange={handleChange}
+                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="새 비밀번호 입력"
+                    />
+                </div>
+
+                <button
+                    type="submit"
+                    className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700 transition"
+                >
+                    수정
+                </button>
+            </form>
         </div>
+
     )
 
 }

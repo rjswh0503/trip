@@ -61,7 +61,7 @@ router.get('/:id/reviews', userController.getUserbyId);
 //내가 찜한 여행지 router
 router.get('/:id/bookMark', userController.getBookMarks);
 
-//내가 좋아요 누른 게시글
+//좋아요 한 여행지 
 
 router.get('/:id/likes', userController.getLikes);
 

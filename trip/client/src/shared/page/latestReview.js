@@ -38,7 +38,7 @@ const LatestReview = () => {
                     {reviews && reviews.map(review => (
                         <div
                             key={review._id}
-                            className='max-w-sm border border-gray-300 rounded-md shadow-sm hover:shadow-lg p-6 flex flex-col justify-between min-h-[250px]'
+                            className='max-w-sm border border-gray-300 rounded-md shadow-sm hover:shadow-lg p-6 flex flex-col justify-between min-h-[280px]'
                         >
                             <div className='flex gap-2'>
                                 <Avatar alt="유저프로필" img={review.author?.image} rounded size="sm" />

@@ -30,7 +30,7 @@ router.patch('/:placeId/review/:reviewId/edit', reviewController.updateReview);
 router.delete('/:placeId/review/:reviewId/delete',checkAdmin, reviewController.deleteReview);
 
 
-//여행 리뷰 좋아요
+//여행 리뷰 추천
 router.post('/:placeId/review/:reviewId/recommend', reviewController.toggleRecommend);
 
 

@@ -31,12 +31,6 @@ router.post('/:postId',
 
 
 
-
-// 덧글 수정 router
-
-router.patch('/:id', commentController.updateComment)
-
-
 // 덧글 삭제 router
 router.delete('/:id', checkAdmin, commentController.deleteComment);
 
