@@ -12,6 +12,8 @@ import LatestReview from "./latestReview";
 
 const Main = () => {
 
+    console.log('API URL:', process.env.REACT_APP_API_URL);
+
     return (
         <div className="container mx-auto">
             <div>
