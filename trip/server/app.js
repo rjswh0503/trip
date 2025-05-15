@@ -12,17 +12,16 @@ const reviewRoutes = require('./routes/review-routes');
 const cors = require('cors');
 
 const app = express();
-const port = 5000;
 
-
-
+const PORT = process.env.PORT;
 
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: 'https://trip-ojvx.onrender.com',  // 프론트 주소
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true  // <- 중요!
 }));
 
 
@@ -52,10 +51,10 @@ app.use((error, req, res, next) => {
 
 
 
-mongoose.connect('mongodb+srv://shin:153123@cluster0.ydxf4.mongodb.net/trip?retryWrites=true&w=majority&appName=Cluster0')
+mongoose.connect(process.env.MONGO)
     .then(() => {
-        app.listen(port, (req, res) => {
-            console.log(`포트번호${port}에서 서버가 실행중....`)
+        app.listen(PORT, () => {
+            console.log(`포트번호${PORT}에서 서버가 실행중....`)
         });
     }).catch((err) => {
         console.log(err);
