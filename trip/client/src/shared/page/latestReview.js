@@ -16,7 +16,7 @@ const LatestReview = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/review/place/popular');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/review/place/popular`);
 
                 setReviews(response.data.topReviews);
                 console.log(response.data.topReviews)
