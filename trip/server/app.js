@@ -22,7 +22,7 @@ app.use(cors({
     origin: 'https://trip-client.onrender.com', 
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true  // <- 중요!
+    credentials: true 
 }));
 
 
