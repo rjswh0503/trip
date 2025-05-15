@@ -19,7 +19,7 @@ const PORT = process.env.PORT;
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: 'https://trip-ojvx.onrender.com', 
+    origin: 'https://trip-client.onrender.com', 
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true  // <- 중요!

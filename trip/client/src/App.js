@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 
+import { ToastContainer } from 'react-toastify';
+import axios from 'axios';
 import { AuthProvider } from './shared/context/auth-context';
 import Register from './users/page/register';
 import Login from './users/page/login';
@@ -32,6 +33,11 @@ import AdminPage from './users/Admin/page/adminPage';
 
 
 const App = () => {
+
+
+
+  axios.defaults.baseURL = process.env.REACT_APP_API_URL;
+  axios.defaults.withCredentials = true;
 
   return (
     <Router>
