@@ -51,7 +51,7 @@ app.use((error, req, res, next) => {
 
 
 
-mongoose.connect(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO)
     .then(() => {
         app.listen(PORT, () => {
             console.log(`포트번호${PORT}에서 서버가 실행중....`)
