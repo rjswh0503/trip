@@ -23,7 +23,7 @@ const MyPost = () => {
         if (!token) return;
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/users/${id}/posts`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${id}/posts`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

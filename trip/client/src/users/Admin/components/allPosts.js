@@ -17,7 +17,7 @@ const AllPosts = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/users/admin/allPosts', {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/admin/allPosts`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -36,7 +36,7 @@ const AllPosts = () => {
     const handleDelete = async (postsId) => {
 
         try {
-            const response = await axios.delete(`http://localhost:5000/api/posts/${postsId}`, {
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/${postsId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 },

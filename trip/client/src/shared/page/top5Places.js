@@ -53,7 +53,7 @@ const Top3Places = () => {
 
         try {
             const response = await axios.post(
-                `http://localhost:5000/api/places/${placeId}/like`,
+                `${process.env.REACT_APP_API_URL}/api/places/${placeId}/like`,
                 {},
                 {
                     headers: {
@@ -95,7 +95,7 @@ const Top3Places = () => {
             });
         }
         try {
-            const response = await axios.post(`http://localhost:5000/api/places/${placeId}/bookMark`, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/places/${placeId}/bookMark`, {
 
             },
                 {

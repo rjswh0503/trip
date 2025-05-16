@@ -22,7 +22,7 @@ const MyComment = () => {
         if (!token) return;
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/users/${id}/comments`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/${id}/comments`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

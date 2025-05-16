@@ -51,7 +51,7 @@ const UserUpdate = () => {
         e.preventDefault();
 
         try {
-            await axios.patch(`http://localhost:5000/api/users/${id}/edit`, user, {
+            await axios.patch(`${process.env.REACT_APP_API_URL}/api/users/${id}/edit`, user, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

@@ -21,7 +21,7 @@ const AllPlaces = () => {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/users/admin/allPlaces', {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/users/admin/allPlaces`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -37,7 +37,7 @@ const AllPlaces = () => {
 
     const handleDelete = async (placeId) => {
         try {
-            const response = await axios.delete(`http://localhost:5000/api/places/${placeId}`, {
+            const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/places/${placeId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

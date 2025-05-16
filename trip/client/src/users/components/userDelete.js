@@ -18,7 +18,7 @@ const UserDelete = () => {
         if (window.confirm('정말 회원탈퇴 하시겠습니까?')) {
             try {
 
-                const response = await axios.delete(`http://localhost:5000/api/users/${id}/delete`, {
+                const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/users/${id}/delete`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     },
