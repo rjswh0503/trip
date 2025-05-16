@@ -17,7 +17,7 @@ const Top3Places = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/places/top5', {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/places/top5`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
