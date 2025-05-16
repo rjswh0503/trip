@@ -14,7 +14,7 @@ const cors = require('cors');
 
 const app = express();
 
-const PORT = process.env.PORT;
+const PORT = 5000;
 
 app.use(bodyParser.json());
 
@@ -52,7 +52,7 @@ app.use((error, req, res, next) => {
 
 
 
-mongoose.createConnection(process.env.MONGO_URL)
+mongoose.connect(process.env.MONGO_URL)
     .then(() => {
         app.listen(PORT, () => {
             console.log(`포트번호${PORT}에서 서버가 실행중....`)
