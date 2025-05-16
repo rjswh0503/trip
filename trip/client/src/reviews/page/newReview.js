@@ -25,7 +25,7 @@ const NewReview = () => {
 
         try {
             await axios.post(
-                `http://localhost:5000/api/review/place/${id}/review/add`,
+                `${process.env.REACT_APP_API_URL}/api/review/place/${id}/review/add`,
                 {
                     title: formData.title,
                     content: formData.content,

@@ -49,7 +49,7 @@ const UpdateReview = () => {
         e.preventDefault();
         try {
             await axios.patch(
-                `http://localhost:5000/api/review/place/${placeId}/review/${reviewId}/edit`, review,
+                `${process.env.REACT_APP_API_URL}/api/review/place/${placeId}/review/${reviewId}/edit`, review,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`

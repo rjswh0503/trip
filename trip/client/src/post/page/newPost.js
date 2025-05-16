@@ -27,7 +27,7 @@ const NewPost = () => {
         data.append('content', formData.content);
         imageFile.forEach(file => data.append('images', file));
         try {
-            const response = await axios.post('http://localhost:5000/api/posts/add',
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/posts/add`,
                 data,
 
                 {

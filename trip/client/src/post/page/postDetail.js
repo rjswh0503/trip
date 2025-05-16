@@ -22,7 +22,7 @@ const PostDetail = () => {
 
     const fetchComments = async () => {
         try {
-            const response = await axios.get(`http://localhost:5000/api/comment/${id}`);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/comment/${id}`);
             setComments(response.data.comments);
         } catch (e) {
             console.log(e)
@@ -32,7 +32,7 @@ const PostDetail = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/posts/${id}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/posts/${id}`);
                 setDetail(response.data.post);
                 console.log(response.data.post);
 
@@ -50,7 +50,7 @@ const PostDetail = () => {
 
     const handleAddComment = async (Data) => {
         try {
-            await axios.post(`http://localhost:5000/api/comment/${id}`,
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/comment/${id}`,
                 Data,
                 {
                     headers: {
@@ -76,7 +76,7 @@ const PostDetail = () => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
 
             try {
-                const response = await axios.delete(`http://localhost:5000/api/posts/${id}`, {
+                const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/posts/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     },
@@ -102,7 +102,7 @@ const PostDetail = () => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
             try {
                 const response = await axios.delete(
-                    `http://localhost:5000/api/comment/${commentId}`,
+                    `${process.env.REACT_APP_API_URL}/api/comment/${commentId}`,
                     {
                         headers: {
                             Authorization: `Bearer ${token}`

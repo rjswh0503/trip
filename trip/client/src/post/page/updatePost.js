@@ -52,7 +52,7 @@ const UpdatePost = () => {
         e.preventDefault();
 
         try {
-            await axios.patch(`http://localhost:5000/api/posts/${id}/edit`, post, {
+            await axios.patch(`${process.env.REACT_APP_API_URL}/api/posts/${id}/edit`, post, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

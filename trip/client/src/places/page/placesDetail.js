@@ -15,7 +15,7 @@ const PlacesDetail = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await axios.get(`http://localhost:5000/api/places/${id}`);
+            const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/places/${id}`);
             setPlace(response.data.places);
 
         };

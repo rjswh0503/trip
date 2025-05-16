@@ -23,7 +23,7 @@ const PostList = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/posts/list');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/posts/list`);
                 setPosts(response.data.postList);
             } catch (e) {
                 console.log(e);
