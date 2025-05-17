@@ -34,7 +34,7 @@ const LatestReview = () => {
         <div>
             <h3 className='text-2xl font-bold'>🔥인기 리뷰</h3>
             <div className='flex justify-center items-center min-h-screen'>
-                <div className='grid grid-cols-1 gap-6'>
+                <div className='grid grid-rows-3 gap-6'>
                     {reviews && reviews.map(review => (
                         <div
                             key={review._id}
