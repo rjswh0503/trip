@@ -21,7 +21,7 @@ const ReviewDetail = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/review/place/${id}/review/${reviewId}`);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/review/place/${id}/review/${reviewId}`);
                 setDetail(response.data.review);
                 console.log(response.data.review);
             } catch (e) {
@@ -88,7 +88,7 @@ const ReviewDetail = () => {
     const deleteHandler = async () => {
         if (window.confirm('정말 삭제하시겠습니까?')) {
             try {
-                const response = await axios.delete(`http://localhost:5000/api/review/place/${id}/review/${reviewId}/delete`, {
+                const response = await axios.delete(`${process.env.REACT_APP_API_URL}/api/review/place/${id}/review/${reviewId}/delete`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     },
