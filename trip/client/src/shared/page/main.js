@@ -27,7 +27,7 @@ const Main = () => {
 
             </div>
             {/* 새 게시글 리스트 limit 3 + 새 리뷰 리스트 limit 3 */}
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-2 sm:grid-rows-1">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-2 md:gap-4 sm:grid-rows-1 sm:gap-4">
                 <div>
                     <NewPostList />
                 </div>
