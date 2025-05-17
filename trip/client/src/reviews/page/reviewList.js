@@ -31,7 +31,10 @@ const PlaceByReview = () => {
     }, [id]);
 
     if (!reviewList || reviewList.length === 0) {
-        return <p className='text-2xl font-black text-center items-center'>해당 장소의 리뷰가 없습니다...</p>
+        return <div className="flex flex-col items-center justify-center h-60 text-gray-500">
+            <div className="text-4xl mb-4">📭</div>
+            <p className="text-lg">작성된 리뷰가 없습니다.</p>
+        </div>
     }
 
 
