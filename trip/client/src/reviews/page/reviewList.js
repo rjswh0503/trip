@@ -31,7 +31,7 @@ const PlaceByReview = () => {
     }, [id]);
 
     if (!reviewList || reviewList.length === 0) {
-        return <p>해당 장소의 리뷰가 없습니다...</p>
+        return <p className='text-2xl font-black text-center'>해당 장소의 리뷰가 없습니다...</p>
     }
 
 
