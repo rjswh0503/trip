@@ -41,7 +41,7 @@ const LatestPost = () => {
                     전체보기
                 </Link>
             </div>
-            <div className="grid grid-rows-1 gap-6">
+            <div className="grid grid-cols-1 gap-6">
                 {latestPost.map((post) => (
                     <div
                         key={post._id}
