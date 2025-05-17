@@ -32,7 +32,7 @@ const LatestPost = () => {
 
     return (
         <div className="px-6 max-w-7xl mx-auto">
-            <div className="flex gap-1 items-center justify-between mb-20">
+            <div className="flex gap-1 items-center justify-between ">
                 <h2 className="text-2xl font-bold">🆕 새로 등록된 게시글</h2>
                 <Link
                     to="/posts/list"
