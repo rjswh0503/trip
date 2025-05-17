@@ -33,7 +33,7 @@ const PlacesList = () => {
                     }
                 });
                 setPlaces(response.data.places);
-                console.log(response.data.places);
+                
                 
                 //여행지 페이지네이션
 
