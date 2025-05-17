@@ -27,7 +27,7 @@ const Main = () => {
 
             </div>
             {/* 새 게시글 리스트 limit 3 + 새 리뷰 리스트 limit 3 */}
-            <div className="flex justify-around mt-10">
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-2 sm:grid-rows-1">
                 <div>
                     <NewPostList />
                 </div>
