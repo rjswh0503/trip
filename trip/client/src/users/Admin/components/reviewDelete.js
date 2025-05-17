@@ -8,7 +8,7 @@ const DeleteButton = ({ reviewId, placeId, onDelete }) => {
 
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5000/api/review/place/${placeId}/review/${reviewId}/delete`, {
+            await axios.delete(`${process.env.REACT_APP_API_URL}/api/review/place/${placeId}/review/${reviewId}/delete`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

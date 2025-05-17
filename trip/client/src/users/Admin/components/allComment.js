@@ -38,7 +38,7 @@ const AllComment = () => {
     const deleteHandler = async (commentId) => {
         try {
             const response = await axios.delete(
-                `http://localhost:5000/api/comment/${commentId}`,
+                `${process.env.REACT_APP_API_URL}/api/comment/${commentId}`,
                 {
                     headers: {
                         Authorization: `Bearer ${token}`
