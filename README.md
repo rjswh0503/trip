@@ -1,3 +1,10 @@
+
+
+# DEMO 
+Demo Site : https://trip-client.onrender.com
+
+
+
 # 여행 커뮤니티 & 여행지 추천 프로젝트 (MERN 스택)
 
 # 프로젝트 개요
@@ -8,7 +15,7 @@
 
 개발 시작 : 2025-03-24 ~ 2025.05.12
 
-Demo Site : https://trip-client.onrender.com
+
 
 # 1. 프로젝트 기술 스택 및 주요 기능
 
