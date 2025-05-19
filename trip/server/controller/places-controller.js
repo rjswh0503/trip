@@ -15,7 +15,7 @@ const { default: mongoose } = require('mongoose');
 
 const addPlaces = async (req, res, next) => {
 
-    const { title, description, category, city, address, region } = req.body;
+    const { title, description, category, address, region } = req.body;
     const imageUrls = req.files?.map(file => file.location) || [];
 
     let coordinates;
@@ -187,7 +187,7 @@ const deletePlace = async (req, res, next) => {
 
 
 
-//여행지 인기 5위 리스트 (북마크 많이 한 여행지)
+//여행지 인기 5위 리스트 (리뷰 많은 여행지)
 
 const getTop5HotPlaces = async (req, res, next) => {
     const userId = req.userData?.userId;

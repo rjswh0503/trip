@@ -19,7 +19,7 @@ const PORT = process.env.PORT || 5000;
 app.use(bodyParser.json());
 
 app.use(cors({
-    origin: 'https://trip-client.onrender.com',
+    origin: 'http://localhost:3000',
     methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
@@ -52,7 +52,7 @@ app.use((error, req, res, next) => {
 
 
 
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect('mongodb+srv://shin:153123@cluster0.ydxf4.mongodb.net/trip?retryWrites=true&w=majority&appName=Cluster0', {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })

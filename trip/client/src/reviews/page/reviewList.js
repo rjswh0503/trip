@@ -42,10 +42,10 @@ const PlaceByReview = () => {
     return (
         <div className='flex justify-center items-center min-h-screen'>
             <div className='grid grid-cols-2 gap-6'>
-                {reviewList && reviewList.map(review => (
+                {reviewList.map(review => (
                     <div
                         key={review._id}
-                        className='max-w-sm border border-gray-300 rounded-md shadow-sm hover:shadow-lg p-6 flex flex-col justify-between min-h-[250px]'
+                        className='max-w-sm border border-gray-300 rounded-md shadow-sm hover:shadow-lg p-6 flex flex-col justify-between'
                     >
                         <div className='flex gap-2'>
                             <Avatar alt="유저프로필" img={review.author?.image} rounded size="sm" />
@@ -65,12 +65,13 @@ const PlaceByReview = () => {
                             </p>
                         </div>
 
-                        <p className='font-normal text-gray-800 line-clamp-4'>{review.content}</p>
+                        <p className='font-normal text-gray-800 line-clamp-1'>{review.content}</p>
 
                         <div className='flex justify-between items-center mt-4'>
                             <div className='flex gap-1 items-center'>
                                 <AiTwotoneLike />
                                 <p>{review.recommend.length}</p>
+                                <p>👁{review.view}</p>
                             </div>
                             <div>
                                 <Link

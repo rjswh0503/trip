@@ -6,7 +6,6 @@ import { useParams, Link } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 
 
-
 const PlacesDetail = () => {
     const { user } = useAuth();
     const { id } = useParams();

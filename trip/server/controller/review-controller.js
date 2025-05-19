@@ -109,7 +109,10 @@ const getReviewById = async (req, res, next) => {
     let review;
 
     try {
-        review = await Review.findById(reviewId).populate('author', 'name image').populate('places', 'title region');
+        review = await Review.findByIdAndUpdate(reviewId,
+            { $inc: { view: 1 } },
+            { new: true }
+        ).populate('author', 'name image').populate('places', 'title region');
     } catch (e) {
         console.error(e);
         const error = new HttpError('리뷰 상세보기 실패', 500);
@@ -179,31 +182,31 @@ const deleteReview = async (req, res, next) => {
         place = await Place.findById(placeId);
     } catch (e) {
         console.error(e);
-        return next(new HttpError('리뷰 삭제 중 서버 오류가 발생했습니다.', 500)); // 내부 서버 오류
+        return next(new HttpError('리뷰 삭제 중 서버 오류가 발생했습니다.', 500));
     }
 
     if (!review || !place) {
-        return next(new HttpError('해당 장소 또는 리뷰를 찾을 수 없습니다.', 404)); // 리소스 없음
+        return next(new HttpError('해당 장소 또는 리뷰를 찾을 수 없습니다.', 404));
     }
 
     // 작성자도 아니고, 관리자도 아니라면 권한 없음
     if (review.author._id.toString() !== req.userData.userId && req.userData.role !== 'admin') {
-        return next(new HttpError('삭제 권한이 없습니다.', 403)); // 권한 없음
+        return next(new HttpError('삭제 권한이 없습니다.', 403));
     }
 
     const session = await mongoose.startSession();
     session.startTransaction();
 
     try {
-        await review.deleteOne({ session }); // 리뷰 삭제
-        place.reviews.pull(review._id);      // 장소에서 리뷰 참조 제거
+        await review.deleteOne({ session });
+        place.reviews.pull(review._id);
         await place.save({ session });
 
         await session.commitTransaction();
     } catch (e) {
         console.error(e);
         await session.abortTransaction();
-        return next(new HttpError('리뷰 삭제 중 오류가 발생했습니다.', 500)); // 트랜잭션 실패
+        return next(new HttpError('리뷰 삭제 중 오류가 발생했습니다.', 500));
     } finally {
         session.endSession();
     }

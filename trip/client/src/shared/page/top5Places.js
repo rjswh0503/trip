@@ -17,7 +17,7 @@ const Top3Places = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/places/top5`, {
+                const response = await axios.get(`http://localhost:5000/api/places/top5`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -53,7 +53,7 @@ const Top3Places = () => {
 
         try {
             const response = await axios.post(
-                `${process.env.REACT_APP_API_URL}/api/places/${placeId}/like`,
+                `http://localhost:5000/api/places/${placeId}/like`,
                 {},
                 {
                     headers: {
@@ -95,7 +95,7 @@ const Top3Places = () => {
             });
         }
         try {
-            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/places/${placeId}/bookMark`, {
+            const response = await axios.post(`http://localhost:5000/api/places/${placeId}/bookMark`, {
 
             },
                 {
