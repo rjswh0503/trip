@@ -187,7 +187,7 @@ const deletePlace = async (req, res, next) => {
 
 
 
-//여행지 인기 5위 리스트 (리뷰 많은 여행지)
+//여행지 인기 5위 리스트 (조회수 많은 수)
 
 const getTop5HotPlaces = async (req, res, next) => {
     const userId = req.userData?.userId;
@@ -195,7 +195,7 @@ const getTop5HotPlaces = async (req, res, next) => {
 
     try {
 
-        places = await Place.find().sort({ reviews: -1, createdAt: 1 }).limit(5).lean();
+        places = await Place.find().sort({ view: -1, createdAt: 1 }).limit(5).lean();
 
         const likeBookMark = places.map(place => ({
             ...place,
