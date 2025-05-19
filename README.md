@@ -8,7 +8,7 @@
 
 개발 시작 : 2025-03-24 ~ 2025.05.12
 
-배포 주소 : https://trip-client.onrender.com
+Demo Site : https://trip-client.onrender.com
 
 # 1. 프로젝트 기술 스택 및 주요 기능
 
