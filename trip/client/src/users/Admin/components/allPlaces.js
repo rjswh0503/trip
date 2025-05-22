@@ -55,7 +55,7 @@ const AllPlaces = () => {
 
     return (
         <div className='mt-8 mx-auto'>
-            <h3 className='text-2xl font-black mb-10 text-center'>여행지 관리
+            <h3 className='text-2xl font-black mb-10 text-center'>
                 <p className='text-sm font-light mt-2 text-blue-400 hover:underline hover:text-blue-500 cursor-pointer'><Link to={'/places/add'}>여행지 등록하기</Link></p>
             </h3>
             <table className='container mx-auto w-8/12 bg-white shadow-sm rounded '>

@@ -56,7 +56,7 @@ const AllPosts = () => {
         <div>
             <h3 className='text-2xl font-black mb-16'>커뮤니티 관리</h3>
             <div className='mt-8'>
-                <h3 className='text-2xl font-black mb-10 text-center'>게시글 관리
+                <h3 className='text-2xl font-black mb-10 text-center'>
                 </h3>
                 <table className='container mx-auto w-8/12  bg-white shadow-sm rounded'>
                     <thead className='bg-gray-300'>
