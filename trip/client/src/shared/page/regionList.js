@@ -21,7 +21,7 @@ const RegionList = () => {
 
         const fetchData = async () => {
             try {
-                const response = await axios.get(`http://localhost:5000/api/places/region?region=${region}`, {
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/places/region?region=${region}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -58,7 +58,7 @@ const RegionList = () => {
 
         try {
             const response = await axios.post(
-                `http://localhost:5000/api/places/${placeId}/like`,
+                `${process.env.REACT_APP_API_URL}/api/places/${placeId}/like`,
                 {},
                 {
                     headers: {
@@ -100,7 +100,7 @@ const RegionList = () => {
             });
         }
         try {
-            const response = await axios.post(`http://localhost:5000/api/places/${placeId}/bookMark`, {
+            const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/places/${placeId}/bookMark`, {
 
             },
                 {
