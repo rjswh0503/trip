@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '../../../shared/context/auth-context';
+import { Link } from 'react-router-dom';
 import LatestUsers from '../components/latestUsers';
 import UserManagement from '../components/UserManagement';
 import AllPlaces from '../components/allPlaces';
@@ -45,7 +46,7 @@ const AdminPage = () => {
     return (
         <div className="grid grid-cols-12 min-h-screen">
             <aside className="col-span-2 justify-center bg-gray-800 text-white p-4 space-y-4">
-                <h2 className="text-2xl font-bold mb-6"><a href='/admin'>Admin</a></h2>
+                <h2 className="text-2xl font-bold mb-6"><Link to="/admin">Admin</Link></h2>
                 <button onClick={() => setPage('dashboard')} className="block w-full text-left hover:text-blue-300">대시보드</button>
                 <button onClick={() => setPage('users')} className="block w-full text-left hover:text-blue-300">전체유저 조회</button>
                 <button onClick={() => setPage('community')} className="block w-full text-left hover:text-blue-300">커뮤니티 관리</button>
