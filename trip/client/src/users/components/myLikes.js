@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 
 import axios from 'axios'; 
-import { useParams, Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useAuth } from '../../shared/context/auth-context';
 import { Pagination } from 'flowbite-react';
 
@@ -53,7 +53,7 @@ const MyLikes = () => {
                         <tr key={like._id} className='hover:bg-gray-50 border-b-2'>
                             <td className='p-3'>{idx + 1}</td>
                             <td className='p-3'><img className='w-16 h-16 rounded-md' src={like.images[0]} alt='여행지 이미지' /></td>
-                            <td className='p-3'><Link to={`places/${like.places.id}`}>{like.title}</Link></td>
+                            <td className='p-3'>{like.title}</td>
                             <td className='p-3'>{like.region}</td>
                         </tr>
                     ))}
