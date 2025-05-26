@@ -39,7 +39,7 @@ const MyBookMark = () => {
 
     return (
         <div>
-            <h3 className='text-2xl font-black mb-6'>찜 목록</h3>
+            
             <table className='container mx-auto w8/2 bg-white shadow-sm rounded'>
                 <thead className='bg-gray-300'>
                     <tr>

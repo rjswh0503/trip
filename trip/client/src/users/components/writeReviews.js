@@ -44,7 +44,7 @@ const WriteReviews = () => {
 
 
                 <div>
-                    <h3 className='text-2xl font-bold mb-6'>작성한 리뷰</h3>
+                    
                     <table className='container mx-auto w8/2 bg-white shadow-sm rounded'>
                         <thead className='bg-gray-300'>
                             <tr>

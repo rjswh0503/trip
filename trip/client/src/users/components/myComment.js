@@ -39,7 +39,7 @@ const MyComment = () => {
 
     return (
         <div>
-            <h3 className='text-2xl font-black mb-6'>작성한 댓글</h3>
+            
             {myComment && myComment.filter(comment => comment && comment._id).length > 0 ? (
                 <div>
                     <table className='container mx-auto w8/2 bg-white shadow-sm rounded'>
